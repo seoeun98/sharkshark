@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { App } from './App';
 import rootReducer from './reducers';
 import reportWebVitals from './reportWebVitals';
@@ -17,7 +18,9 @@ const store = configureStore({ reducer: rootReducer });
 root.render(
   <Provider store={store}>
     <ColorModeScript />
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
 );
 

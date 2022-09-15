@@ -1,3 +1,10 @@
+import { Text } from '@chakra-ui/react';
+
 export const LandingPage = () => {
-  return <div>LandingPage</div>;
+  return (
+    <div>
+      <Text fontSize="3xl"> Title </Text>
+      LandingPage
+    </div>
+  );
 };

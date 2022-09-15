@@ -1,6 +1,6 @@
 import { authAxios } from './common';
 
-// GET /user/{id}
+// 계정 정보 조회
 export const getUserInfoAPI = (id: string) => {
   authAxios
     .get(`/user/${id}`)
@@ -13,7 +13,7 @@ export const getUserInfoAPI = (id: string) => {
     });
 };
 
-// PUT /user/{id}
+// 계정 정보 업데이트
 export const updateUserInfoAPI = (id: string, password: string, git: string, dir: string) => {
   authAxios
     .put(`/user/${id}`, { id: id, password: password, git: git, dir: dir })

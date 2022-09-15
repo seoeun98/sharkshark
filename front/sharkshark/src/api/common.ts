@@ -5,7 +5,7 @@ const SERVER_ADDRESS = '/api';
 export const authAxios: AxiosInstance = axios.create({
   baseURL: `${SERVER_ADDRESS}`,
   headers: {
-    Authorization: 'Bearer ' + localStorage.getItem('accessToken') || '',
+    Authorization: localStorage.getItem('accessToken') || '',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
   },

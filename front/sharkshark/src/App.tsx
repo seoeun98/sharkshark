@@ -10,6 +10,9 @@ import { CodeTestPage } from './views/CodeTestPage';
 import { BloggingPage } from './views/BloggingPage';
 import { DataRivalPage } from './views/DataRivalPage';
 import { DataRoadPage } from './views/DataRoadPage';
+import { UserLoginPage } from './views/UserLoginPage';
+import { UserRegisterPage } from './views/UserRegisterPage';
+import { SettingPage } from './views/SettingPage';
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -23,8 +26,11 @@ export const App = () => (
         <Route path="data/chart" element={<DataChartPage />} />
         <Route path="data/road" element={<DataRoadPage />} />
         <Route path="data/rival" element={<DataRivalPage />} />
+        <Route path="setting" element={<SettingPage />} />
         <Route index element={<Navigate to="home" replace />} />
       </Route>
+      <Route path="login" element={<UserLoginPage />} />
+      <Route path="register" element={<UserRegisterPage />} />
     </Routes>
   </ChakraProvider>
 );

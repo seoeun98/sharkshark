@@ -1,4 +1,5 @@
-import { Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 export const LandingPage = () => {
   return (

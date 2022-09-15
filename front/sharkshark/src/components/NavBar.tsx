@@ -1,6 +1,5 @@
-import { ReactNode } from 'react';
-import { Box, Center, Flex } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Box, Center, Flex, Spacer } from '@chakra-ui/react';
+import { Link, useLocation } from 'react-router-dom';
 
 export const NavBar = () => {
   const menu = [
@@ -11,9 +10,12 @@ export const NavBar = () => {
     { url: 'data/chart', text: '실력 분석' },
   ];
 
+  const pathname = useLocation().pathname;
+
   return (
     <Box h="80px" bg="gray.50">
       <Flex>
+        {/* logo */}
         <Center h="80px" mx="20px">
           <Link to="home">
             <Box fontSize="24px"> Logo </Box>
@@ -26,6 +28,20 @@ export const NavBar = () => {
             <Link to={item.url}>{item.text}</Link>
           </Center>
         ))}
+        <Spacer />
+
+        {/* buttons */}
+        <Center h="80px" mx="20px">
+          {pathname === '/home' ? (
+            <Flex>
+              <Link to="login">Login</Link>
+              <Box w="10px" />
+              <Link to="register">Register</Link>
+            </Flex>
+          ) : (
+            <Link to="setting">Setting</Link>
+          )}
+        </Center>
       </Flex>
     </Box>
   );

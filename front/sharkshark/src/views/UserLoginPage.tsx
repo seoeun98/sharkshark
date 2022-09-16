@@ -1,4 +1,4 @@
-import { Box, Button, Input } from '@chakra-ui/react';
+import { Box, Button, Container, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loginAPI } from '../api/default';
@@ -7,9 +7,9 @@ export const UserLoginPage = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   return (
-    <div>
+    <Container>
       <Box>UserLoginPage</Box>
-      <Box w="300px">
+      <Box>
         <Input type="text" placeholder="id" value={id} onChange={e => setId(e.target.value)} />
         <Input
           type="password"
@@ -20,6 +20,6 @@ export const UserLoginPage = () => {
         <Button onClick={() => loginAPI(id, password)}>로그인</Button>
       </Box>
       <Link to="/home">홈으로 돌아가기</Link>
-    </div>
+    </Container>
   );
 };

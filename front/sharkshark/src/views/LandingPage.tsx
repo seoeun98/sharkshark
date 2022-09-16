@@ -1,3 +1,11 @@
+import { Box, Text } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+
 export const LandingPage = () => {
-  return <div>LandingPage</div>;
+  return (
+    <div>
+      <Text fontSize="3xl"> Title </Text>
+      LandingPage
+    </div>
+  );
 };

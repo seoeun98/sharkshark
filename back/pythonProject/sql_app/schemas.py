@@ -19,6 +19,21 @@ class updateUser(User):
     token: str
     dir:str
 
+
+class Rival(BaseModel):
+    userId: str
+    rivalId: str
+
+    class Config:
+        orm_mode = True
+
+class Problem(BaseModel):
+    no: int
+    title: str
+
+    class Config:
+        orm_mode = True
+
 # class UserCreate(User):
 #     pw: str
 #

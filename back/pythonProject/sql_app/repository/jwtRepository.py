@@ -6,7 +6,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import Request, HTTPException
 
 
-SECRET_KEY="secret"
+SECRET_KEY = "secret"
 ALGORITHM = "HS256"
 
 class JWTRepo():

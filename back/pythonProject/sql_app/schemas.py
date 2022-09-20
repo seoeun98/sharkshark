@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 class User(BaseModel):
@@ -33,6 +35,11 @@ class Problem(BaseModel):
 
     class Config:
         orm_mode = True
+
+class Output(BaseModel) :
+    msg : Optional[str] = None
+    access_token : Optional[str] = None
+
 
 # class UserCreate(User):
 #     pw: str

@@ -6,7 +6,8 @@ import csv
 headers = { "Content-Type": "application/json" }
 base_url = "https://solved.ac/api/v3/"
 search_problem_url = "search/problem"
-start = 263
+file_path = '../data/'
+start = 1
 
 class Problems():
     def __init__(self):
@@ -21,12 +22,11 @@ def scrap_problem_per_page(page: int):
     querystring = {"query": " ", "page": f"{page}"}
 
     if page == start:
-      output_file = open('problems.csv', mode='w')
-      writer = csv.writer(output_file)
-      writer.writerow(['problemId', 'titleKo', 'isSolvable', 'acceptedUserCount', 'level',
-                      'averageTries', 'tags'])
+      output_file = open(file_path + 'problems.csv', mode='w', encoding='utf-8-sig', newline='')
+      writer = csv.writer(output_file)              
+      writer.writerow(['problem_id', 'title', 'tags', 'is_solvable', 'accepted_user_count', 'level', 'average_tries'])
     else:
-        output_file = open('problems.csv', mode='a')
+        output_file = open(file_path + 'problems.csv', mode='a', encoding='utf-8-sig', newline='')
         writer = csv.writer(output_file)
 
     response = requests.request("GET", url, headers=headers, params=querystring)
@@ -51,8 +51,7 @@ def scrap_problem_per_page(page: int):
 
             problem.tags = ",".join(tags)
 
-        writer.writerow([problem.problem_id, problem.title, problem.is_solvable, problem.accepted_user_count, problem.level,
-                          problem.average_tries, problem.tags if len(tags_data) > 0 else None])
+        writer.writerow([problem.problem_id, problem.title, problem.tags if len(tags_data) > 0 else None, problem.is_solvable, problem.accepted_user_count, problem.level, problem.average_tries])
 
 def scrap_problem(args_time_interval):
     time_interval = args_time_interval

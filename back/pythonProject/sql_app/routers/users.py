@@ -1,15 +1,19 @@
 import string
 from typing import List
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Header
 from sqlalchemy.orm import Session
+from starlette.responses import JSONResponse
 
 import sql_app.models
 from sql_app import schemas
 from sql_app.database import get_db
-from sql_app.repository import userRepository
+from sql_app.repository import userRepository, jwtRepository
 
 import random
+
+JWT_SECRET = "secret"
+JWT_ALGORITHM = "HS256"
 
 router = APIRouter(
     prefix="/user",
@@ -41,14 +45,20 @@ def confirm_message(id, db: Session = Depends(get_db)):
     return 1
 
 # 전체 유저 조회
-@router.get("")
+@router.get("", dependencies=[Depends(jwtRepository.JWTBearer())])
 def get_all_user(db: Session = Depends(get_db)):
     return db.query(sql_app.models.User).all()
 
 # 로그인
 @router.post("/login")
 def login(request: schemas.User, db: Session = Depends(get_db)):
-    return userRepository.login_user(request, db)
+    newUser = userRepository.login_user(request, db)
+
+    if newUser is not 0:
+        token = jwtRepository.JWTRepo.generate_token({"sub": newUser.id})
+        return token
+
+    return JSONResponse(status_code=400, content=dict(msg="NOT_SUPPORTED"))
 
 # 계정 정보 조회
 @router.get("/{id}", response_model=schemas.getUser)
@@ -57,7 +67,7 @@ def get_by_id(id: str, db: Session = Depends(get_db)):
 
 # 계정 정보 업데이트
 @router.put("")
-def update_by_id(request: schemas.updateUser, db: Session = Depends(get_db)):
+def update_by_id(request: schemas.updateUser, db: Session = Depends(get_db), access_token: str = Header(None)):
     return userRepository.update_user(request, db)
 
 # 회원 탈퇴

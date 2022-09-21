@@ -28,7 +28,7 @@ export const getProfileMsgAPI = async (id: string) => {
       alert('getProfileMsg failed');
     });
   console.log(profileMsg);
-  return 'profileMsg';
+  return profileMsg;
 };
 
 // 상태메시지 지정 문구 입력 확인

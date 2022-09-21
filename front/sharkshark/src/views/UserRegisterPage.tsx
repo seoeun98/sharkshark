@@ -55,6 +55,7 @@ export const UserRegisterPage = () => {
     if (msg === 'OK') {
       setPMsgStatus(true);
       setCheckMsg(msg);
+      onClose();
     } else {
       setPMsgStatus(false);
     }

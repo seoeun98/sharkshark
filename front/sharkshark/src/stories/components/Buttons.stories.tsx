@@ -1,12 +1,16 @@
 import React from 'react';
-import PFButton from '../../components/Button';
+import CustomButton from '../../components/Button';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   title: 'Components/Button',
-  component: PFButton,
+  component: CustomButton,
 };
 
-export const Default = () => {
-  return <PFButton />;
+export const primary = () => {
+  return <CustomButton>Primary</CustomButton>;
+};
+
+export const secondary = () => {
+  return <CustomButton variant="secondary">Secondary</CustomButton>;
 };

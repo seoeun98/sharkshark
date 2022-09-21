@@ -12,7 +12,7 @@ router = APIRouter(
     tags=["Problems"]
 )
 
-@router.get()
+@router.get("")
 def get_probs_list(db: Session = Depends(get_db)) :
     return None;
 

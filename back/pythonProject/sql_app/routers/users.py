@@ -10,6 +10,8 @@ from sql_app import schemas
 from sql_app.database import get_db
 from sql_app.repository import userRepository, jwtRepository
 
+from util import user_message_crawling
+
 import random
 
 router = APIRouter(
@@ -26,7 +28,7 @@ def regist(request: schemas.User, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="not registered")
 
 # 상태메세지 문구 넘겨주기
-@router.post("/confirm/{id}", dependencies=[Depends(jwtRepository.JWTBearer())])
+@router.post("/confirm/{id}")
 def pass_message(id, db: Session = Depends(get_db)):
     d={}
 
@@ -37,16 +39,18 @@ def pass_message(id, db: Session = Depends(get_db)):
     for i in range(_LENGTH) :
         result += random.choice(string_poll)
 
-    if userRepository.set_message(id, result, db) == 0:
+    if userRepository.set_message(id, result, db) != 0:
         d['msg'] = result
         return d
     else: return -1
 
 # 입력 확인 완료
-@router.get("/confirm/{id}", status_code=200, dependencies=[Depends(jwtRepository.JWTBearer())])
+@router.get("/confirm/{id}", status_code=200)
 def confirm_message(id, db: Session = Depends(get_db)):
-    return 1
+    userMsg = user_message_crawling(id)
 
+    if not userRepository.check_message(id, userMsg, db) :
+        raise HTTPException(status_code=401, detail="not certified")
 # 전체 유저 조회
 @router.get("", dependencies=[Depends(jwtRepository.JWTBearer())])
 def get_all_user(db: Session = Depends(get_db)):

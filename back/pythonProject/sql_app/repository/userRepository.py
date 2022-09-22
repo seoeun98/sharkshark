@@ -1,3 +1,6 @@
+import string
+from random import random
+
 import bcrypt
 from sqlalchemy.orm import Session
 from sql_app import models, schemas
@@ -13,6 +16,11 @@ def create_user(user: schemas.User, db: Session):
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+
+    db_msg = db.query(models.userMsg).filter(models.userMsg.userId == user.id).first()
+    db.delete(db_msg)
+    db.commit()
+
     return 1
 
 def login_user(user: schemas.User, db: Session):
@@ -29,23 +37,33 @@ def get_by_id(id: str, db: Session):
         return db_user
     else: return 0
 
-def set_message(id: str, msg : str, db : Session):
-    db_user = db.query(models.User).filter(models.User.id == id)
+def set_message(id: str, db : Session):
+    check_user = db.query(models.userMsg).filter(models.userMsg.userId == id)
 
-    if not db_user.first():
-        db_user.update({'msg' : msg})
-        db.commit()
-        return 1
-    else : return 0
+    if check_user.first():
+        return check_user.first().userMsg
+
+    _LENGTH = 6
+    string_poll = string.ascii_lowercase
+    result = ""
+
+    for i in range(_LENGTH):
+        result += random.choice(string_poll)
+
+    db_msg = models.userMsg(userId=id, userMsg=result)
+    db.add(db_msg)
+    db.commit()
+    db.refresh(db_msg)
+    return result
+
 
 # BJ의 프로필 메세지 체크
 def check_message(id: str, msg: str, db : Session) :
-    db_user = db.query(models.User).filter(models.User.id == id).first()
+    db_user = db.query(models.userMsg).filter(models.userMsg.userId == id).first()
 
     if db_user:
-        db_user_msg = db_user.msg
-        return msg.find(db_user_msg)
-    return 0
+        return msg.find(db_user.userMsg)
+    return -1
 
 
 

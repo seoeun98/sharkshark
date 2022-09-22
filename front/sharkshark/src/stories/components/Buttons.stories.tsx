@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomButton from '../../components/Button';
+import CustomButton from '../../components/common/Button';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

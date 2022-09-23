@@ -1,5 +1,5 @@
 import string
-from random import random
+import random
 
 import bcrypt
 from sqlalchemy.orm import Session

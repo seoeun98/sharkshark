@@ -4,26 +4,17 @@ import { ComponentStyleConfig } from '@chakra-ui/react';
 
 const baseStyle: SystemStyleFunction = () => {
   return {
-    fontSize: '12px',
-    width: '200px',
-    px: '32px', // <-- px is short for paddingLeft and paddingRight
-    py: '20px', // <-- py is short for paddingTop and paddingBottom
-    borderRadius: '36px',
-    fontWeight: '500',
-    border: '2px solid',
-  };
-};
-
-const basicSize = () => {
-  return {
-    fontSize: '12px',
-    px: '32px', // <-- px is short for paddingLeft and paddingRight
-    py: '20px', // <-- py is short for paddingTop and paddingBottom
+    // borderRadius: '2rem',
+    // fontWeight: '500',
+    // border: '1px solid',
   };
 };
 
 const primaryVariant = (props: Record<string, any>) => {
   return {
+    borderRadius: '2rem',
+    fontWeight: '500',
+    border: '1px solid',
     borderColor: mode('neutral.25', 'neutral.400')(props),
     color: 'utility.lightBG',
     bgGradient: 'linear(to-r, primary.cyan50, primary.purple0)',
@@ -45,6 +36,9 @@ const primaryVariant = (props: Record<string, any>) => {
 
 const secondaryVariant = (props: Record<string, any>) => {
   return {
+    borderRadius: '2rem',
+    fontWeight: '500',
+    border: '1px solid',
     borderColor: mode('neutral.25', 'neutral.400')(props),
     color: mode('utility.darkBG', 'utility.lightBG')(props),
     backgroundColor: mode('neutral.0', 'neutral.500')(props),
@@ -68,13 +62,46 @@ const variants = {
   secondary: secondaryVariant,
 };
 const sizes = {
-  basic: basicSize,
+  cxs: {
+    fontSize: 'sm',
+    px: '6',
+    py: '2.5',
+  },
+  csm: {
+    fontSize: 'sm',
+    px: '8',
+    py: '3',
+  },
+  cmd: {
+    fontSize: 'sm',
+    px: '20',
+    py: '3',
+  },
+  cxl: {
+    fontSize: 'md',
+    px: '92px',
+    py: '4',
+  },
+  c2xl: {
+    fontSize: 'md',
+    px: '24',
+    py: '4',
+  },
+  c3xl: {
+    fontSize: 'lg',
+    px: '24',
+    py: '5',
+  },
 };
 
 const Button: ComponentStyleConfig = {
   baseStyle,
   sizes,
   variants,
+  defaultProps: {
+    size: 'cmd',
+    variant: 'primary',
+  },
 };
 
 export default Button;

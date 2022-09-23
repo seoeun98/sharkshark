@@ -19,6 +19,14 @@ router = APIRouter(
     tags=["Users"]
 )
 
+# refresh token으로 새로운 access token 발급해주기
+@router.post("/auth", status_code=200)
+def new_access_token(db: Session = Depends(get_db), refresh_token: str = Header(None)):
+    token = jwtRepository.JWTRepo.create_new_access_token(refresh_token, db)
+    print("새로운 access-token: " + token)
+    return {"access-token":token}
+
+
 # 회원가입
 @router.post("/regist", status_code=200)
 def regist(request: schemas.User, db: Session = Depends(get_db)):
@@ -30,10 +38,8 @@ def regist(request: schemas.User, db: Session = Depends(get_db)):
 # 상태메세지 문구 넘겨주기
 @router.post("/confirm/{id}")
 def pass_message(id, db: Session = Depends(get_db)):
-    d={}
-
-    d['msg'] = userRepository.set_message(id, db)
-    return d
+    result = userRepository.set_message(id, db)
+    return {"msg": result}
 
 # 입력 확인 완료
 @router.get("/confirm/{id}", status_code=200)
@@ -42,6 +48,7 @@ def confirm_message(id, db: Session = Depends(get_db)):
 
     if userRepository.check_message(id, userMsg, db) == -1:
         raise HTTPException(status_code=401, detail="not certified")
+
 # 전체 유저 조회
 @router.get("", dependencies=[Depends(jwtRepository.JWTBearer())])
 def get_all_user(db: Session = Depends(get_db)):
@@ -50,15 +57,17 @@ def get_all_user(db: Session = Depends(get_db)):
 # 로그인
 @router.post("/login")
 def login(request: schemas.User, db: Session = Depends(get_db)):
-    d={}
-
     newUser = userRepository.login_user(request, db)
-
     if newUser:
-        token = jwtRepository.JWTRepo.generate_token({"id": newUser.id})
-        print("발급된 token : " + token)
-        d['access_token']=token
-        return d
+        access_token = jwtRepository.JWTRepo.generate_access_token({"id": newUser.id})
+        refresh_token = jwtRepository.JWTRepo.generate_refresh_token({"id": newUser.id})
+
+        print("발급된 access_token : " + access_token)
+        print("발급된 refresh_token : " + refresh_token)
+
+        jwtRepository.JWTRepo.set_auth(refresh_token, newUser.id, db)
+
+        return {"access-token": access_token, "refresh-token" : refresh_token}
 
     return JSONResponse(status_code=400, content=dict(msg="NOT_SUPPORTED"))
 

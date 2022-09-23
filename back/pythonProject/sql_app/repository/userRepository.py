@@ -1,9 +1,15 @@
 import string
-from random import random
+import random
 
 import bcrypt
 from sqlalchemy.orm import Session
 from sql_app import models, schemas
+# from sql_app.repository.jwtRepository import JWTRepo
+
+# def create_new_access_token(refresh:str, userId: str, db: Session):
+#     if JWTRepo.set_auth(refresh, userId, db) :
+#         return JWTRepo.generate_access_token({"id": userId})
+#     return None;
 
 def create_user(user: schemas.User, db: Session):
     check_user = db.query(models.User).filter(models.User.id == user.id).first()

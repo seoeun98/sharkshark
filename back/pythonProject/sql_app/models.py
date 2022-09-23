@@ -95,3 +95,10 @@ class wrongType(Base):
     userId = Column(VARCHAR(45), ForeignKey('user.id'))
     wrongCnt = Column(Integer)
 
+class auth(Base):
+    __tablename__ = "auth"
+
+    no = Column(Integer, primary_key=True, autoincrement=True)
+    userId = Column(VARCHAR(45))
+    refresh_token = Column(VARCHAR(2000))
+

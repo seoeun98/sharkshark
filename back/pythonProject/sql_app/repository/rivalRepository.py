@@ -2,9 +2,7 @@ from sqlalchemy.orm import Session
 from sql_app import models, schemas
 
 def get_rivals_list(user: str, db: Session) :
-    db.query(models.rival).filter(models.rival.userId == user).all()
-
-    # return db.query(models.rival).filter(models.rival.userId == user).all()
+    return db.query(models.rival).filter(models.rival.userId == user).all()
 
 def put_rival(rivalId, db: Session, user: str) :
     check_rival = db.query(models.rival).filter(models.rival.rivalId == rivalId).filter(models.rival.userId == user).first()

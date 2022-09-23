@@ -1,9 +1,9 @@
 import { defaultAxios } from './common';
 
 // 회원가입
-export const registerAPI = (id: string, password: string) => {
+export const registerAPI = (id: string, pw: string) => {
   defaultAxios
-    .post('/user/register', { id: id, password: password })
+    .post('/user/register', { id: id, pw: pw })
     .then(res => {
       window.location.href = '/login';
     })
@@ -19,12 +19,11 @@ export const getProfileMsgAPI = async (id: string) => {
   await defaultAxios
     .post(`/user/confirm/${id}`)
     .then(res => {
-      console.log(res.data.msg);
+      console.log(res.data);
       profileMsg = res.data.msg;
     })
     .catch(err => {
-      profileMsg = 'test msg';
-      console.log(profileMsg);
+      profileMsg = '-1';
       console.log(err);
       alert('getProfileMsg failed');
     });
@@ -50,11 +49,11 @@ export const checkProfileMsgAPI = async (id: string) => {
 };
 
 // 로그인
-export const loginAPI = (id: string, password: string) => {
+export const loginAPI = (id: string, pw: string) => {
   defaultAxios
-    .post('/user/login', { id: id, password: password })
+    .post('/user/login', { id: id, pw: pw })
     .then(res => {
-      localStorage.setItem('accessToken', res.data.access_token);
+      localStorage.setItem('access_token', res.data.access_token);
       window.location.href = '/';
     })
     .catch(err => {

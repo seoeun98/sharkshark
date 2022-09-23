@@ -3,7 +3,7 @@ import { defaultAxios } from './common';
 // 회원가입
 export const registerAPI = (id: string, pw: string) => {
   defaultAxios
-    .post('/user/register', { id: id, pw: pw })
+    .post('/user/regist', { id: id, pw: pw })
     .then(res => {
       window.location.href = '/login';
     })

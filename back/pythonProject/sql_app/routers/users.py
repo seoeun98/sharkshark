@@ -32,24 +32,15 @@ def regist(request: schemas.User, db: Session = Depends(get_db)):
 def pass_message(id, db: Session = Depends(get_db)):
     d={}
 
-    _LENGTH=6
-    string_poll = string.ascii_lowercase
-    result = ""
-
-    for i in range(_LENGTH) :
-        result += random.choice(string_poll)
-
-    if userRepository.set_message(id, result, db) != 0:
-        d['msg'] = result
-        return d
-    else: return -1
+    d['msg'] = userRepository.set_message(id, db)
+    return d
 
 # 입력 확인 완료
 @router.get("/confirm/{id}", status_code=200)
 def confirm_message(id, db: Session = Depends(get_db)):
     userMsg = user_message_crawling(id)
 
-    if not userRepository.check_message(id, userMsg, db) :
+    if userRepository.check_message(id, userMsg, db) == -1:
         raise HTTPException(status_code=401, detail="not certified")
 # 전체 유저 조회
 @router.get("", dependencies=[Depends(jwtRepository.JWTBearer())])
@@ -64,7 +55,7 @@ def login(request: schemas.User, db: Session = Depends(get_db)):
     newUser = userRepository.login_user(request, db)
 
     if newUser:
-        token = jwtRepository.JWTRepo.generate_token({"sub": newUser.id})
+        token = jwtRepository.JWTRepo.generate_token({"id": newUser.id})
         print("발급된 token : " + token)
         d['access_token']=token
         return d

@@ -7,28 +7,28 @@ def get_rivals_list(user: str, db: Session) :
 def put_rival(rivalId, db: Session, user: str) :
     check_rival = db.query(models.rival).filter(models.rival.rivalId == rivalId).filter(models.rival.userId == user).first()
 
-    if check_rival is not None: return 0
+    if check_rival: return False
 
     db_rival = models.rival(rivalId=rivalId, userId=user)
     db.add(db_rival)
     db.commit()
     db.refresh(db_rival)
 
-    return 1
+    return True
 
 def delete_rival(rivalId, db: Session, user: str) :
     db_rival = db.query(models.rival).filter(models.rival.rivalId == rivalId).filter(models.rival.userId == user).first()
 
-    if db_rival is None : return 0
+    if not db_rival : return False
 
     db.delete(db_rival)
     db.commit()
     db.refresh(db_rival)
 
-    return 1
+    return True
 
 def get_rival(rivalId, db: Session) :
     db_rival = db.query(models.BJ_user).filter(models.BJ_user.userId == rivalId).first()
 
-    if db_rival is not None: return db_rival
-    else : return 0
+    if db_rival: return db_rival
+    else : return False

@@ -1,15 +1,19 @@
 from sqlalchemy.orm import Session
 from sql_app import models, schemas
 
-def get_probs_list(id: str, db: Session):
-    db_user = db.query(models.problem).filter(models.User.id == id)
+def get_probs_by_rival(id: str, db: Session):
+    db_user = db.query(models.rec_problems).filter(models.rec_problems.userId == id).first()
+
+    if db_user:
+        return db_user.problems
     return None
 
-def get_probs_by_rival(db: Session):
+def get_probs_by_category(id: str, db: Session):
+    db_user = db.query(models.rec_problems_tag).filter(models.rec_problems_tag.userId == id).first()
+
+    if db_user:
+        return db_user.problems
     return None
 
-def get_probs_by_category(db: Session):
-    return None
-
-def get_probs_for_mock(db: Session):
+def get_probs_for_mock(id: str, db: Session):
     return None

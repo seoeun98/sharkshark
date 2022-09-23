@@ -64,7 +64,7 @@ def login(request: schemas.User, db: Session = Depends(get_db)):
     newUser = userRepository.login_user(request, db)
 
     if newUser:
-        token = jwtRepository.JWTRepo.generate_token({"sub": newUser.id})
+        token = jwtRepository.JWTRepo.generate_token({"id": newUser.id})
         print("발급된 token : " + token)
         d['access_token']=token
         return d

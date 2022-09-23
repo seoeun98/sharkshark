@@ -13,7 +13,7 @@ export const NavBar = () => {
   const pathname = useLocation().pathname;
 
   return (
-    <Box h="80px" bg="gray.50">
+    <Box h="80px" bg="" pos="fixed" zIndex="popover">
       <Flex>
         {/* logo */}
         <Center h="80px" mx="20px">

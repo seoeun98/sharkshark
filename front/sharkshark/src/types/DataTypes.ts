@@ -1,4 +1,9 @@
-export type myData = {
+export type Problem = {
+  star: boolean;
+  level: number;
   id: number;
-  desc: string;
+  title: string;
+  tag: string;
+  acceptedUserCnt: number;
+  avgTries: number;
 };

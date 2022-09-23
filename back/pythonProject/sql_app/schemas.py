@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 class User(BaseModel):
@@ -18,6 +20,26 @@ class updateUser(User):
     git:str
     token: str
     dir:str
+
+
+class Rival(BaseModel):
+    userId: str
+    rivalId: str
+
+    class Config:
+        orm_mode = True
+
+class Problem(BaseModel):
+    no: int
+    title: str
+
+    class Config:
+        orm_mode = True
+
+class Output(BaseModel) :
+    msg : Optional[str] = None
+    access_token : Optional[str] = None
+
 
 # class UserCreate(User):
 #     pw: str

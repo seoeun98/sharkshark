@@ -3,6 +3,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, Header
 from sqlalchemy.orm import Session
 from sql_app.repository import rivalRepository, jwtRepository
+from sql_app.repository.jwtRepository import JWTRepo
 
 import sql_app.models
 from sql_app.database import get_db
@@ -15,8 +16,13 @@ router = APIRouter(
 # 추천 사용자 목록을 불러온다
 @router.get("", dependencies=[Depends(jwtRepository.JWTBearer())])
 def get_rival_list(db: Session = Depends(get_db), user: Optional[str] = Header(None)):
+    print(user)
+    userId = JWTRepo.decode_token(user).items()
+
+    print(userId)
+
     # return db.query(sql_app.models.rival).all()
-    return rivalRepository.get_rivals_list(user, db)
+    return rivalRepository.get_rivals_list(userId, db)
 
 # 라이벌을 등록한다. (등록할 라이벌의 id를 pathVariable에 넣는다)
 @router.post("/{id}", status_code=200, dependencies=[Depends(jwtRepository.JWTBearer())])

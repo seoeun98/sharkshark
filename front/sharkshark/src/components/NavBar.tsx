@@ -16,6 +16,11 @@ import {
   Stack,
   Center,
   VStack,
+  TabList,
+  Tabs,
+  Tab,
+  TabIndicator,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
@@ -34,49 +39,65 @@ export const NavBar = () => {
 
   return (
     <div>
-      <Box px={136}>
+      <Box px="10vw" bg="" pos="fixed" w="100%" zIndex="popover">
         <Flex h={16} alignItems="center" justifyContent="space-between">
           <IconButton
             size="md"
-            borderRadius={8}
+            borderRadius={32}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label="Open Menu"
             display={{ md: 'none' }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <HStack spacing={8} alignItems="center">
-            <Box>Logo</Box>
-            <HStack as="nav" spacing={0} display={{ base: 'none', md: 'flex' }}>
-              {menu.map(item => (
-                <VStack spacing={0} justify="center">
-                  <Center
-                    fontWeight="400"
-                    alignItems="center"
-                    w={108}
-                    h={16}
-                    _hover={{
-                      fontWeight: '600',
-                      textDecoration: 'none',
-                      bgColor: 'neutral.25',
-                    }}
-                    _selected={{ fontWeight: '600', textDecoration: 'none' }}
-                  >
-                    <Link to={item.url}>{item.text}</Link>
-                  </Center>
-                </VStack>
-              ))}
-            </HStack>
+          <HStack alignItems="center">
+            <Link to="/">
+              <Box w={152} marginRight={24}>
+                <Image
+                  src={useColorModeValue('assets/logo/logo_dark.png', 'assets/logo/logo_light.png')}
+                />
+              </Box>
+            </Link>
+            <Tabs variant="unstyled" isManual>
+              <TabList as="nav" display={{ base: 'none', md: 'flex' }}>
+                {menu.map(item => (
+                  <Link to={item.url}>
+                    <Tab
+                      w={120}
+                      h={16}
+                      fontSize="16px"
+                      fontWeight="400"
+                      _hover={{
+                        fontWeight: '600',
+                        bgGradient: 'linear(to-r, primary.cyan50, primary.purple0)',
+                        bgClip: 'text',
+                      }}
+                      _selected={{
+                        fontWeight: '600',
+                      }}
+                    >
+                      {item.text}
+                    </Tab>
+                  </Link>
+                ))}
+              </TabList>
+              <TabIndicator
+                mt="-4px"
+                zIndex={-1}
+                height="4px"
+                bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
+              />
+            </Tabs>
           </HStack>
 
           <Flex alignItems="center">
             <ColorModeSwitcher />
-            <Button variant="primary" size="cxs" marginLeft={4}>
+            <Button variant="primary" size="cxs" marginLeft={6}>
               <Link to="login">로그인</Link>
             </Button>
             <Button variant="secondary" size="cxs" marginLeft={4}>
               <Link to="register">회원가입</Link>
             </Button>
-            {/* 계정 관리 등등 */}
+            {/* 계정 관리 등 */}
             {/* <Menu>
               <MenuButton as={Button} rounded="full" variant="link" cursor="pointer">
                 <Avatar
@@ -94,20 +115,13 @@ export const NavBar = () => {
           </Flex>
         </Flex>
 
-        {isOpen ? (
+        {/* 모바일 버전 */}
+        {/* {isOpen ? (
           <Box pb={4} display={{ md: 'none' }}>
-            <Stack as="nav" spacing={4}>
-              {/* {Links.map(({ name, path }) => (
-                // <NavLink key={path} path={path}>
-                //   {name}
-                // </NavLink>
-              ))} */}
-            </Stack>
+            <Stack as="nav" spacing={4} />
           </Box>
-        ) : null}
+        ) : null} */}
       </Box>
-
-      {/* <Box p={4}>Main Content Here</Box> */}
     </div>
   );
 };

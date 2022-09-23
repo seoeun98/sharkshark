@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 
 # file_path = '/content/drive/MyDrive/SSAFY/'
-file_path = ''
+file_path = '../data/'
 headers = {'User-Agent': "Mediapartners-Google"}
 
 class ProblemsSolved():
@@ -46,12 +46,12 @@ def total_solved_problem_seq_crawling(username : str) -> list:
 def scrap_problem_solved(args_time_interval):
     handles = pd.read_csv(file_path + 'users.csv')['handle']
 
-    output_file = open(file_path + 'user_solved_problems.csv', mode='w')
+    output_file = open(file_path + 'user_solved_problems.csv', mode='w', encoding='utf-8-sig', newline='')
     writer = csv.writer(output_file)
     writer.writerow(['handle', 'problems'])
 
     for handle in reversed(handles):
-        output_file = open(file_path + 'user_solved_problems.csv', mode='a')
+        output_file = open(file_path + 'user_solved_problems.csv', mode='a', encoding='utf-8-sig', newline='')
         writer = csv.writer(output_file)
         print(f"Get handle {handle} now!")
         problems_list = total_solved_problem_seq_crawling(handle)

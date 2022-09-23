@@ -16,9 +16,15 @@ class User(Base):
     token = Column(VARCHAR(45))
     git = Column(VARCHAR(45))
     dir = Column(VARCHAR(45))
-    msg = Column(VARCHAR(45))
 
     rival = relationship("rival", backref="users", uselist=False, cascade="all,delete")
+
+class userMsg(Base):
+    __tablename__ = "userMsg"
+
+    no = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    userId = Column(VARCHAR(45))
+    userMsg = Column(VARCHAR(45))
 
 class BJ_user(Base):
     __tablename__ = "BJ_user"

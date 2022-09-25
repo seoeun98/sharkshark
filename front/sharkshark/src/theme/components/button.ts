@@ -13,9 +13,7 @@ const baseStyle: SystemStyleFunction = () => {
 const primaryVariant = (props: Record<string, any>) => {
   return {
     borderRadius: '2rem',
-    fontWeight: '500',
-    border: '1px solid',
-    borderColor: mode('neutral.25', 'neutral.400')(props),
+    fontWeight: '400',
     color: 'utility.lightBG',
     bgGradient: 'linear(to-r, primary.cyan50, primary.purple0)',
     _hover: {
@@ -37,7 +35,7 @@ const primaryVariant = (props: Record<string, any>) => {
 const secondaryVariant = (props: Record<string, any>) => {
   return {
     borderRadius: '2rem',
-    fontWeight: '500',
+    fontWeight: mode('600', '400')(props),
     border: '1px solid',
     borderColor: mode('neutral.25', 'neutral.400')(props),
     color: mode('utility.darkBG', 'utility.lightBG')(props),

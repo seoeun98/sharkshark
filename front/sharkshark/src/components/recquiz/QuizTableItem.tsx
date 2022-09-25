@@ -1,9 +1,9 @@
 import { Box, Center, Collapse, Flex, Spacer, Tag, useDisclosure } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
-import { Problem } from '../types/DataTypes';
+import { Problem } from '../../types/DataTypes';
 import { HiStar, HiOutlineStar } from 'react-icons/hi';
 
-export const QuizItem = (props: { problem: Problem }) => {
+export const QuizTableItem = (props: { problem: Problem }) => {
   const { isOpen, onToggle } = useDisclosure();
   const { problem } = props;
   return (

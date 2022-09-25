@@ -1,6 +1,26 @@
-import { Box, Center, useColorModeValue, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Center,
+  Flex,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  useColorModeValue,
+  VStack,
+  Text,
+  HStack,
+} from '@chakra-ui/react';
 
 export const RecUserPage = () => {
+  const hoverColor = useColorModeValue('neutral.700', 'neutral.50');
+  const selectedColor = useColorModeValue('black', 'white');
+  const bgColor = useColorModeValue('#F1F3F5', 'neutral.500');
+  const selectedfw = useColorModeValue(700, 500);
+  const basicfw = useColorModeValue(400, 300);
+  const titlefw = useColorModeValue(700, 500);
+
   return (
     <Box>
       {/* image & slogan */}
@@ -25,6 +45,71 @@ export const RecUserPage = () => {
           </Box>
         </VStack>
       </Center>
+      {/* main body */}
+      <Box>
+        <Tabs variant="unstyled" orientation="vertical" mx="10vw">
+          <TabList w="10vw" my="6vh">
+            <Tab
+              w={180}
+              h={12}
+              fontSize="1rem"
+              borderRadius="8px"
+              marginBottom="8px"
+              fontWeight={basicfw}
+              color="neutral.200"
+              _hover={{
+                color: hoverColor,
+              }}
+              _selected={{
+                color: selectedColor,
+                fontWeight: selectedfw,
+                bg: bgColor,
+              }}
+            >
+              추천 목록
+            </Tab>
+            <Tab
+              w={180}
+              h={12}
+              fontSize="1rem"
+              borderRadius="8px"
+              marginBottom="8px"
+              fontWeight="400"
+              color="neutral.200"
+              _hover={{
+                color: hoverColor,
+              }}
+              _selected={{
+                color: selectedColor,
+                fontWeight: 600,
+                bg: bgColor,
+              }}
+            >
+              라이벌 목록
+            </Tab>
+          </TabList>
+
+          <TabPanels ml="4vw" marginTop="4vh" bg="">
+            <TabPanel>
+              <HStack fontWeight={titlefw} marginBottom="3rem">
+                <Box
+                  fontSize="22px"
+                  fontWeight="800"
+                  bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
+                  bgClip="text"
+                >
+                  USERID
+                </Box>
+                <Box fontSize="24px">님의 라이벌 추천 목록</Box>
+              </HStack>
+              <Box h="44vh" bg="neutral.200" />
+            </TabPanel>
+            <TabPanel>
+              <p>라이벌 목록</p>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Box>
     </Box>
   );
 };

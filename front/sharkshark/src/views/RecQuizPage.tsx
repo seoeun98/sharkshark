@@ -117,11 +117,17 @@ export const RecQuizPage = () => {
 
       {/* main body */}
       <Box>
-        <Tabs orientation="vertical" mx="10vw" my="5vh">
-          <TabList w="11vw" bg="neutral.200">
-            <Tab>전체</Tab>
-            <Tab>사용자 기반 추천 문제</Tab>
-            <Tab>유형별 추천 문제</Tab>
+        <Tabs variant="unstyled" orientation="vertical" mx="10vw" my="6vh">
+          <TabList w="10vw">
+            <Tab w={180} h={10}>
+              전체
+            </Tab>
+            <Tab w={180} h={10}>
+              사용자 기반 추천 문제
+            </Tab>
+            <Tab w={180} h={10}>
+              유형별 추천 문제
+            </Tab>
           </TabList>
 
           <TabPanels bg="neutral.100" ml="5vw">

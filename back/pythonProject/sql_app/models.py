@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, VARCHAR, FLOAT, TIMESTAMP, BIGINT
+from sqlalchemy import Column, ForeignKey, Integer, VARCHAR, FLOAT, TIMESTAMP, BIGINT, TEXT
 from sqlalchemy.orm import relationship
 
 from .database import Base
@@ -29,6 +29,7 @@ class userMsg(Base):
 class major_category(Base):
     __tablename__ = "major_category"
 
+    no = Column(Integer, primary_key=True, index=True, autoincrement=True)
     userId = Column(VARCHAR(45), ForeignKey('BJ_user.userId'))
     math = Column(FLOAT)
     implementation = Column(FLOAT)
@@ -60,7 +61,7 @@ class BJ_user(Base):
     maxStreak = Column(Integer)
     rank = Column(Integer)
     organization = Column(Integer)
-    problems = Column(VARCHAR(400000))
+    problems = Column(TEXT)
 
     # user = relationship("user", backref="BJ_users", uselist=False, cascade="all,delete")
     rival = relationship("rival", backref="BJ_users", uselist=False, cascade="all,delete")

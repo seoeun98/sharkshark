@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, VARCHAR, FLOAT, TIMESTAMP, BIGINT, TEXT
+from sqlalchemy import Column, ForeignKey, Integer, VARCHAR, FLOAT, TIMESTAMP, BIGINT, TEXT, Boolean
 from sqlalchemy.orm import relationship
 
 from .database import Base
@@ -90,6 +90,9 @@ class problem(Base):
     acceptedUserCnt = Column(Integer)
     level = Column(Integer)
     avgTries = Column(Integer)
+    isSolvable = Column(Boolean)
+    acceptedUserCnt = Column(Integer)
+    tags = Column(TEXT)
 
     problem = relationship("solvedProblem", cascade="all,delete")
     problem_tag = relationship("problem_tag", cascade="all,delete")

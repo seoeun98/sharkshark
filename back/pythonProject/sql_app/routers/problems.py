@@ -35,4 +35,9 @@ def get_probs_by_category(db: Session = Depends(get_db), user: Optional[str] = H
 
 @router.get("/mock", dependencies=[Depends(jwtRepository.JWTBearer())])
 def get_probs_for_mock(db: Session = Depends(get_db), user: Optional[str] = Header(None)) :
-    return None
+    userId = JWTRepo.decode_token(user)
+    result = ProblemsRepository.get_probs_for_mock(userId, db)
+
+    if result:
+        return result
+    raise HTTPException(status_code=401, detail="no item")

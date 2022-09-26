@@ -15,6 +15,31 @@ import { QuizMenuRival } from '../components/recquiz/QuizMenuRival';
 import { QuizMenuTag } from '../components/recquiz/QuizMenuTag';
 
 export const RecQuizPage = () => {
+  const hoverColor = useColorModeValue('neutral.700', 'neutral.50');
+  const selectedColor = useColorModeValue('black', 'white');
+  const bgColor = useColorModeValue('#F1F3F5', 'neutral.500');
+  const selectedfw = useColorModeValue(700, 500);
+  const basicfw = useColorModeValue(400, 300);
+  const titlefw = useColorModeValue(700, 500);
+
+  const TabStyle = {
+    w: 180,
+    h: 12,
+    fontSize: '1rem',
+    borderRadius: '8px',
+    marginBottom: '8px',
+    fontWeight: { basicfw },
+    color: 'neutral.200',
+    _hover: {
+      color: hoverColor,
+    },
+    _selected: {
+      color: selectedColor,
+      fontWeight: selectedfw,
+      bg: bgColor,
+    },
+  };
+  // <Tab sx={TabStyle}>전체</Tab>
   return (
     <Box>
       {/* image & slogan */}
@@ -53,18 +78,12 @@ export const RecQuizPage = () => {
       <Box>
         <Tabs variant="unstyled" orientation="vertical" mx="10vw" my="6vh">
           <TabList w="10vw">
-            <Tab w={180} h={10}>
-              전체
-            </Tab>
-            <Tab w={180} h={10}>
-              사용자 기반 추천 문제
-            </Tab>
-            <Tab w={180} h={10}>
-              유형별 추천 문제
-            </Tab>
+            <Tab sx={TabStyle}>전체</Tab>
+            <Tab sx={TabStyle}>사용자 기반 추천 문제</Tab>
+            <Tab sx={TabStyle}>유형별 추천 문제</Tab>
           </TabList>
 
-          <TabPanels bg="neutral.100" ml="5vw">
+          <TabPanels ml="5vw">
             <TabPanel>
               <QuizMenuDefault />
             </TabPanel>

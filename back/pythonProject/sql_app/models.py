@@ -1,3 +1,5 @@
+import json
+
 from sqlalchemy import Column, ForeignKey, Integer, VARCHAR, FLOAT, TIMESTAMP, BIGINT, TEXT, Boolean
 from sqlalchemy.orm import relationship
 
@@ -65,7 +67,6 @@ class BJ_user(Base):
 
     # user = relationship("user", backref="BJ_users", uselist=False, cascade="all,delete")
     rival = relationship("rival", backref="BJ_users", uselist=False, cascade="all,delete")
-    solvedProblem = relationship("solvedProblem", backref="BJ_users", cascade="all,delete")
     major_category = relationship("major_category", backref="BJ_users", cascade="all,delete")
 
 class rival(Base):
@@ -79,7 +80,7 @@ class solvedProblem(Base):
     __tablename__ = "solvedProblem"
 
     probNo = Column(Integer, ForeignKey('problem.no'), primary_key=True)
-    userId = Column(VARCHAR(45), ForeignKey('BJ_user.userId'))
+    userId = Column(VARCHAR(45))
     solvedDate = Column(TIMESTAMP(6))
 
 class problem(Base):
@@ -116,9 +117,14 @@ class wrongType(Base):
     __tablename__ = "wrongType"
 
     no = Column(Integer, primary_key=True, autoincrement=True)
-    typeName = Column(VARCHAR(45))
     userId = Column(VARCHAR(45), ForeignKey('user.id'))
-    wrongCnt = Column(Integer)
+    wrong_print = Column(Integer)
+    wrong_answer = Column(Integer)
+    over_time = Column(Integer)
+    over_memory = Column(Integer)
+    over_print = Column(Integer)
+    runtime_error = Column(Integer)
+    compile_error = Column(Integer)
 
 class auth(Base):
     __tablename__ = "auth"

@@ -1,5 +1,5 @@
 import string
-from random import random
+import random
 
 import bcrypt
 from sqlalchemy.orm import Session
@@ -9,7 +9,7 @@ def create_user(user: schemas.User, db: Session):
     check_user = db.query(models.User).filter(models.User.id == user.id).first()
 
     # 이미 존재하는 유저면 리턴
-    if check_user is not None: return 0
+    if check_user is not None: return False
 
     hashed_pw = bcrypt.hashpw(user.pw.encode('utf-8'), bcrypt.gensalt())
     db_user = models.User(id=user.id, pw=hashed_pw)
@@ -21,14 +21,16 @@ def create_user(user: schemas.User, db: Session):
     db.delete(db_msg)
     db.commit()
 
-    return 1
+    return True
 
 def login_user(user: schemas.User, db: Session):
     db_user = db.query(models.User).filter(models.User.id == user.id).first()
 
-    if db_user and bcrypt.checkpw(user.pw.encode('utf-8'), db_user.pw.encode('utf-8')):
-        return db_user
-    else : return None
+    if not db_user:
+        return "no user"
+    elif not bcrypt.checkpw(user.pw.encode('utf-8'), db_user.pw.encode('utf-8')) :
+        return "not correct pw"
+    else : return db_user
 
 def get_by_id(id: str, db: Session):
     db_user = db.query(models.User).filter(models.User.id == id).first()
@@ -62,6 +64,9 @@ def check_message(id: str, msg: str, db : Session) :
     db_user = db.query(models.userMsg).filter(models.userMsg.userId == id).first()
 
     if db_user:
+        print("Dfasgsagasgd")
+        print(msg)
+        print(db_user.userMsg)
         return msg.find(db_user.userMsg)
     return -1
 

@@ -1,6 +1,9 @@
 from sqlalchemy.orm import Session
 from sql_app import models, schemas
 
+def get_recommend_rivals_list(user: str, db: Session) :
+    return db.query(models.rec_rival).filter(models.rec_rival.userId == user).all()
+
 def get_rivals_list(user: str, db: Session) :
     return db.query(models.rival).filter(models.rival.userId == user).all()
 

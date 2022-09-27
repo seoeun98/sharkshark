@@ -64,8 +64,11 @@ def check_message(id: str, msg: str, db : Session) :
     db_user = db.query(models.userMsg).filter(models.userMsg.userId == id).first()
 
     if db_user:
+        print("Dfasgsagasgd")
+        print(msg)
+        print(db_user.userMsg)
         return msg.find(db_user.userMsg)
-    return False
+    return -1
 
 
 

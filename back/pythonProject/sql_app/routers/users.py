@@ -48,7 +48,7 @@ def pass_message(id, db: Session = Depends(get_db)):
 def confirm_message(id, db: Session = Depends(get_db)):
     userMsg = user_message_crawling(id)
 
-    if not userRepository.check_message(id, userMsg, db):
+    if userRepository.check_message(id, userMsg, db) == -1:
         raise HTTPException(status_code=401, detail="not certified")
 
 # 전체 유저 조회

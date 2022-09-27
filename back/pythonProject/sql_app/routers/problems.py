@@ -7,7 +7,7 @@ import sql_app.models
 from sql_app import schemas
 from sql_app.database import get_db
 
-from sql_app.repository import ProblemsRepository, jwtRepository
+from sql_app.repository import problemsRepository, jwtRepository
 from sql_app.repository.jwtRepository import JWTRepo
 
 router = APIRouter(
@@ -18,7 +18,7 @@ router = APIRouter(
 @router.get("", dependencies=[Depends(jwtRepository.JWTBearer())], status_code=200)
 def get_probs_by_rival(db: Session = Depends(get_db), user: Optional[str] = Header(None)) :
     userId = JWTRepo.decode_token(user)
-    result = ProblemsRepository.get_probs_by_rival(userId, db)
+    result = problemsRepository.get_probs_by_rival(userId, db)
 
     if result :
         return result
@@ -27,7 +27,7 @@ def get_probs_by_rival(db: Session = Depends(get_db), user: Optional[str] = Head
 @router.get("/category", dependencies=[Depends(jwtRepository.JWTBearer())])
 def get_probs_by_category(db: Session = Depends(get_db), user: Optional[str] = Header(None)) :
     userId = JWTRepo.decode_token(user)
-    result = ProblemsRepository.get_probs_by_category(userId, db)
+    result = problemsRepository.get_probs_by_category(userId, db)
 
     if result :
         return result

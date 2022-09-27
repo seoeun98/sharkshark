@@ -1,46 +1,55 @@
-/* eslint-disable @typescript-eslint/no-redeclare */
-import { SystemStyleFunction, mode } from '@chakra-ui/theme-tools';
 import { ComponentStyleConfig } from '@chakra-ui/react';
+import { mode } from '@chakra-ui/theme-tools';
+import colors from '../foundations/Color/colors';
+export { default as colors } from '../foundations/Color/colors';
 
-const baseStyle: SystemStyleFunction = () => {
-  return {
-    width: '400px',
-    height: '48px',
-    borderRadius: '4px',
-    bgGradient: 'linear(to-r, primary.cyan50, primary.purple0)',
-    bgClip: 'text',
-    fontSize: '12px',
-    fontWeight: '400',
-    border: '3px solid',
-  };
-};
+const getOutlineVariant = (props: Record<string, any>) => {
+  const { theme } = props;
 
-const outlineVariant = (props: Record<string, any>) => {
   return {
-    color: 'utility.neutral.50',
-    bg: mode('#F1F3F5', 'neutral.500')(props),
-    borderColor: 'utility.neutral.50',
-    _hover: {
+    field: {
+      h: '48px',
+      fontSize: '16px',
+      background: mode('neutral.0', 'neutral.500')(props),
+      fontWeight: '500',
       bgGradient: 'linear(to-r, primary.cyan50, primary.purple0)',
-      bg: mode('#F1F6FD', '#384459')(props),
-    },
-    _active: {
-      bgGradient: 'linear(to-r, primary.cyan50, primary.purple0)',
-      bg: mode('#F1F3F5', 'neutral.500')(props),
-    },
-    _disabled: {
-      opacity: 0.4,
-      color: mode('neutral.25', '#BBBBBB')(props),
-      borderColor: mode('neutral.50', 'neutral.400')(props),
-      cursor: 'not-allowed',
+      borderRadius: '6px',
+      bgClip: 'text',
+      errorBorderColor: 'warning.0',
+      // borderColor: getColor(theme, "brand.border"),
+      _placeholder: {
+        color: 'neutral.50',
+        fontWeight: '300',
+        opacity: '2',
+      },
+      _hover: {
+        color: 'primary.cyan50',
+        background: mode('neutral.0', 'neutral.500')(props),
+        borderColor: 'primary.cyan50',
+      },
+      _focus: {
+        borderColor: 'primary.cyan50',
+        boxShadow: `0 0 0 1.5px ${colors.primary.cyan0}`,
+      },
+      _disabled: {
+        opacity: 1,
+        background: mode('neutral.50', 'neutral.800')(props),
+        borderColor: mode('neutral.50', 'neutral.400')(props),
+        cursor: 'not-allowed',
+        _placeholder: {
+          color: mode('neutral.25', '#363A3F')(props),
+        },
+      },
     },
   };
 };
 
 const variants = {
-  outline: outlineVariant,
+  outline: getOutlineVariant,
 };
 
-const Input: ComponentStyleConfig = { baseStyle, variants };
+const Input: ComponentStyleConfig = {
+  variants,
+};
 
 export default Input;

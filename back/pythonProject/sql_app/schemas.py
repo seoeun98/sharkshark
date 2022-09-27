@@ -48,10 +48,3 @@ class Period(BaseModel) :
 class proCntPerDay(BaseModel):
     proCnt:int
     day: datetime.date
-# class UserCreate(User):
-#     pw: str
-#
-# class showUser(UserBase):
-#
-#     class Config:
-#         orm_mode = True

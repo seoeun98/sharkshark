@@ -17,15 +17,16 @@ def get_major_category(userId: str, db: Session):
 
 # 기간별 문제 풀이 조회
 def get_period_problem(period: Period, userId: str, db: Session):
-    list = []
+    list = {}
 
     for i in range(int(period.startDate.strftime('%Y%m%d')), int(period.endDate.strftime('%Y%m%d')) + 1):
-        cnt_per_day = db.query(models.solvedProblem).filter(models.solvedProblem.userId == userId).all()
-
-        for test in cnt_per_day:
-            print(test)
-
-        list.append(proCntPerDay(cnt_per_day, i))
+        if i % 100 <= 31 and i % 1000 != 0 :
+            cnt_per_day = db.query(models.solvedProblem).filter(models.solvedProblem.userId == userId).all()
+            cnt = 0
+            for test in cnt_per_day:
+                if int(test.__dict__['solvedDate'].strftime('%Y%m%d')) == i:
+                    cnt += 1
+            list[i] = cnt
 
     return list;
 

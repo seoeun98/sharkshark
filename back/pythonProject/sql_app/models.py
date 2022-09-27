@@ -79,7 +79,7 @@ class rival(Base):
 class solvedProblem(Base):
     __tablename__ = "solvedProblem"
 
-    probNo = Column(Integer, ForeignKey('problem.no'), primary_key=True)
+    probNo = Column(Integer, primary_key=True)
     userId = Column(VARCHAR(45))
     solvedDate = Column(TIMESTAMP(6))
 
@@ -95,7 +95,6 @@ class problem(Base):
     acceptedUserCnt = Column(Integer)
     tags = Column(TEXT)
 
-    problem = relationship("solvedProblem", cascade="all,delete")
     problem_tag = relationship("problem_tag", cascade="all,delete")
 
 class problem_tag(Base):

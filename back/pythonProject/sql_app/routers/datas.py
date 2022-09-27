@@ -17,7 +17,6 @@ router = APIRouter(
 # 티어 상승 로드맵 조회
 @router.get("/tier", dependencies=[Depends(jwtRepository.JWTBearer())])
 def get_tier_roadmap(db: Session = Depends(get_db), user: Optional[str] = Header(None)) :
-
     userId = JWTRepo.decode_token(user)
     dataRepository.get_roadMap(userId, db)
 

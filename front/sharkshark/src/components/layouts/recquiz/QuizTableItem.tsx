@@ -44,7 +44,7 @@ export const QuizTableItem = (props: { problem: Problem }) => {
           </Box>
 
           {/* id */}
-          <Box ml="24px">{problem.id}</Box>
+          <Box ml="24px">{problem.no}</Box>
 
           {/* title */}
           <Box ml="16px">

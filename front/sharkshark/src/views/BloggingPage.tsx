@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Sidebar } from '../components/common/Sidebar';
+import { BlogPosting } from '../components/layouts/blogging/BlogPosting';
 import { BlogSetting } from '../components/layouts/blogging/BlogSetting';
 import { setAuthToken } from '../reducers/ghAPIReducer';
 export const BloggingPage = () => {
@@ -75,7 +76,9 @@ export const BloggingPage = () => {
           <Sidebar first="블로그 포스팅" second="블로그 계정 설정" third="" />
 
           <TabPanels ml="5vw">
-            <TabPanel>..</TabPanel>
+            <TabPanel>
+              <BlogPosting />
+            </TabPanel>
             <TabPanel>
               <BlogSetting />
             </TabPanel>

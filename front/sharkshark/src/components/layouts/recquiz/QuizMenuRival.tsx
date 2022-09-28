@@ -8,7 +8,7 @@ export const QuizMenuRival = () => {
     {
       star: false,
       level: 11,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,
@@ -17,7 +17,7 @@ export const QuizMenuRival = () => {
     {
       star: true,
       level: 16,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,
@@ -26,7 +26,7 @@ export const QuizMenuRival = () => {
     {
       star: false,
       level: 11,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,
@@ -35,7 +35,7 @@ export const QuizMenuRival = () => {
     {
       star: true,
       level: 16,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,
@@ -44,7 +44,7 @@ export const QuizMenuRival = () => {
     {
       star: false,
       level: 11,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,
@@ -53,7 +53,7 @@ export const QuizMenuRival = () => {
     {
       star: true,
       level: 16,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,
@@ -62,7 +62,7 @@ export const QuizMenuRival = () => {
     {
       star: false,
       level: 11,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,

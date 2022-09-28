@@ -1,9 +1,10 @@
 export type Problem = {
-  star: boolean;
-  level: number;
-  id: number;
+  star?: boolean;
+  no: number;
   title: string;
-  tag: string;
   acceptedUserCnt: number;
+  level: number;
   avgTries: number;
+  isSolvable?: boolean;
+  tag: string;
 };

@@ -9,10 +9,10 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
-import { Problem } from '../../types/DataTypes';
+import { Problem } from '../../../types/DataTypes';
 import { HiStar, HiOutlineStar } from 'react-icons/hi';
-import { Tier } from '../common/Tier';
-import { ColorText } from '../common/ColorText';
+import { Tier } from '../../common/Tier';
+import { ColorText } from '../../common/ColorText';
 
 export const QuizTableItem = (props: { problem: Problem }) => {
   const { isOpen, onToggle } = useDisclosure();

@@ -1,8 +1,9 @@
-import { Box, Button, Flex, useColorModeValue } from '@chakra-ui/react';
-import { Problem } from '../../types/DataTypes';
+import { Box, Button, Flex } from '@chakra-ui/react';
+import { Problem } from '../../../types/DataTypes';
+import { QuizTable } from './QuizTable';
 import { QuizTableItem } from './QuizTableItem';
 
-export const QuizTable = () => {
+export const QuizMenuRival = () => {
   const testdata: Array<Problem> = [
     {
       star: false,
@@ -15,10 +16,10 @@ export const QuizTable = () => {
     },
     {
       star: true,
-      level: 18,
+      level: 16,
       id: 1011,
       title: 'Fly me to the Alpha Centauri',
-      tag: '수학 math,다이나믹 프로그래밍 DP',
+      tag: '수학 math',
       acceptedUserCnt: 24601,
       avgTries: 2.22,
     },
@@ -70,43 +71,16 @@ export const QuizTable = () => {
   ];
 
   return (
-    <Box>
-      <Box p="8px" bg={useColorModeValue('neutral.100', 'neutral.800')} borderRadius="10px">
-        <Flex>
-          {/* star */}
-          <Box w="24px" ml="24px" />
-          {/* level */}
-          <Box ml="16px">레벨</Box>
-          {/* id */}
-          <Box ml="16px">ID</Box>
-          {/* title */}
-          <Box ml="16px">제목</Box>
-        </Flex>
+    <Box pos="relative">
+      <Button pos="absolute" right="0">
+        라이벌 추가 등록
+      </Button>
+      <Box fontSize="24px">라이벌 기반 추천 문제</Box>
+      <Box fontSize="12px">
+        지피지기(知彼知己)면 백전불태(百戰不殆) <br />
+        라이벌이 풀었지만, 내가 풀지 않았던 문제를 알려드려요.
       </Box>
-      <Box
-        h="400px"
-        my="8px"
-        overflow="auto"
-        css={{
-          '&::-webkit-scrollbar': {
-            width: '12px',
-          },
-          '&::-webkit-scrollbar-track': {
-            background: useColorModeValue('#CBCDD6', '#18181A'),
-            borderRadius: '12px',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            background: 'linear-gradient(0deg, #997BED 0%, #4AE2DE 100%)',
-            borderRadius: '12px',
-          },
-        }}
-      >
-        {testdata.map((item, index) => (
-          <Box mb="8px" mr="8px" key={index}>
-            <QuizTableItem problem={item} />
-          </Box>
-        ))}
-      </Box>
+      <QuizTable />
     </Box>
   );
 };

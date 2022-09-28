@@ -1,7 +1,7 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { getUserID } from '../../api/common';
-import { Problem } from '../../types/DataTypes';
-import { ColorText } from '../common/ColorText';
+import { getUserID } from '../../../api/common';
+import { Problem } from '../../../types/DataTypes';
+import { ColorText } from '../../common/ColorText';
 import { QuizTable } from './QuizTable';
 import { QuizTableItem } from './QuizTableItem';
 

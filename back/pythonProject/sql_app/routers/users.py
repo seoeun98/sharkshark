@@ -90,6 +90,22 @@ def get_by_id(id: str, db: Session = Depends(get_db)):
 def update_by_id(request: schemas.updateUser, db: Session = Depends(get_db)):
     return userRepository.update_user(request, db)
 
+# 계정 비밀번호 재설정
+@router.put("/pw")
+def update_pw_by_id(request: schemas.User, db: Session = Depends(get_db)):
+    id = request.id
+    userMsg = user_message_crawling(id)
+
+    if userRepository.check_message(id, userMsg, db) == -1:
+        raise HTTPException(status_code=401, detail="not certified")
+
+    user = userRepository.get_by_id(id, db)
+    if user:
+        user.pw = request.pw
+        return userRepository.update_user(user, db)
+    else:
+        raise HTTPException(status_code=401, detail="not registered")
+
 # 회원 탈퇴
 @router.delete("", dependencies=[Depends(jwtRepository.JWTBearer())])
 def delete_by_id(request: schemas.User, db: Session = Depends(get_db)):

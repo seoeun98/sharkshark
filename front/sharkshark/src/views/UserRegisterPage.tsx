@@ -20,7 +20,6 @@ import {
   chakra,
   InputRightElement,
   Badge,
-  useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useState } from 'react';
@@ -53,6 +52,7 @@ export const UserRegisterPage = () => {
 
   const handleShowClick = () => setShowPassword(!showPassword);
   const modifyUser = 'https://www.acmicpc.net/modify';
+  let connectButtonMsg = '연동';
 
   const checkId = async () => {
     if (id === '') {
@@ -60,7 +60,7 @@ export const UserRegisterPage = () => {
       return;
     }
     const msg = await getProfileMsgAPI(id);
-    if (msg == '-1') {
+    if (msg === '-1') {
       setIdAlert('없는 백준 아이디입니다. 아이디를 정확하게 입력해주세요');
       return;
     }
@@ -71,10 +71,11 @@ export const UserRegisterPage = () => {
 
   const checkProfileMsg = async () => {
     const msg = await checkProfileMsgAPI(id);
-
     if (msg === 'OK') {
       setPMsgStatus(true);
       setCheckMsg(msg);
+      setIdAlert('인증이 완료되었습니다.');
+      connectButtonMsg = '재설정';
       onClose();
     } else {
       setPMsgStatus(false);
@@ -149,7 +150,7 @@ export const UserRegisterPage = () => {
                 ms="4px"
                 fontSize="14px"
                 mb="8px"
-                htmlFor="id"
+                htmlFor="userId"
                 fontWeight="700"
                 _hover={{ cursor: 'pointer' }}
               >
@@ -166,14 +167,14 @@ export const UserRegisterPage = () => {
                   />
                   <Input
                     type="text"
-                    id={id}
+                    id="userId"
+                    marginRight="12px"
                     placeholder="백준 아이디 입력"
                     onChange={e => setId(e.target.value)}
-                    marginRight="12px"
                   />
                 </InputGroup>
                 <Button size="cxs" variant="secondary" onClick={checkId}>
-                  연동
+                  {connectButtonMsg}
                 </Button>
               </Flex>
               <Box fontSize="12px" fontWeight="400" color="warning.50">
@@ -188,7 +189,7 @@ export const UserRegisterPage = () => {
                 ms="4px"
                 fontSize="14px"
                 mb="8px"
-                htmlFor="id"
+                htmlFor="password"
                 fontWeight="700"
                 _hover={{ cursor: 'pointer' }}
               >
@@ -203,7 +204,7 @@ export const UserRegisterPage = () => {
                   <Input
                     isDisabled={checkMsg ? false : true}
                     type={showPassword ? 'text' : 'password'}
-                    id={id}
+                    id="password"
                     placeholder="비밀번호 입력"
                     onChange={e => setPassword(e.target.value)}
                   />
@@ -230,7 +231,7 @@ export const UserRegisterPage = () => {
                 ms="4px"
                 fontSize="14px"
                 mb="8px"
-                htmlFor="id"
+                htmlFor="passwordCheck"
                 fontWeight="700"
                 _hover={{ cursor: 'pointer' }}
               >
@@ -245,7 +246,7 @@ export const UserRegisterPage = () => {
                   <Input
                     isDisabled={checkMsg ? false : true}
                     type={showPassword ? 'text' : 'password'}
-                    id={id}
+                    id="passwordCheck"
                     placeholder="비밀번호 재입력"
                     onChange={e => setPwCheck(e.target.value)}
                   />

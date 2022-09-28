@@ -24,10 +24,11 @@ const primaryVariant = (props: Record<string, any>) => {
       bgGradient: 'linear(to-r, #7162AA, #4B93A3)',
     },
     _disabled: {
-      opacity: 0.4,
-      color: mode('neutral.50', 'neutral.400')(props),
-      borderColor: mode('neutral.50', 'neutral.400')(props),
+      color: mode('neutral.50', 'neutral.0')(props),
       cursor: 'not-allowed',
+      border: '1px solid',
+      // eslint-disable-next-line no-dupe-keys
+      borderColor: mode('neutral.25', 'neutral.600')(props),
     },
   };
 };
@@ -48,7 +49,7 @@ const secondaryVariant = (props: Record<string, any>) => {
       bgGradient: 'linear(to-r, #7162AA, #4B93A3)',
     },
     _disabled: {
-      color: mode('neutral.50', 'neutral.800')(props),
+      color: mode('neutral.50', 'neutral.300')(props),
       borderColor: mode('neutral.50', 'neutral.800')(props),
       cursor: 'not-allowed',
     },

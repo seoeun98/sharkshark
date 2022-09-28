@@ -87,7 +87,7 @@ def get_by_id(id: str, db: Session = Depends(get_db)):
 
 # 계정 정보 업데이트
 @router.put("", dependencies=[Depends(jwtRepository.JWTBearer())])
-def update_by_id(request: schemas.updateUser, db: Session = Depends(get_db), access_token: str = Header(None)):
+def update_by_id(request: schemas.updateUser, db: Session = Depends(get_db)):
     return userRepository.update_user(request, db)
 
 # 회원 탈퇴

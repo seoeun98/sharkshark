@@ -15,8 +15,8 @@ router = APIRouter(
     tags=["Problems"]
 )
 
-@router.get("", dependencies=[Depends(jwtRepository.JWTBearer())], status_code=200)
-def get_probs_by_rival(db: Session = Depends(get_db), user: Optional[str] = Header(None)) :
+@router.get("", status_code=200)
+def get_probs_by_rival(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
     userId = JWTRepo.decode_token(user)
     result = problemsRepository.get_probs_by_rival(userId, db)
 
@@ -24,8 +24,8 @@ def get_probs_by_rival(db: Session = Depends(get_db), user: Optional[str] = Head
         return result
     raise HTTPException(status_code=401, detail="no item")
 
-@router.get("/category", dependencies=[Depends(jwtRepository.JWTBearer())])
-def get_probs_by_category(db: Session = Depends(get_db), user: Optional[str] = Header(None)) :
+@router.get("/category")
+def get_probs_by_category(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
     userId = JWTRepo.decode_token(user)
     result = problemsRepository.get_probs_by_category(userId, db)
 
@@ -33,8 +33,8 @@ def get_probs_by_category(db: Session = Depends(get_db), user: Optional[str] = H
         return result
     raise HTTPException(status_code=401, detail="no item")
 
-@router.get("/mock", dependencies=[Depends(jwtRepository.JWTBearer())])
-def get_probs_for_mock(db: Session = Depends(get_db), user: Optional[str] = Header(None)) :
+@router.get("/mock")
+def get_probs_for_mock(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
     userId = JWTRepo.decode_token(user)
     result = problemsRepository.get_probs_for_mock(userId, db)
 

@@ -12,8 +12,8 @@ router = APIRouter(
     tags=["Docs"]
 )
 
-@router.post("", dependencies=[Depends(jwtRepository.JWTBearer())], status_code=200)
-def create_docs(db: Session = Depends(get_db), user: Optional[str] = Header(None)) :
+@router.post("", status_code=200)
+def create_docs(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
     userId = JWTRepo.decode_token(user)
     result = documentRepository.create_doc(userId, db)
 

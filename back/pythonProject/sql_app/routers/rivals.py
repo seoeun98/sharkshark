@@ -1,6 +1,6 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Header
+from fastapi import APIRouter, Depends, HTTPException, Header, dependencies
 from sqlalchemy.orm import Session
 from sql_app.repository import rivalRepository, jwtRepository
 from sql_app.repository.jwtRepository import JWTRepo
@@ -15,8 +15,9 @@ router = APIRouter(
 
 # 추천 사용자 목록을 불러온다
 @router.get("", dependencies=[Depends(jwtRepository.JWTBearer())])
-def get_recommend_rival_list(db: Session = Depends(get_db), user: Optional[str] = Header(None)):
-    userId = JWTRepo.decode_token(user)
+def get_recommend_rival_list(db: Session = Depends(get_db)):
+    userId = JWTRepo.decode_token(dependencies)
+    print(userId)
     if userId:
         return rivalRepository.get_recommend_rivals_list(userId, db)
     raise HTTPException(status_code=401, detail="not authorized")

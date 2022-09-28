@@ -4,6 +4,7 @@ from typing import List
 from fastapi import APIRouter, Depends, Header, HTTPException
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
+import requests
 
 import sql_app.models
 from sql_app import schemas
@@ -93,3 +94,20 @@ def update_by_id(request: schemas.updateUser, db: Session = Depends(get_db), acc
 @router.delete("", dependencies=[Depends(jwtRepository.JWTBearer())])
 def delete_by_id(request: schemas.User, db: Session = Depends(get_db)):
     return userRepository.delete_user(request, db)
+
+# github authorizationCode로 github access token 발급
+@router.post("/github/{id}", status_code=200, dependencies=[Depends(jwtRepository.JWTBearer())])
+def get_github_access_token(request: schemas.authorizationCode, id: str, db: Session = Depends(get_db)):
+    # github token post 요청
+    res = requests.post('http://github.com/login/oauth/access_token?client_id=85f7d0322a41da83b8dd&client_secret=6fb45100b00e85e52aeff0a3d513c32113819fa1&code=' + request.authorizationCode)
+    # 요청 상태 코드 확인
+    if res.status_code == 200:
+        github_access_token = res.text.split("=")[1]
+        if 'error' in github_access_token:
+            raise HTTPException(status_code=401, detail="code already used")
+        user = userRepository.get_by_id(id, db)
+        if user:
+            user.token = github_access_token
+            userRepository.update_user(user, db)
+            return {"github_access_token": github_access_token}
+    raise HTTPException(status_code=401, detail="need re-login")

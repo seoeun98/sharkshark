@@ -6,7 +6,7 @@ const SERVER_ADDRESS = 'http://127.0.0.1:8000';
 export const authAxios: AxiosInstance = axios.create({
   baseURL: `${SERVER_ADDRESS}`,
   headers: {
-    access_token: 'Bearer ' + localStorage.getItem('access_token') || '',
+    Authorization: 'Bearer ' + localStorage.getItem('access_token') || '',
   },
 });
 

@@ -7,7 +7,7 @@ export const QuizTable = () => {
     {
       star: false,
       level: 11,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,
@@ -16,7 +16,7 @@ export const QuizTable = () => {
     {
       star: true,
       level: 18,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math,다이나믹 프로그래밍 DP',
       acceptedUserCnt: 24601,
@@ -25,7 +25,7 @@ export const QuizTable = () => {
     {
       star: false,
       level: 11,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,
@@ -34,7 +34,7 @@ export const QuizTable = () => {
     {
       star: true,
       level: 16,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,
@@ -43,7 +43,7 @@ export const QuizTable = () => {
     {
       star: false,
       level: 11,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,
@@ -52,7 +52,7 @@ export const QuizTable = () => {
     {
       star: true,
       level: 16,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,
@@ -61,7 +61,7 @@ export const QuizTable = () => {
     {
       star: false,
       level: 11,
-      id: 1011,
+      no: 1011,
       title: 'Fly me to the Alpha Centauri',
       tag: '수학 math',
       acceptedUserCnt: 24601,

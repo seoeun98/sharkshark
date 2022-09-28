@@ -332,18 +332,6 @@ export const UserRegisterPage = () => {
               <Box fontSize="12px" my="12px" fontWeight="300">
                 설정 방법 : 백준 사이트 접속 &gt; 로그인 &gt; 상단바 설정 &gt; 정보 수정 &#45; 상태
                 메시지 &nbsp; &nbsp;
-                {/* <Badge
-                  ml="1"
-                  fontWeight="500"
-                  fontSize="12px"
-                  bgColor="white"
-                  color="primary.cyan0"
-                  borderRadius="12px"
-                  px={2}
-                  py={1}
-                >
-                  <Link to={modifyUser}>바로 가기</Link>
-                </Badge> */}
                 <Button
                   variant="secondary"
                   borderRadius="4px"

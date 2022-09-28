@@ -7,3 +7,9 @@ export type Problem = {
   acceptedUserCnt: number;
   avgTries: number;
 };
+
+export type RivalInfo = {
+  userId: string;
+  level: number;
+  class: string;
+};

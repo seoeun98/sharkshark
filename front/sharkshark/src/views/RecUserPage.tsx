@@ -6,15 +6,13 @@ import {
   Tabs,
   useColorModeValue,
   VStack,
-  HStack,
 } from '@chakra-ui/react';
 import { Sidebar } from '../components/common/Sidebar';
 import { getUserID } from '../api/common';
-import { ColorText } from '../components/common/ColorText';
+import { RivalRecDefault } from '../components/recRival/RivalRecDefault';
+import { RivalListDefault } from '../components/recRival/RivalListDefault';
 
 export const RecUserPage = () => {
-  const titlefw = useColorModeValue(700, 500);
-
   return (
     <Box>
       {/* image & slogan */}
@@ -26,7 +24,6 @@ export const RecUserPage = () => {
         bgSize="cover"
         bgPos="center"
         h="35vh"
-        textAlign="center"
       >
         <VStack spacing="1vh">
           <Box fontSize="32px" pt="4vh" fontWeight={useColorModeValue(800, 700)}>
@@ -43,16 +40,12 @@ export const RecUserPage = () => {
       <Box>
         <Tabs variant="unstyled" orientation="vertical" mx="10vw" my="6vh">
           <Sidebar first="라이벌 추천 목록" second="라이벌 관리" third="" />
-          <TabPanels ml="4vw" bg="">
+          <TabPanels ml="4vw" bg="" mb="10vh">
             <TabPanel>
-              <HStack fontSize="24px" fontWeight={titlefw} marginBottom="3rem">
-                <ColorText>{getUserID()}</ColorText>
-                <Box>님의 라이벌 추천 목록</Box>
-              </HStack>
-              <Box h="44vh" bg="neutral.200" />
+              <RivalRecDefault />
             </TabPanel>
             <TabPanel>
-              <p>라이벌 목록</p>
+              <RivalListDefault />
             </TabPanel>
           </TabPanels>
         </Tabs>

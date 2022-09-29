@@ -24,7 +24,7 @@ def lately_solved_problem_seq_crawling(username : str) -> list:
           try:
               lately_solved_problems.append([username, problems[i].select_one('td:nth-of-type(3) > a').text, problems[i].select_one('td:nth-of-type(9) > a')['title']])
           except:
-              lately_solved_problems
+              return lately_solved_problems
       try:
           url = 'https://www.acmicpc.net' + soup.find('a', {'id':'next_page'})['href']
       except: 

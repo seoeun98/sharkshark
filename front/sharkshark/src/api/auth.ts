@@ -57,7 +57,7 @@ export const githubTokenAPI = async (id: string, code: string) => {
 export const probsByRivalAPI = async () => {
   let list: Array<Problem> = [];
   await authAxios
-    .post('/prob')
+    .get('/prob')
     .then(res => {
       console.log(res);
       list = res.data;
@@ -73,7 +73,7 @@ export const probsByRivalAPI = async () => {
 export const probsByCategoryAPI = async () => {
   let list: Array<Problem> = [];
   await authAxios
-    .post('/prob/category')
+    .get('/prob/category')
     .then(res => {
       console.log(res);
       list = res.data;
@@ -89,7 +89,7 @@ export const probsByCategoryAPI = async () => {
 export const probsForTestAPI = async () => {
   let list: Array<Problem> = [];
   await authAxios
-    .post('/prob/mock')
+    .get('/prob/mock')
     .then(res => {
       console.log(res);
       list = res.data;
@@ -105,7 +105,7 @@ export const probsForTestAPI = async () => {
 export const probsRecentAPI = async () => {
   let list: Array<Problem> = [];
   await authAxios
-    .post('/prob/recent')
+    .get('/prob/recent')
     .then(res => {
       console.log(res);
       list = res.data;

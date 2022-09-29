@@ -23,8 +23,8 @@ def get_tier_roadmap(db: Session = Depends(get_db), user: Optional[str] = Header
     return None
 
 # 주요 유형 조회
-@router.get("/category", dependencies=[Depends(jwtRepository.JWTBearer())])
-def get_major_category(db: Session = Depends(get_db), user: Optional[str] = Header(None)) :
+@router.get("/category")
+def get_major_category(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
     userId = JWTRepo.decode_token(user)
     result = dataRepository.get_major_category(userId, db)
 
@@ -33,8 +33,8 @@ def get_major_category(db: Session = Depends(get_db), user: Optional[str] = Head
     raise HTTPException(status_code=401, detail="no item")
 
 # 기간별 문제 풀이 조회
-@router.post("/history", dependencies=[Depends(jwtRepository.JWTBearer())])
-def get_history(period: Period, db: Session = Depends(get_db), user: Optional[str] = Header(None)):
+@router.post("/history")
+def get_history(period: Period, db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())):
     userId = JWTRepo.decode_token(user)
     result = dataRepository.get_period_problem(period, userId, db)
 
@@ -44,8 +44,8 @@ def get_history(period: Period, db: Session = Depends(get_db), user: Optional[st
 
 
 # 주요 오답 유형 조회
-@router.get("/wrong", dependencies=[Depends(jwtRepository.JWTBearer())])
-def get_major_wrong(db: Session = Depends(get_db), user: Optional[str] = Header(None)) :
+@router.get("/wrong")
+def get_major_wrong(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
     userId = JWTRepo.decode_token(user)
     result = dataRepository.dataRepository.get_major_wrong(userId, db)
 

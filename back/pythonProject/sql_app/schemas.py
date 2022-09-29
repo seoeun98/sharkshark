@@ -48,3 +48,6 @@ class Period(BaseModel) :
 class proCntPerDay(BaseModel):
     proCnt:int
     day: datetime.date
+
+class authorizationCode(BaseModel):
+    authorizationCode:str

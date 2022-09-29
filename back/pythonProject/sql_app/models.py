@@ -1,6 +1,7 @@
 import json
 
-from sqlalchemy import Column, ForeignKey, Integer, VARCHAR, FLOAT, TIMESTAMP, BIGINT, TEXT, Boolean, MEDIUMTEXT
+from sqlalchemy import Column, ForeignKey, Integer, VARCHAR, FLOAT, TIMESTAMP, BIGINT, TEXT, Boolean
+from sqlalchemy.dialects.mysql import MEDIUMTEXT
 from sqlalchemy.orm import relationship
 
 from .database import Base
@@ -89,8 +90,7 @@ class problem(Base):
     isSolvable = Column(Boolean)
     acceptedUserCnt = Column(Integer)
     tags = Column(TEXT)
-
-    problem_tag = relationship("problem_tag", cascade="all,delete")
+    
 
 class wrongType(Base):
     __tablename__ = "wrongType"

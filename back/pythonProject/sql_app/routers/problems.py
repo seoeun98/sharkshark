@@ -41,3 +41,12 @@ def get_probs_for_mock(db: Session = Depends(get_db), user: str = Depends(jwtRep
     if result:
         return result
     raise HTTPException(status_code=401, detail="no item")
+
+@router.get("/recent")
+def get_recent_5_probs(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
+    userId = JWTRepo.decode_token(user)
+    result = problemsRepository.get_recent_5_probs(userId, db)
+
+    if result:
+        return result
+    raise HTTPException(status_code=401, detail="no item")

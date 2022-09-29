@@ -10,8 +10,6 @@ class User(Base):
     __tablename__ = "user"
 
     no = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    # id = Column(VARCHAR(45), ForeignKey('BJ_user.userId'))
-    # BJ 통해서 인증한 후에 회원가입 되는 거라면 왜 굳이 FK로 이어야하지? 어차피 id가 같으니 연동돼있지 않아도 상관없는 거 아닌가
 
     id = Column(VARCHAR(45), unique=True)
     pw = Column(VARCHAR(120))
@@ -65,7 +63,6 @@ class BJ_user(Base):
     organization = Column(Integer)
     problems = Column(TEXT)
 
-    # user = relationship("user", backref="BJ_users", uselist=False, cascade="all,delete")
     rival = relationship("rival", backref="BJ_users", uselist=False, cascade="all,delete")
     major_category = relationship("major_category", backref="BJ_users", cascade="all,delete")
 

@@ -1,7 +1,7 @@
 from typing import Optional
 
 
-from fastapi import APIRouter, Header, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from requests import Session
 
 from sql_app.database import get_db
@@ -15,12 +15,14 @@ router = APIRouter(
 )
 
 # 티어 상승 로드맵 조회
-@router.get("/tier", dependencies=[Depends(jwtRepository.JWTBearer())])
-def get_tier_roadmap(db: Session = Depends(get_db), user: Optional[str] = Header(None)) :
+@router.get("/tier")
+def get_tier_roadmap(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
     userId = JWTRepo.decode_token(user)
-    dataRepository.get_roadMap(userId, db)
+    result = dataRepository.get_roadMap(userId, db)
 
-    return None
+    if result:
+        return {"user":result[0], "rivals":result[1]}
+    raise HTTPException(status_code=401, detail="no item")
 
 # 주요 유형 조회
 @router.get("/category")

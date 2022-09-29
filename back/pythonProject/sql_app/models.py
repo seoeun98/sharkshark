@@ -1,6 +1,6 @@
 import json
 
-from sqlalchemy import Column, ForeignKey, Integer, VARCHAR, FLOAT, TIMESTAMP, BIGINT, TEXT, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, VARCHAR, FLOAT, TIMESTAMP, BIGINT, TEXT, Boolean, MEDIUMTEXT
 from sqlalchemy.orm import relationship
 
 from .database import Base
@@ -13,7 +13,7 @@ class User(Base):
 
     id = Column(VARCHAR(45), unique=True)
     pw = Column(VARCHAR(120))
-    token = Column(VARCHAR(45), default="")
+    token = Column(VARCHAR(100), default="")
     git = Column(VARCHAR(45), default="")
     dir = Column(VARCHAR(45), default="")
 
@@ -45,12 +45,10 @@ class BJ_user(Base):
     __tablename__ = "BJ_user"
 
     no = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    tier = Column(VARCHAR(45))
-    totalSolvedCnt = Column(Integer)
     userId = Column(VARCHAR(45), unique=True)
-
     solvedCount = Column(Integer)
     userClass = Column(Integer)
+    tier = Column(VARCHAR(45)) 
     rating = Column(Integer)
     ratingByProblemsSum = Column(Integer)
     ratingByClass = Column(Integer)
@@ -60,8 +58,8 @@ class BJ_user(Base):
     reverseRivalCount = Column(Integer)
     maxStreak = Column(Integer)
     rank = Column(Integer)
-    organization = Column(Integer)
-    problems = Column(TEXT)
+    organization = Column(VARCHAR(200))
+    problems = Column(MEDIUMTEXT)
 
     rival = relationship("rival", backref="BJ_users", uselist=False, cascade="all,delete")
     major_category = relationship("major_category", backref="BJ_users", cascade="all,delete")
@@ -91,21 +89,6 @@ class problem(Base):
     isSolvable = Column(Boolean)
     acceptedUserCnt = Column(Integer)
     tags = Column(TEXT)
-
-    problem_tag = relationship("problem_tag", cascade="all,delete")
-
-class problem_tag(Base):
-    __tablename__ = "problem_tag"
-
-    no = Column(Integer, primary_key=True, autoincrement=True)
-    probNo = Column(Integer, ForeignKey('problem.no'))
-    tagNo = Column(Integer, ForeignKey('tag.no'))
-
-class tag(Base):
-    __tablename__ = "tag"
-
-    no = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(VARCHAR(45))
 
     problem_tag = relationship("problem_tag", cascade="all,delete")
 

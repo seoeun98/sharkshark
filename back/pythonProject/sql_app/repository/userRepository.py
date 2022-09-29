@@ -96,4 +96,3 @@ def get_all_user(db: Session):
     if not db_users:
         return None
     else: return db_users
-

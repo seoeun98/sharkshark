@@ -6,7 +6,7 @@ export type Problem = {
   level: number;
   avgTries: number;
   isSolvable?: boolean;
-  tag: string;
+  tags: string;
 };
 
 export type UserInfo = {

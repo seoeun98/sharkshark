@@ -79,7 +79,7 @@ export const BlogPosting = () => {
                 <Box ml="16px">
                   <Box mb="16px">{item.title}</Box>
                   <Box>
-                    {item.tag.split(',').map((e, idx) => (
+                    {item.tags.split(',').map((e, idx) => (
                       <Tag borderRadius="20px" py="6px" px="12px" mr="8px" key={idx}>
                         <ColorText># {e}</ColorText>
                       </Tag>

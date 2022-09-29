@@ -8,3 +8,28 @@ export type Problem = {
   isSolvable?: boolean;
   tag: string;
 };
+
+export type UserInfo = {
+  id: string;
+  token: string;
+  git: string;
+  dir: string;
+};
+
+export type rival = {
+  tier: number;
+  totalSolvedCnt?: number;
+  userId: string;
+  solvedCount?: number;
+  userClass?: number;
+  rating?: number;
+  ratingByProblemsSum?: number;
+  ratingByClass?: number;
+  ratingBySolvedCount?: number;
+  exp?: number;
+  rivalCount?: number;
+  reverseRivalCount?: number;
+  maxStreak?: number;
+  rank?: number;
+  organization?: string;
+};

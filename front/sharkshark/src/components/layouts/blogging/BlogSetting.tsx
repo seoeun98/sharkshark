@@ -27,7 +27,11 @@ export const BlogSetting = () => {
   const authToken = useSelector((state: any) => state.ghAPIReducer.authToken);
   const repo = useSelector((state: any) => state.ghAPIReducer.repo);
 
-  const [ghRepo, setGhRepo] = useState({} as { name: string; url: string; dir: string });
+  const [ghRepo, setGhRepo] = useState({ name: '', url: '', dir: '' } as {
+    name: string;
+    url: string;
+    dir: string;
+  });
   const [ghRepos, setGhRepos] = useState([] as Array<{ name: string; url: string }>);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -111,16 +115,20 @@ export const BlogSetting = () => {
       </Paragraph>
 
       {/* 선택한 저장소 */}
-      <Box>
-        저장소 설정됨:
-        <Flex mb="16px" mt="16px">
-          <Avatar src={repo.url} boxSize="48px" mx="16px" />
-          <Box lineHeight="48px" mr="32px">
-            {repo.name}
-          </Box>
-          <Box lineHeight="48px">{repo.dir}</Box>
-        </Flex>
-      </Box>
+      {repo.name ? (
+        <Box>
+          저장소 설정됨:
+          <Flex mb="16px" mt="16px">
+            <Avatar src={repo.url} boxSize="48px" mx="16px" />
+            <Box lineHeight="48px" mr="32px">
+              {repo.name}
+            </Box>
+            <Box lineHeight="48px">{repo.dir}</Box>
+          </Flex>
+        </Box>
+      ) : (
+        <Box></Box>
+      )}
 
       {/* modal */}
       <Modal size="3xl" isOpen={isOpen} onClose={onClose} isCentered>

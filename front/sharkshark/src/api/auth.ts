@@ -31,7 +31,7 @@ export const updateUserInfoAPI = (id: string, password: string, git: string, dir
     })
     .catch(err => {
       console.log(err);
-      alert('로그인 실패');
+      alert('updateUserInfoAPI failed');
     });
 };
 
@@ -46,7 +46,7 @@ export const githubTokenAPI = async (id: string, code: string) => {
     })
     .catch(err => {
       console.log(err);
-      alert('로그인 실패');
+      alert('githubTokenAPI failed');
     });
   return token;
 };

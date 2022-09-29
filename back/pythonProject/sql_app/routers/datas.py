@@ -21,7 +21,7 @@ def get_tier_roadmap(db: Session = Depends(get_db), user: str = Depends(jwtRepos
     result = dataRepository.get_roadMap(userId, db)
 
     if result:
-        return result
+        return {"user":result[0], "rivals":result[1]}
     raise HTTPException(status_code=401, detail="no item")
 
 # 주요 유형 조회

@@ -115,7 +115,7 @@ def delete_by_id(request: schemas.User, db: Session = Depends(get_db)):
 @router.post("/github/{id}", status_code=200, dependencies=[Depends(jwtRepository.JWTBearer())])
 def get_github_access_token(request: schemas.authorizationCode, id: str, db: Session = Depends(get_db)):
     # github token post 요청
-    res = requests.post('http://github.com/login/oauth/access_token?client_id=85f7d0322a41da83b8dd&client_secret=6fb45100b00e85e52aeff0a3d513c32113819fa1&code=' + request.authorizationCode)
+    res = requests.post('http://github.com/login/oauth/access_token?client_id=9539ff1ae93c2ccb932b&client_secret=76ec7c09e6681a619b287b7d311f2753782ecb16&code=' + request.authorizationCode)
     # 요청 상태 코드 확인
     if res.status_code == 200:
         github_access_token = res.text.split("=")[1]

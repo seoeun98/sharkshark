@@ -12,7 +12,6 @@ class getUser(BaseModel):
     token: str
     git: str
     dir: str
-    msg : str
 
     class Config:
         orm_mode = True

@@ -13,9 +13,9 @@ class User(Base):
 
     id = Column(VARCHAR(45), unique=True)
     pw = Column(VARCHAR(120))
-    token = Column(VARCHAR(45))
-    git = Column(VARCHAR(45))
-    dir = Column(VARCHAR(45))
+    token = Column(VARCHAR(45), default="")
+    git = Column(VARCHAR(45), default="")
+    dir = Column(VARCHAR(45), default="")
 
     rival = relationship("rival", backref="users", uselist=False, cascade="all,delete")
 

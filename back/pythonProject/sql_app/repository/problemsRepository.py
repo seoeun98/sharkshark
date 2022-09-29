@@ -6,9 +6,10 @@ def get_probs_by_rival(id: str, db: Session):
     prob_list = db.query(models.rec_problems).filter(models.rec_problems.userId == id).first().problems.split(',')
     result_list = []
 
-    for prob_no in prob_list :
-        prob = db.query(models.problem).filter(models.problem.no == int(prob_no)).first()
-        result_list.append(prob)
+    if prob_list:
+        for prob_no in prob_list :
+            prob = db.query(models.problem).filter(models.problem.no == int(prob_no)).first()
+            result_list.append(prob)
 
     return result_list
 

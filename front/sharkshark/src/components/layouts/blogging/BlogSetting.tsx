@@ -65,8 +65,8 @@ export const BlogSetting = () => {
 
     if (authorizationCode) {
       // auth code와 token 교환 및 업데이트, 저장
-      // getAuthToken(authorizationCode);
-      dispatch(setAuthToken('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'));
+      getAuthToken(authorizationCode);
+      //dispatch(setAuthToken('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'));
     } else {
       // token이 db에 존재하는지 확인
       // checkdbtokenapi

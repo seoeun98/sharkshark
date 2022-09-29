@@ -50,7 +50,7 @@ export const QuizTableItem = (props: { problem: Problem }) => {
           <Box ml="16px">
             <Box mb="16px">{problem.title}</Box>
             <Box>
-              {problem.tag.split(',').map((item, index) => (
+              {problem.tags.split(',').map((item, index) => (
                 <Tag borderRadius="20px" py="6px" px="12px" mr="8px" key={index}>
                   <ColorText># {item}</ColorText>
                 </Tag>

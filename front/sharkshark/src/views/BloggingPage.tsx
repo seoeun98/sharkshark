@@ -8,11 +8,13 @@ import {
   Tabs,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserInfoAPI } from '../api/auth';
+import { getUserID, githubRepoImage } from '../api/common';
 import { Sidebar } from '../components/common/Sidebar';
 import { BlogPosting } from '../components/layouts/blogging/BlogPosting';
 import { BlogSetting } from '../components/layouts/blogging/BlogSetting';
-import { setAuthToken } from '../reducers/ghAPIReducer';
+import { setAuthToken, setRepo } from '../reducers/ghAPIReducer';
 export const BloggingPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const handleTabsChange = (index: number) => {
@@ -21,20 +23,34 @@ export const BloggingPage = () => {
 
   const authToken = useSelector((state: any) => state.ghAPIReducer.authToken);
   const repo = useSelector((state: any) => state.ghAPIReducer.repo);
+  const dispatch = useDispatch();
+
+  const initSeq = async () => {
+    const userinfo = await getUserInfoAPI(getUserID());
+
+    dispatch(setAuthToken(userinfo.token));
+    dispatch(
+      setRepo({
+        name: userinfo.git,
+        url: await githubRepoImage(userinfo.git, userinfo.token),
+        dir: userinfo.dir,
+      }),
+    );
+
+    if (userinfo.token && userinfo.dir) setTabIndex(0);
+    else setTabIndex(1);
+  };
 
   useEffect(() => {
+    console.log('==BloggingPage==');
+
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get('code');
 
     if (authorizationCode) {
       setTabIndex(1);
     } else {
-      console.log('==BloggingPage==');
-      console.log(authToken);
-      console.log(repo);
-      //token과 repo 설정이 되어있으면 tab0, 아니면 tab1
-      if (authToken && repo) setTabIndex(0);
-      else setTabIndex(1);
+      initSeq();
     }
   }, []);
 

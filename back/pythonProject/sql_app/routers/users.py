@@ -81,9 +81,11 @@ def login(request: schemas.User, db: Session = Depends(get_db)):
     return JSONResponse(status_code=400, content=dict(msg="NOT_SUPPORTED"))
 
 # 계정 정보 조회
-@router.get("/{id}", response_model=schemas.getUser, dependencies=[Depends(jwtRepository.JWTBearer())])
+@router.get("/{id}", response_model=schemas.getUser, dependencies=[Depends(jwtRepository.JWTBearer())], status_code=200)
 def get_by_id(id: str, db: Session = Depends(get_db)):
-    return userRepository.get_by_id(id, db)
+    if userRepository.get_by_id(id, db):
+        return
+    raise JSONResponse(status_code=500, content=dict(msg="NOT_UPDATED"))
 
 # 계정 정보 업데이트
 @router.put("", dependencies=[Depends(jwtRepository.JWTBearer())])

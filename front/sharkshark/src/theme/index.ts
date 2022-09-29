@@ -1,9 +1,8 @@
 // theme/index.ts
-
-import { extendTheme } from '@chakra-ui/react';
+import { extendTheme, ThemeConfig } from '@chakra-ui/react';
 
 // global style
-import { globalStyles } from './styles';
+import { mode } from '@chakra-ui/theme-tools';
 
 // Foundations
 // theme related to borders, spacings, colors.
@@ -14,14 +13,25 @@ import * as foundations from './foundations';
 import * as components from './components';
 
 // Chakra Configuration on Initial Mode
-// const config: ThemeConfig = {
-//   initialColorMode: 'dark',
-//   useSystemColorMode: false,
-// };
+const config: ThemeConfig = {
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
+};
 
 const customTheme = extendTheme({
-  // config,
-  globalStyles,
+  config,
+  styles: {
+    global: {
+      body: {
+        bg: mode('white', 'black'),
+        overflowX: 'hidden',
+        fontFamily: 'Pretendard',
+      },
+      html: {
+        fontFamily: 'Pretendard',
+      },
+    },
+  },
   ...foundations,
   components: {
     ...components,

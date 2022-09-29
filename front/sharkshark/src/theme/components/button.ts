@@ -4,27 +4,16 @@ import { ComponentStyleConfig } from '@chakra-ui/react';
 
 const baseStyle: SystemStyleFunction = () => {
   return {
-    fontSize: '12px',
-    width: '200px',
-    px: '32px', // <-- px is short for paddingLeft and paddingRight
-    py: '20px', // <-- py is short for paddingTop and paddingBottom
-    borderRadius: '36px',
-    fontWeight: '500',
-    border: '2px solid',
-  };
-};
-
-const basicSize = () => {
-  return {
-    fontSize: '12px',
-    px: '32px', // <-- px is short for paddingLeft and paddingRight
-    py: '20px', // <-- py is short for paddingTop and paddingBottom
+    // borderRadius: '2rem',
+    // fontWeight: '500',
+    // border: '1px solid',
   };
 };
 
 const primaryVariant = (props: Record<string, any>) => {
   return {
-    borderColor: mode('neutral.25', 'neutral.400')(props),
+    borderRadius: '2rem',
+    fontWeight: '400',
     color: 'utility.lightBG',
     bgGradient: 'linear(to-r, primary.cyan50, primary.purple0)',
     _hover: {
@@ -35,16 +24,20 @@ const primaryVariant = (props: Record<string, any>) => {
       bgGradient: 'linear(to-r, #7162AA, #4B93A3)',
     },
     _disabled: {
-      opacity: 0.4,
-      color: mode('neutral.50', 'neutral.400')(props),
-      borderColor: mode('neutral.50', 'neutral.400')(props),
+      color: mode('neutral.50', 'neutral.0')(props),
       cursor: 'not-allowed',
+      border: '1px solid',
+      // eslint-disable-next-line no-dupe-keys
+      borderColor: mode('neutral.25', 'neutral.600')(props),
     },
   };
 };
 
 const secondaryVariant = (props: Record<string, any>) => {
   return {
+    borderRadius: '2rem',
+    fontWeight: mode('600', '400')(props),
+    border: '1px solid',
     borderColor: mode('neutral.25', 'neutral.400')(props),
     color: mode('utility.darkBG', 'utility.lightBG')(props),
     backgroundColor: mode('neutral.0', 'neutral.500')(props),
@@ -56,7 +49,7 @@ const secondaryVariant = (props: Record<string, any>) => {
       bgGradient: 'linear(to-r, #7162AA, #4B93A3)',
     },
     _disabled: {
-      color: mode('neutral.50', 'neutral.800')(props),
+      color: mode('neutral.50', 'neutral.300')(props),
       borderColor: mode('neutral.50', 'neutral.800')(props),
       cursor: 'not-allowed',
     },
@@ -68,13 +61,46 @@ const variants = {
   secondary: secondaryVariant,
 };
 const sizes = {
-  basic: basicSize,
+  cxs: {
+    fontSize: 'sm',
+    px: '6',
+    py: '2.5',
+  },
+  csm: {
+    fontSize: 'sm',
+    px: '8',
+    py: '3',
+  },
+  cmd: {
+    fontSize: 'sm',
+    px: '20',
+    py: '3',
+  },
+  cxl: {
+    fontSize: 'md',
+    px: '92px',
+    py: '4',
+  },
+  c2xl: {
+    fontSize: 'md',
+    px: '24',
+    py: '4',
+  },
+  c3xl: {
+    fontSize: 'lg',
+    px: '24',
+    py: '5',
+  },
 };
 
 const Button: ComponentStyleConfig = {
   baseStyle,
   sizes,
   variants,
+  defaultProps: {
+    size: 'cmd',
+    variant: 'primary',
+  },
 };
 
 export default Button;

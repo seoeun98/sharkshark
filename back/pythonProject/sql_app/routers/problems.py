@@ -46,8 +46,9 @@ def get_probs_for_mock(db: Session = Depends(get_db), user: str = Depends(jwtRep
 
 @router.get("/recent")
 def get_recent_5_probs(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
-    userId = JWTRepo.decode_token(user)
-    result = problemsRepository.get_recent_5_probs(userId, db)
+    userId = JWTRepo.decode_token(user)    
+    prob_list = crowling.get_status_crawling(userId, '')       
+    result = problemsRepository.get_recent_5_probs(prob_list[0:5], db)
 
     if result:
         return result

@@ -16,6 +16,8 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { FaGithub, FaDatabase } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import { githubTokenAPI, updateUserInfoAPI } from '../../../api/auth';
+import { getUserID, githubRepoList } from '../../../api/common';
 import { setAuthToken, setRepo } from '../../../reducers/ghAPIReducer';
 import { GradientScrollBox } from '../../common/GradientScrollBox';
 import { Paragraph } from '../../common/Paragraph';
@@ -39,24 +41,16 @@ export const BlogSetting = () => {
     window.location.assign(URL);
   };
 
-  const getGhRepos = () => {
-    axios
-      .get('https://api.github.com/user/repos', {
-        headers: {
-          Authorization: 'Bearer ' + authToken,
-        },
-      })
-      .then(({ data }) => {
-        let repos: Array<{ name: string; url: string }> = [];
-        data.map((item: any) => {
-          repos.push({ name: item.full_name, url: item.owner.avatar_url });
-        });
-        setGhRepos(repos);
-      });
+  const getGhRepos = async () => {
+    setGhRepos(await githubRepoList(authToken));
+  };
+
+  const getAuthToken = async (code: string) => {
+    dispatch(setAuthToken(await githubTokenAPI(getUserID(), code)));
   };
 
   const setOnClose = () => {
-    // call setuserinfo api
+    updateUserInfoAPI('', '', ghRepo.name, ghRepo.dir);
     dispatch(setRepo(ghRepo));
     onClose();
   };
@@ -67,7 +61,7 @@ export const BlogSetting = () => {
 
     if (authorizationCode) {
       // auth code와 token 교환 및 업데이트, 저장
-      // api: code into token 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
+      // getAuthToken(authorizationCode);
       dispatch(setAuthToken('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'));
     } else {
       // token이 db에 존재하는지 확인
@@ -86,13 +80,9 @@ export const BlogSetting = () => {
           </>
         }
       >
-        <Button
-          borderRadius="8px"
-          px="40px"
-          onClick={getAuthCode}
-          disabled={authToken ? true : false}
-        >
-          <FaGithub fontSize="20px" /> &nbsp; {!authToken ? 'Github 계정 연동' : 'Github 연동 완료'}
+        <Button borderRadius="8px" px="40px" onClick={getAuthCode}>
+          <FaGithub fontSize="20px" /> &nbsp;{' '}
+          {!authToken ? 'Github 계정 연동' : 'Github 계정 재설정'}
         </Button>
       </Paragraph>
 

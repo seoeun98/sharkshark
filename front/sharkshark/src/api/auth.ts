@@ -2,14 +2,14 @@ import { UserInfo } from '../types/DataTypes';
 import { authAxios } from './common';
 
 // 계정 정보 조회
-export const getUserInfoAPI = (id: string) => {
+export const getUserInfoAPI = async (id: string) => {
   let userinfo: UserInfo = {
     id: '',
     token: '',
     git: '',
     dir: '',
   };
-  authAxios
+  await authAxios
     .get(`/user/${id}`)
     .then(({ data }: { data: UserInfo }) => {
       console.log(data);

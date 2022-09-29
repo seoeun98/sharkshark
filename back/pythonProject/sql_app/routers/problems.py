@@ -59,3 +59,10 @@ def get_mockRes(request: schemas.getMockRes, user: str = Depends(jwtRepository.J
     userId = JWTRepo.decode_token(user)
     return crowling.get_mockRes(userId, request.probNo, request.start)
 
+@router.get("/detail/{probNo}")
+def get_prob_detail(probNo: int, user: str = Depends(jwtRepository.JWTBearer())) :    
+    detail = crowling.get_prob_detail(probNo)
+    if detail is not None:
+        return detail
+    else:
+        return HTTPException(status_code=401, detail="no item")

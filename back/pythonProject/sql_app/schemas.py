@@ -50,3 +50,7 @@ class proCntPerDay(BaseModel):
 
 class authorizationCode(BaseModel):
     authorizationCode:str
+
+class getMockRes(BaseModel):
+    probNo: int
+    start: str

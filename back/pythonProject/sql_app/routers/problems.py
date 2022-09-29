@@ -1,4 +1,5 @@
 from typing import Optional
+import pandas as pd
 
 from fastapi import APIRouter, Depends, Header, HTTPException
 from sqlalchemy.orm import Session
@@ -9,6 +10,7 @@ from sql_app.database import get_db
 
 from sql_app.repository import problemsRepository, jwtRepository
 from sql_app.repository.jwtRepository import JWTRepo
+from sql_app.service import crowling
 
 router = APIRouter(
     prefix="/prob",
@@ -50,3 +52,9 @@ def get_recent_5_probs(db: Session = Depends(get_db), user: str = Depends(jwtRep
     if result:
         return result
     raise HTTPException(status_code=401, detail="no item")
+
+@router.post("/mockres")
+def get_mockRes(request: schemas.getMockRes, user: str = Depends(jwtRepository.JWTBearer())) :
+    userId = JWTRepo.decode_token(user)
+    return crowling.get_mockRes(userId, request.probNo, request.start)
+

@@ -18,9 +18,11 @@ router = APIRouter(
 @router.get("/tier")
 def get_tier_roadmap(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
     userId = JWTRepo.decode_token(user)
-    dataRepository.get_roadMap(userId, db)
+    result = dataRepository.get_roadMap(userId, db)
 
-    return None
+    if result:
+        return result
+    raise HTTPException(status_code=401, detail="no item")
 
 # 주요 유형 조회
 @router.get("/category")

@@ -14,7 +14,10 @@ import {
 import { ColorText } from '../../common/ColorText';
 import { BasicInfoLayout } from './BasicInfoLayout';
 
-export const RivalBasicCard = (props: { RivalInfo: any }) => {
+export const RivalBasicCard = (props: {
+  RivalInfo: any;
+  bottompropFunction: (arg0: string) => void;
+}) => {
   const { RivalInfo } = props;
   const { isOpen, onToggle } = useDisclosure();
   let children = {};
@@ -67,8 +70,15 @@ export const RivalBasicCard = (props: { RivalInfo: any }) => {
                 mb="32px"
               >
                 <Center ml="240px" mb="12px">
-                  <Button variant="primary" w="72px" size="xs" borderRadius="4px">
-                    실력 비교
+                  <Button
+                    variant="primary"
+                    w="72px"
+                    size="xs"
+                    borderRadius="4px"
+                    // eslint-disable-next-line react/destructuring-assignment
+                    onClick={() => props.bottompropFunction('RivalCompare')}
+                  >
+                    실력 분석
                   </Button>
                 </Center>
 

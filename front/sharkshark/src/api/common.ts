@@ -23,3 +23,9 @@ export const getUserID = () => {
   const decoded = JSON.parse(atob(token.split('.')[1]));
   return decoded.id;
 };
+
+export const logout = () => {
+  localStorage.removeItem('access_token');
+  localStorage.setItem('isLogin', 'false');
+  window.location.href = '/login';
+};

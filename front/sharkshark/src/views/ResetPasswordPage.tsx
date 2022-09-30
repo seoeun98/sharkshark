@@ -24,12 +24,12 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { checkProfileMsgAPI, getProfileMsgAPI, registerAPI } from '../api/default';
+import { checkProfileMsgAPI, getProfileMsgAPI, modifyPasswordAPI } from '../api/default';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { FaUserAlt, FaLock } from 'react-icons/fa';
 import { ColorText } from '../components/common/ColorText';
 
-export const UserRegisterPage = () => {
+export const ResetPasswordPage = () => {
   const image = '/assets/logo/symbol.png';
   const CFaUserAlt = chakra(FaUserAlt);
   const CFaLock = chakra(FaLock);
@@ -52,7 +52,7 @@ export const UserRegisterPage = () => {
 
   const handleShowClick = () => setShowPassword(!showPassword);
   const modifyUser = 'https://www.acmicpc.net/modify';
-  let connectButtonMsg = '연동';
+  let connectButtonMsg = '인증';
 
   const checkId = async () => {
     if (id === '') {
@@ -140,7 +140,7 @@ export const UserRegisterPage = () => {
           <VStack spacing="4px">
             <Image width="32px" src={image} />
             <Box fontSize="30px" fontWeight="800">
-              회원가입
+              비밀번호 재설정
             </Box>
           </VStack>
           <VStack spacing={4}>
@@ -156,7 +156,7 @@ export const UserRegisterPage = () => {
               >
                 아이디
                 <Box fontSize="12px" fontWeight="400">
-                  백준 연동을 위해 백준 아이디로 입력해주세요.
+                  회원 확인을 위해 백준 아이디를 입력하고 인증을 진행해주세요.
                 </Box>
               </FormLabel>
               <Flex marginBottom="8px">
@@ -193,7 +193,7 @@ export const UserRegisterPage = () => {
                 fontWeight="700"
                 _hover={{ cursor: 'pointer' }}
               >
-                비밀번호
+                새 비밀번호 입력
               </FormLabel>
               <Flex marginBottom="8px">
                 <InputGroup>
@@ -235,7 +235,7 @@ export const UserRegisterPage = () => {
                 fontWeight="700"
                 _hover={{ cursor: 'pointer' }}
               >
-                비밀번호 확인
+                새 비밀번호 확인
               </FormLabel>
               <Flex marginBottom="8px">
                 <InputGroup>
@@ -278,13 +278,12 @@ export const UserRegisterPage = () => {
               variant="primary"
               size="cxl"
               type="submit"
-              onClick={() => registerAPI(id, password)}
+              onClick={() => modifyPasswordAPI(id, password)}
             >
-              회원가입
+              비밀번호 재설정
             </Button>
           </Center>
-          <Text display="flex" fontSize="12px" fontWeight="400">
-            이미 계정이 있으신가요?&nbsp;&nbsp;
+          <Text fontSize="12px">
             <Text
               as="u"
               fontWeight="600"
@@ -292,7 +291,7 @@ export const UserRegisterPage = () => {
                 color: 'primary.cyan0',
               }}
             >
-              <Link to="/login">로그인</Link>
+              <Link to="/login">로그인으로 돌아가기</Link>
             </Text>
           </Text>
         </VStack>
@@ -312,7 +311,7 @@ export const UserRegisterPage = () => {
                 </Badge>
                 {'  '}
                 님, {'  '}
-                {pMsgStatus ? '반가워요!' : '연동을 다시 진행해주세요 :('}
+                {pMsgStatus ? '반가워요!' : '인증을 다시 진행해주세요 :('}
               </Box>
 
               {pMsgStatus ? (

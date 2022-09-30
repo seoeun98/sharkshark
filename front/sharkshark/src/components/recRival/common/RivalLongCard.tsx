@@ -16,7 +16,10 @@ import { ColorText } from '../../common/ColorText';
 import { BasicInfoLayout } from './BasicInfoLayout';
 import { getUserID } from '../../../api/common';
 
-export const RivalLongCard = (props: { userInfo: any }) => {
+export const RivalLongCard = (props: {
+  userInfo: any;
+  bottompropFunction: (arg0: string) => void;
+}) => {
   const { isOpen, onToggle } = useDisclosure();
   const { userInfo } = props;
   let children = {};
@@ -125,7 +128,15 @@ export const RivalLongCard = (props: { userInfo: any }) => {
                 </VStack>
               </Center>
             </HStack>
-            <Button variant="primary" w="90px" h="30px" size="xs" borderRadius="4px">
+            <Button
+              variant="primary"
+              w="90px"
+              h="30px"
+              size="xs"
+              borderRadius="4px"
+              // eslint-disable-next-line react/destructuring-assignment
+              onClick={() => props.bottompropFunction('RivalCompare')}
+            >
               실력 분석
             </Button>
           </VStack>

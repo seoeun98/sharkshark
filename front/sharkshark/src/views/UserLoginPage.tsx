@@ -26,7 +26,7 @@ export const UserLoginPage = () => {
   return (
     <>
       <Box
-        bgImage="url(/assets/account/account_top.png)"
+        bgImage="url(/assets/account/background/account_top.png)"
         w="40vw"
         h="100%"
         pos="fixed"
@@ -36,7 +36,7 @@ export const UserLoginPage = () => {
         bgRepeat="no-repeat"
       />
       <Box
-        bgImage="url(/assets/account/account_bottom.png)"
+        bgImage="url(/assets/account/background/account_bottom.png)"
         bgSize="contain"
         bgRepeat="no-repeat"
         w="50vw"

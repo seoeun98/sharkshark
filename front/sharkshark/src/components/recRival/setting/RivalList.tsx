@@ -3,7 +3,7 @@ import { RivalBasicCard } from '../common/RivalBasicCard';
 import { getRivalAPI, getRivalInfoAPI } from '../../../api/rival';
 import React, { useState, useEffect } from 'react';
 
-export const RivalList = () => {
+export const RivalList = (props: { middlePropFunction: (arg0: string) => void }) => {
   const [rivalList, setrivalList] = useState([]);
   const rivalListInfo = [];
 
@@ -25,12 +25,18 @@ export const RivalList = () => {
     { id: 'id', className: 'Class 4', level: 18 },
   ];
 
+  const middleFunction = (text: any) => {
+    console.log(text);
+    // eslint-disable-next-line react/destructuring-assignment
+    props.middlePropFunction(text);
+  };
+
   return (
     <SimpleGrid minChildWidth="360px" columns={2} spacingX={5} spacingY={10} ml="1vw">
       {testdata.map((item, index) => (
         // {rivalListInfo.map((item, index) => (
         <GridItem w="100%" h="100%">
-          <RivalBasicCard RivalInfo={item} />
+          <RivalBasicCard bottompropFunction={middleFunction} RivalInfo={item} />
         </GridItem>
       ))}
     </SimpleGrid>

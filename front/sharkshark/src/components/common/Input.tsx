@@ -4,7 +4,6 @@ import {
   chakra,
   Flex,
   FormControl,
-  FormErrorMessage,
   FormHelperText,
   FormLabel,
   InputGroup,
@@ -47,7 +46,7 @@ export const CustomInput = (props: {
         </FormLabel>
 
         {id === 'password' ? (
-          <InputGroup>
+          <InputGroup marginBottom="8px">
             <InputLeftElement
               pointerEvents="none"
               children={<CFaLock fontSize="14px" color="neutral.200" />}
@@ -56,7 +55,7 @@ export const CustomInput = (props: {
             {children_button}
           </InputGroup>
         ) : (
-          <InputGroup>
+          <InputGroup marginBottom="8px">
             <InputLeftElement
               pointerEvents="none"
               children={<CFaUserAlt fontSize="14px" color="neutral.200" />}
@@ -65,11 +64,11 @@ export const CustomInput = (props: {
           </InputGroup>
         )}
         {errorMessage !== '' ? (
-          <FormErrorMessage fontSize="12px" fontWeight="400" color="warning.50">
+          <Box fontSize="12px" fontWeight="500" color="warning.50">
             {errorMessage}
-          </FormErrorMessage>
+          </Box>
         ) : (
-          <FormErrorMessage />
+          <Box fontSize="12px" fontWeight="500" color="warning.50" />
         )}
         {id === 'password' ? (
           <FormHelperText textAlign="right">

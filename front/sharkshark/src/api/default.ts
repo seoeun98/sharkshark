@@ -8,26 +8,27 @@ export const registerAPI = (id: string, pw: string) => {
       window.location.href = '/login';
     })
     .catch(err => {
-      console.log(err);
-      alert('회원가입 실패');
+      alert('이미 가입된 유저입니다. 로그인을 진행해주세요.');
+      window.location.href = '/login';
     });
 };
 
 // 상태메시지 지정 문구 가져오기
 export const getProfileMsgAPI = async (id: string) => {
-  let profileMsg = '';
+  let profileMsg = { msg: '', detail: '' };
   await defaultAxios
     .post(`/user/confirm/${id}`)
     .then(res => {
-      console.log(res.data);
-      profileMsg = res.data.msg;
+      console.log(res);
+      profileMsg.msg = res.data.msg;
+      profileMsg.detail = res.data.detail;
     })
     .catch(err => {
-      profileMsg = '-1';
+      profileMsg.msg = '-1';
       console.log(err);
       alert('getProfileMsg failed');
     });
-  console.log(profileMsg);
+
   return profileMsg;
 };
 
@@ -37,20 +38,20 @@ export const checkProfileMsgAPI = async (id: string) => {
   await defaultAxios
     .get(`/user/confirm/${id}`)
     .then(res => {
-      alert('checkProfileMsgAPI success');
       checkMsg = 'OK';
     })
     .catch(err => {
       console.log(err);
-      alert('checkProfileMsgAPI failed');
+      alert('상태 메세지가 올바르지 않습니다.');
       checkMsg = 'FAIL';
     });
   return checkMsg;
 };
 
 // 로그인
-export const loginAPI = (id: string, pw: string) => {
-  defaultAxios
+export const loginAPI = async (id: string, pw: string) => {
+  let loginError = '';
+  await defaultAxios
     .post('/user/login', { id: id, pw: pw })
     .then(res => {
       localStorage.setItem('access_token', res.data.access_token);
@@ -59,9 +60,14 @@ export const loginAPI = (id: string, pw: string) => {
       localStorage.setItem('isLogin', 'true');
     })
     .catch(err => {
-      console.log(err);
-      alert('로그인 실패');
+      let error = err.response.data.detail;
+      if (error === '가입된 아이디가 없습니다') {
+        loginError = error;
+      } else {
+        loginError = error;
+      }
     });
+  return loginError;
 };
 
 // 비밀번호 재설정

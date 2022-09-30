@@ -1,7 +1,7 @@
 import { Box, Button, Flex } from '@chakra-ui/react';
 import { FaArrowLeft, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { getUserID } from '../../api/common';
-import { Problem } from '../../types/DataTypes';
+import { getUserID } from '../../../api/common';
+import { Problem } from '../../../types/DataTypes';
 import { QuizTable } from './QuizTable';
 import { QuizTableItem } from './QuizTableItem';
 

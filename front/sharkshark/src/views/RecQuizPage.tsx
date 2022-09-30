@@ -9,9 +9,9 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { Sidebar } from '../components/common/Sidebar';
-import { QuizMenuDefault } from '../components/recquiz/QuizMenuDefault';
-import { QuizMenuRival } from '../components/recquiz/QuizMenuRival';
-import { QuizMenuTag } from '../components/recquiz/QuizMenuTag';
+import { QuizMenuDefault } from '../components/layouts/recquiz/QuizMenuDefault';
+import { QuizMenuRival } from '../components/layouts/recquiz/QuizMenuRival';
+import { QuizMenuTag } from '../components/layouts/recquiz/QuizMenuTag';
 
 export const RecQuizPage = () => {
   return (

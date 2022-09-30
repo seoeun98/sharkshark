@@ -9,10 +9,10 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
-import { Problem } from '../../types/DataTypes';
+import { Problem } from '../../../types/DataTypes';
 import { HiStar, HiOutlineStar } from 'react-icons/hi';
-import { Tier } from '../common/Tier';
-import { ColorText } from '../common/ColorText';
+import { Tier } from '../../common/Tier';
+import { ColorText } from '../../common/ColorText';
 
 export const QuizTableItem = (props: { problem: Problem }) => {
   const { isOpen, onToggle } = useDisclosure();
@@ -44,13 +44,13 @@ export const QuizTableItem = (props: { problem: Problem }) => {
           </Box>
 
           {/* id */}
-          <Box ml="24px">{problem.id}</Box>
+          <Box ml="24px">{problem.no}</Box>
 
           {/* title */}
           <Box ml="16px">
             <Box mb="16px">{problem.title}</Box>
             <Box>
-              {problem.tag.split(',').map((item, index) => (
+              {problem.tags.split(',').map((item, index) => (
                 <Tag borderRadius="20px" py="6px" px="12px" mr="8px" key={index}>
                   <ColorText># {item}</ColorText>
                 </Tag>

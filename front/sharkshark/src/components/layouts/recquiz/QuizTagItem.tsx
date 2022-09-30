@@ -15,7 +15,7 @@ import { Tier } from '../../common/Tier';
 import { ColorText } from '../../common/ColorText';
 import { probsByCategoryAPI } from '../../../api/auth';
 
-export const QuizTableItem = (props: { problem: Problem }) => {
+export const QuizTagItem = (props: { problem: Problem }) => {
   const { isOpen, onToggle } = useDisclosure();
   const { problem } = props;
   const bgcolor = useColorModeValue('neutral.25', 'neutral.500');

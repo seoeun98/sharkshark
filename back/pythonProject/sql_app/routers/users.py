@@ -36,7 +36,7 @@ def regist(request: schemas.User, db: Session = Depends(get_db)):
     result = userRepository.create_user(request, db)
 
     if not result:
-        raise HTTPException(status_code=404, detail="not registered")
+        raise HTTPException(status_code=401, detail="already registered")
 
 # 상태메세지 문구 넘겨주기
 @router.post("/confirm/{id}")
@@ -63,10 +63,10 @@ def login(request: schemas.User, db: Session = Depends(get_db)):
     newUser = userRepository.login_user(request, db)
 
     if newUser == "no user":
-        return JSONResponse(status_code=401, content=dict(msg="가입된 아이디가 없습니다"))
+        return JSONResponse(status_code=401, content=dict(detail="가입된 아이디가 없습니다"))
 
     elif newUser == "not correct pw" :
-        return JSONResponse(status_code=401, content=dict(msg="패스워드가 일치하지 않습니다"))
+        return JSONResponse(status_code=401, content=dict(detail="패스워드가 일치하지 않습니다"))
     else:
         access_token = jwtRepository.JWTRepo.generate_access_token({"id": newUser.id})
         refresh_token = jwtRepository.JWTRepo.generate_refresh_token({"id": newUser.id})
@@ -78,14 +78,14 @@ def login(request: schemas.User, db: Session = Depends(get_db)):
 
         return {"access_token": access_token, "refresh_token" : refresh_token}
 
-    return JSONResponse(status_code=400, content=dict(msg="NOT_SUPPORTED"))
+    return JSONResponse(status_code=400, content=dict(detail="NOT_SUPPORTED"))
 
 # 계정 정보 조회
 @router.get("/{id}", response_model=schemas.getUser, dependencies=[Depends(jwtRepository.JWTBearer())], status_code=200)
 def get_by_id(id: str, db: Session = Depends(get_db)):
     if userRepository.get_by_id(id, db):
         return
-    raise JSONResponse(status_code=500, content=dict(msg="NOT_UPDATED"))
+    raise JSONResponse(status_code=500, content=dict(detail="NOT_UPDATED"))
 
 # 계정 정보 업데이트
 @router.put("", dependencies=[Depends(jwtRepository.JWTBearer())])
@@ -130,4 +130,4 @@ def get_github_access_token(request: schemas.authorizationCode, id: str, db: Ses
             user.token = github_access_token
             userRepository.update_user(user, db)
             return {"github_access_token": github_access_token}
-    raise HTTPException(status_code=401, detail="need re-login")
+    raise HTTPException(status_code=401, detail="github connection error")

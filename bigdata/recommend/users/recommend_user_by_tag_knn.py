@@ -2,7 +2,8 @@
 import pandas as pd
 from tqdm import tqdm
 
-file_path = '../../data/'
+# file_path = '../../data/'
+file_path = 'data/'
 
 def get_user_avg_level_of_each_tag():
     df_problems = pd.read_csv(file_path + 'probleams.csv')  # 문제 데이터
@@ -37,7 +38,27 @@ def get_user_avg_level_of_each_tag():
                     df.loc[idx, tag + '_cnt'] += 1 
         idx = idx + 1
 
-    # 평균 계산
+    # # 평균 계산
+    # for tag in tag_list:            
+    #     df[tag] = df[tag] / df[tag + '_cnt']
+
+    # # 전처리 및 필요없는 컬럼 제거
+    # df = df.fillna(0)
+    # df = df.drop(df.columns[9:], axis=1)
+    # df = df.round(3)
+
+    df = cal_avg(df)
+
+    # csv 로 저장
+    df.to_csv(file_path + 'user_avg_level_of_tags_.csv')
+
+    return df
+
+def cal_avg(df):
+    # 사용할 태그
+    tag_list = ['math', 'implementation', 'greedy', 'string', 'data_structures', 'graphs', 'dp', 'bruteforcing']
+
+    # 평균 계산 
     for tag in tag_list:            
         df[tag] = df[tag] / df[tag + '_cnt']
 
@@ -46,7 +67,11 @@ def get_user_avg_level_of_each_tag():
     df = df.drop(df.columns[9:], axis=1)
     df = df.round(3)
 
-    # csv 로 저장
-    df.to_csv(file_path + 'user_avg_level_of_tags_.csv')
-
     return df
+
+
+df = pd.read_csv(file_path + 'user_avg_level_of_tags.csv')  # 태그 레벨 합 및 문제 수
+df = df.drop(df.columns[:2], axis=1)
+df = cal_avg(df)
+print(df)
+# df.to_csv(file_path + 'user_avg_level_of_tags_.csv')

@@ -57,4 +57,14 @@ def get_recent_5_probs(prob_list: list, db: Session):
 
     return result_list;
 
+def get_probs_by_tag(userId: str, tag: str, db: Session):
+    result_list = []
+    user_tier = db.query(models.BJ_user).filter(models.BJ_user.userId == userId).first().tier
+
+    list = db.query(models.problem).filter(models.problem.tags.like("%{}%".format(tag))).filter(models.problem.level.between(user_tier - 3, user_tier + 3)).order_by(models.problem.acceptedUserCnt.desc()).limit(20)
+
+    for one in list:
+        result_list.append(one.__dict__)
+
+    return result_list
 

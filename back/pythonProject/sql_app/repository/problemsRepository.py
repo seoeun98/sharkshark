@@ -6,9 +6,10 @@ def get_probs_by_rival(id: str, db: Session):
     prob_list = db.query(models.rec_problems).filter(models.rec_problems.userId == id).first().problems.split(',')
     result_list = []
 
-    for prob_no in prob_list :
-        prob = db.query(models.problem).filter(models.problem.no == int(prob_no)).first()
-        result_list.append(prob)
+    if prob_list:
+        for prob_no in prob_list :
+            prob = db.query(models.problem).filter(models.problem.no == int(prob_no)).first()
+            result_list.append(prob)
 
     return result_list
 
@@ -46,15 +47,24 @@ def get_probs_for_mock(id: str, db: Session):
 
     return result_list
 
-def get_recent_5_probs(id: str, db: Session):
-    prob_list = db.query(models.solvedProblem).filter(models.solvedProblem.userId == id).distinct(models.solvedProblem.probNo).order_by(models.solvedProblem.solvedDate.desc()).all()
+def get_recent_5_probs(prob_list: list, db: Session):    
     result_list = []
 
     for i in range(0, 5):
-        prob_num = prob_list[i].probNo
+        prob_num = prob_list[i][1]        
         prob = db.query(models.problem).filter(models.problem.no == prob_num).first()
         result_list.append(prob)
 
     return result_list;
 
+def get_probs_by_tag(userId: str, tag: str, db: Session):
+    result_list = []
+    user_tier = db.query(models.BJ_user).filter(models.BJ_user.userId == userId).first().tier
+
+    list = db.query(models.problem).filter(models.problem.tags.like("%{}%".format(tag))).filter(models.problem.level.between(user_tier - 3, user_tier + 3)).order_by(models.problem.acceptedUserCnt.desc()).limit(20)
+
+    for one in list:
+        result_list.append(one.__dict__)
+
+    return result_list
 

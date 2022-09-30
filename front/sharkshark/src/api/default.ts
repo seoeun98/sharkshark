@@ -55,9 +55,23 @@ export const loginAPI = (id: string, pw: string) => {
     .then(res => {
       localStorage.setItem('access_token', res.data.access_token);
       window.location.href = '/';
+      localStorage.setItem('isLogin', 'true');
     })
     .catch(err => {
       console.log(err);
       alert('로그인 실패');
+    });
+};
+
+// 비밀번호 재설정
+export const modifyPasswordAPI = (id: string, pw: string) => {
+  defaultAxios
+    .put('/user/pw', { id: id, pw: pw })
+    .then(res => {
+      window.location.href = '/login';
+    })
+    .catch(err => {
+      console.log(err);
+      alert('비밀번호 설정 실패');
     });
 };

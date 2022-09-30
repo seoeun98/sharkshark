@@ -1,7 +1,7 @@
 import { Box, useColorModeValue } from '@chakra-ui/react';
 import { RivalLongCard } from '../common/RivalLongCard';
 
-const RivalAllList = () => {
+const RivalAllList = (props: { middlePropFunction: (arg0: string) => void }) => {
   const titlefw = useColorModeValue(700, 500);
   const testdata = [
     { id: 'id', className: 'Class 4', level: 18 },
@@ -12,6 +12,11 @@ const RivalAllList = () => {
     { id: 'id', className: 'Class 4', level: 18 },
     { id: 'id', className: 'Class 4', level: 18 },
   ];
+  const middleFunction = (text: any) => {
+    console.log(text);
+    // eslint-disable-next-line react/destructuring-assignment
+    props.middlePropFunction(text);
+  };
   return (
     <Box w="40vw">
       <Box fontSize="24px" fontWeight={titlefw} mb="6vh">
@@ -38,7 +43,7 @@ const RivalAllList = () => {
       >
         {testdata.map((item, index) => (
           <Box mb="8px" mr="8px" key={index}>
-            <RivalLongCard userInfo={item} />
+            <RivalLongCard bottompropFunction={middleFunction} userInfo={item} />
           </Box>
         ))}
       </Box>

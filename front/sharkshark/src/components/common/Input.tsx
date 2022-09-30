@@ -80,7 +80,7 @@ export const CustomInput = (props: {
                 color: 'primary.cyan0',
               }}
             >
-              <Link to="">비밀번호 찾기</Link>
+              <Link to="/password-reset">비밀번호 찾기</Link>
             </Text>
           </FormHelperText>
         ) : (

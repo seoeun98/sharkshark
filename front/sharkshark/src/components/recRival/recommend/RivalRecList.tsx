@@ -5,21 +5,25 @@ import Carousel from 'react-spring-3d-carousel';
 import { useState } from 'react';
 import { useSpring, animated, config } from 'react-spring';
 
-const testdata = [
-  { id: 'id', className: 'Class 4', level: 18 },
-  { id: 'dddddd', className: 'Class 3', level: 18 },
-  { id: 'isfsfsd', className: 'Class 44', level: 18 },
-  { id: 'isfddf', className: 'Class 4', level: 18 },
-  { id: 'idsffd', className: 'Class 4', level: 18 },
-  { id: 'id', className: 'Class 4', level: 18 },
-  { id: 'id', className: 'Class 4', level: 18 },
-];
-
-const RivalRecList = () => {
+export const RivalRecList = (props: { middlePropFunction: (arg0: string) => void }) => {
+  const testdata = [
+    { id: 'id', className: 'Class 4', level: 18 },
+    { id: 'dddddd', className: 'Class 3', level: 18 },
+    { id: 'isfsfsd', className: 'Class 44', level: 18 },
+    { id: 'isfddf', className: 'Class 4', level: 18 },
+    { id: 'idsffd', className: 'Class 4', level: 18 },
+    { id: 'id', className: 'Class 4', level: 18 },
+    { id: 'id', className: 'Class 4', level: 18 },
+  ];
   const [show, setShown] = useState(false);
   const props3 = useSpring({
     transform: show ? 'scale(1.03)' : 'scale(1)',
   });
+  const middleFunction = (text: any) => {
+    console.log(text);
+    // eslint-disable-next-line react/destructuring-assignment
+    props.middlePropFunction(text);
+  };
   let cards = [
     {
       key: uuidv4(),
@@ -29,7 +33,7 @@ const RivalRecList = () => {
           onMouseEnter={() => setShown(true)}
           onMouseLeave={() => setShown(false)}
         >
-          <RivalBasicCard RivalInfo={testdata[0]} />
+          <RivalBasicCard RivalInfo={testdata[0]} bottompropFunction={middleFunction} />
         </animated.div>
       ),
     },
@@ -41,32 +45,7 @@ const RivalRecList = () => {
           onMouseEnter={() => setShown(true)}
           onMouseLeave={() => setShown(false)}
         >
-          <RivalBasicCard RivalInfo={testdata[1]} />{' '}
-        </animated.div>
-      ),
-    },
-    {
-      key: uuidv4(),
-      content: (
-        <animated.div
-          style={props3}
-          onMouseEnter={() => setShown(true)}
-          onMouseLeave={() => setShown(false)}
-        >
-          {' '}
-          <RivalBasicCard RivalInfo={testdata[0]} />{' '}
-        </animated.div>
-      ),
-    },
-    {
-      key: uuidv4(),
-      content: (
-        <animated.div
-          style={props3}
-          onMouseEnter={() => setShown(true)}
-          onMouseLeave={() => setShown(false)}
-        >
-          <RivalBasicCard RivalInfo={testdata[1]} />{' '}
+          <RivalBasicCard RivalInfo={testdata[1]} bottompropFunction={middleFunction} />{' '}
         </animated.div>
       ),
     },
@@ -79,7 +58,7 @@ const RivalRecList = () => {
           onMouseLeave={() => setShown(false)}
         >
           {' '}
-          <RivalBasicCard RivalInfo={testdata[0]} />{' '}
+          <RivalBasicCard RivalInfo={testdata[0]} bottompropFunction={middleFunction} />{' '}
         </animated.div>
       ),
     },
@@ -91,7 +70,7 @@ const RivalRecList = () => {
           onMouseEnter={() => setShown(true)}
           onMouseLeave={() => setShown(false)}
         >
-          <RivalBasicCard RivalInfo={testdata[1]} />{' '}
+          <RivalBasicCard RivalInfo={testdata[1]} bottompropFunction={middleFunction} />{' '}
         </animated.div>
       ),
     },
@@ -103,7 +82,32 @@ const RivalRecList = () => {
           onMouseEnter={() => setShown(true)}
           onMouseLeave={() => setShown(false)}
         >
-          <RivalBasicCard RivalInfo={testdata[0]} />{' '}
+          {' '}
+          <RivalBasicCard RivalInfo={testdata[0]} bottompropFunction={middleFunction} />{' '}
+        </animated.div>
+      ),
+    },
+    {
+      key: uuidv4(),
+      content: (
+        <animated.div
+          style={props3}
+          onMouseEnter={() => setShown(true)}
+          onMouseLeave={() => setShown(false)}
+        >
+          <RivalBasicCard RivalInfo={testdata[1]} bottompropFunction={middleFunction} />{' '}
+        </animated.div>
+      ),
+    },
+    {
+      key: uuidv4(),
+      content: (
+        <animated.div
+          style={props3}
+          onMouseEnter={() => setShown(true)}
+          onMouseLeave={() => setShown(false)}
+        >
+          <RivalBasicCard RivalInfo={testdata[0]} bottompropFunction={middleFunction} />{' '}
         </animated.div>
       ),
     },

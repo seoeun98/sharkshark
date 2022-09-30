@@ -2,7 +2,12 @@ import { Box, Divider, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import { RivalPreviewCard } from '../common/RivalPreviewCard';
 
-const RivalPreviewList = () => {
+const RivalPreviewList = (props: { middlePropFunction: (arg0: string) => void }) => {
+  const middleFunction = (text: any) => {
+    console.log(text);
+    // eslint-disable-next-line react/destructuring-assignment
+    props.middlePropFunction(text);
+  };
   const testdata = [
     { id: 'id', className: 'Class 4', level: 18 },
     { id: 'dddddd', className: 'Class 3', level: 18 },
@@ -41,7 +46,7 @@ const RivalPreviewList = () => {
           <Box m="12px" mr="8px" key={index}>
             {index !== 0 ? <Divider /> : <></>}
 
-            <RivalPreviewCard userInfo={item} />
+            <RivalPreviewCard bottompropFunction={middleFunction} userInfo={item} />
           </Box>
         ))}
       </Box>

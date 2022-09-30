@@ -47,7 +47,7 @@ def pass_message(id, db: Session = Depends(get_db)):
         return HTTPException(status_code=401, detail="already registered")
     # 백준 유저인지 확인
     user_msg = user_message_crawling(id)
-    if user_msg == 'Not-Found-User'
+    if user_msg == 'Not-Found-User':
         return HTTPException(status_code=401, detail="not BOJ user")        
 
     result = userRepository.set_message(id, db)

@@ -41,6 +41,15 @@ def regist(request: schemas.User, db: Session = Depends(get_db)):
 # 상태메세지 문구 넘겨주기
 @router.post("/confirm/{id}")
 def pass_message(id, db: Session = Depends(get_db)):
+    user = userRepository.get_by_id(id, db)
+    # 이미 가입한 유저
+    if user:
+        return HTTPException(status_code=401, detail="already registered")
+    # 백준 유저인지 확인
+    user_msg = user_message_crawling(id)
+    if user_msg == 'Not-Found-User'
+        return HTTPException(status_code=401, detail="not BOJ user")        
+
     result = userRepository.set_message(id, db)
     return {"msg": result}
 

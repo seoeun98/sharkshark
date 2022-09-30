@@ -36,7 +36,7 @@ def regist(request: schemas.User, db: Session = Depends(get_db)):
     result = userRepository.create_user(request, db)
 
     if not result:
-        raise HTTPException(status_code=404, detail="not registered")
+        raise HTTPException(status_code=401, detail="already registered")
 
 # 상태메세지 문구 넘겨주기
 @router.post("/confirm/{id}")

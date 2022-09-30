@@ -1,4 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { probsByRivalAPI } from '../../../api/auth';
 import { getUserID } from '../../../api/common';
 import { Problem } from '../../../types/DataTypes';
 import { ColorText } from '../../common/ColorText';
@@ -6,6 +8,16 @@ import { QuizTable } from './QuizTable';
 import { QuizTableItem } from './QuizTableItem';
 
 export const QuizMenuDefault = () => {
+  const [list, setList] = useState<Problem[]>([]);
+
+  const getList = async () => {
+    setList(await probsByRivalAPI());
+  };
+
+  useEffect(() => {
+    getList();
+  }, []);
+
   return (
     <>
       <Box fontSize="24px">
@@ -16,7 +28,7 @@ export const QuizMenuDefault = () => {
         본인의 목적에 맞는 문제를 찾아 풀어보세요.
       </Box>
       <Box ml="2vw">
-        <QuizTable />
+        <QuizTable list={list} />
       </Box>
     </>
   );

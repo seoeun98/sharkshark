@@ -1,73 +1,10 @@
-import { Box, Button, Flex, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, useColorModeValue } from '@chakra-ui/react';
 import { Problem } from '../../../types/DataTypes';
 import { QuizTableItem } from './QuizTableItem';
 
-export const QuizTable = () => {
-  const testdata: Array<Problem> = [
-    {
-      star: false,
-      level: 11,
-      no: 1011,
-      title: 'Fly me to the Alpha Centauri',
-      tags: '수학 math',
-      acceptedUserCnt: 24601,
-      avgTries: 2.22,
-    },
-    {
-      star: true,
-      level: 18,
-      no: 1011,
-      title: 'Fly me to the Alpha Centauri',
-      tags: '수학 math,다이나믹 프로그래밍 DP',
-      acceptedUserCnt: 24601,
-      avgTries: 2.22,
-    },
-    {
-      star: false,
-      level: 11,
-      no: 1011,
-      title: 'Fly me to the Alpha Centauri',
-      tags: '수학 math',
-      acceptedUserCnt: 24601,
-      avgTries: 2.22,
-    },
-    {
-      star: true,
-      level: 16,
-      no: 1011,
-      title: 'Fly me to the Alpha Centauri',
-      tags: '수학 math',
-      acceptedUserCnt: 24601,
-      avgTries: 2.22,
-    },
-    {
-      star: false,
-      level: 11,
-      no: 1011,
-      title: 'Fly me to the Alpha Centauri',
-      tags: '수학 math',
-      acceptedUserCnt: 24601,
-      avgTries: 2.22,
-    },
-    {
-      star: true,
-      level: 16,
-      no: 1011,
-      title: 'Fly me to the Alpha Centauri',
-      tags: '수학 math',
-      acceptedUserCnt: 24601,
-      avgTries: 2.22,
-    },
-    {
-      star: false,
-      level: 11,
-      no: 1011,
-      title: 'Fly me to the Alpha Centauri',
-      tags: '수학 math',
-      acceptedUserCnt: 24601,
-      avgTries: 2.22,
-    },
-  ];
+export const QuizTable = (probs: { list: Problem[] }) => {
+  const { list } = probs;
+  const bgcolor = useColorModeValue('neutral.25', 'neutral.500');
 
   return (
     <Box>
@@ -101,11 +38,17 @@ export const QuizTable = () => {
           },
         }}
       >
-        {testdata.map((item, index) => (
-          <Box mb="8px" mr="8px" key={index}>
-            <QuizTableItem problem={item} />
-          </Box>
-        ))}
+        {list.length > 0 ? (
+          list.map((item, index) => (
+            <Box mb="8px" mr="8px" key={index}>
+              <QuizTableItem problem={item} />
+            </Box>
+          ))
+        ) : (
+          <Center bg={bgcolor} borderRadius="12px" p="32px">
+            ~ 목록이 없습니다 ~
+          </Center>
+        )}
       </Box>
     </Box>
   );

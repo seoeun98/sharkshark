@@ -54,6 +54,7 @@ export const loginAPI = (id: string, pw: string) => {
     .post('/user/login', { id: id, pw: pw })
     .then(res => {
       localStorage.setItem('access_token', res.data.access_token);
+      localStorage.setItem('refresh_token', res.data.refresh_token);
       window.location.href = '/';
       localStorage.setItem('isLogin', 'true');
     })
@@ -64,6 +65,7 @@ export const loginAPI = (id: string, pw: string) => {
 };
 
 // 비밀번호 재설정
+<<<<<<< HEAD
 export const modifyPasswordAPI = (id: string, pw: string) => {
   defaultAxios
     .put('/user/pw', { id: id, pw: pw })
@@ -73,5 +75,38 @@ export const modifyPasswordAPI = (id: string, pw: string) => {
     .catch(err => {
       console.log(err);
       alert('비밀번호 설정 실패');
+=======
+export const resetPWAPI = (id: string, pw: string) => {
+  defaultAxios
+    .put('/user/pw', { id: id, pw: pw })
+    .then(res => {
+      console.log(res);
+      alert('재설정 성공');
+    })
+    .catch(err => {
+      console.log(err);
+      alert('재설정 실패');
+    });
+};
+
+// 토큰 재발급
+export const refreshTokenAPI = () => {
+  defaultAxios
+    .post(
+      '/user/auth',
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('refresh_token'),
+        },
+      },
+    )
+    .then(res => {
+      localStorage.setItem('access_token', res.data.access_token);
+      alert('재발급 성공');
+    })
+    .catch(err => {
+      alert('재발급 실패');
+>>>>>>> 122af942c6fbb03acac580c26be894b178a56fa1
     });
 };

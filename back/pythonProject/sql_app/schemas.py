@@ -12,7 +12,6 @@ class getUser(BaseModel):
     token: str
     git: str
     dir: str
-    msg : str
 
     class Config:
         orm_mode = True
@@ -51,3 +50,7 @@ class proCntPerDay(BaseModel):
 
 class authorizationCode(BaseModel):
     authorizationCode:str
+
+class getMockRes(BaseModel):
+    probNo: int
+    start: str

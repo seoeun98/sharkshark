@@ -2,10 +2,22 @@ from sqlalchemy.orm import Session
 from sql_app import models, schemas
 
 def get_recommend_rivals_list(user: str, db: Session) :
-    return db.query(models.rec_rival).filter(models.rec_rival.userId == user).first()
+    rivals = db.query(models.rec_rival).filter(models.rec_rival.userId == user).first().__dict__
+    list = rivals['rivalIds'].split(',')
+    result_list = []
+
+    for one in list:
+        result_list.append(get_rival(one, db))
+    return result_list
 
 def get_rivals_list(user: str, db: Session) :
-    return db.query(models.rival).filter(models.rival.userId == user).all()
+    rivals = db.query(models.rival).filter(models.rival.userId == user).first().__dict__
+    list = rivals['rivalIds'].split(',')
+    result_list = []
+
+    for one in list:
+        result_list.append(get_rival(one, db))
+    return result_list
 
 def put_rival(rivalId, db: Session, user: str) :
     check_rival = db.query(models.rival).filter(models.rival.rivalId == rivalId).filter(models.rival.userId == user).first()

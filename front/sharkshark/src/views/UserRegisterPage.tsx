@@ -49,24 +49,33 @@ export const UserRegisterPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { hasCopied, onCopy } = useClipboard(profileMsg);
   const [showPassword, setShowPassword] = useState(false);
+  const [ButtonMsg, setButtonMsg] = useState('연동');
 
   const handleShowClick = () => setShowPassword(!showPassword);
   const modifyUser = 'https://www.acmicpc.net/modify';
-  let connectButtonMsg = '연동';
 
   const checkId = async () => {
-    if (id === '') {
-      setIdAlert('아이디를 입력해주세요.');
-      return;
+    if (checkMsg) {
+      setCheckMsg('');
+    } else {
+      if (id === '') {
+        setIdAlert('아이디를 입력해주세요.');
+        return;
+      }
+      const msg = await getProfileMsgAPI(id);
+      console.log(msg);
+      if (msg.detail === 'not BOJ user') {
+        setIdAlert('없는 백준 아이디입니다. 아이디를 정확하게 입력해주세요');
+        return;
+      } else if (msg.detail === 'already registered') {
+        alert('이미 가입된 유저입니다. 로그인을 진행해주세요.');
+        setIdAlert('이미 가입된 유저입니다. 로그인을 진행해주세요');
+        return;
+      }
+      setPMsgStatus(true);
+      setProfileMsg(msg.msg);
+      onOpen();
     }
-    const msg = await getProfileMsgAPI(id);
-    if (msg === '-1') {
-      setIdAlert('없는 백준 아이디입니다. 아이디를 정확하게 입력해주세요');
-      return;
-    }
-    setPMsgStatus(true);
-    setProfileMsg(msg);
-    onOpen();
   };
 
   const checkProfileMsg = async () => {
@@ -75,7 +84,7 @@ export const UserRegisterPage = () => {
       setPMsgStatus(true);
       setCheckMsg(msg);
       setIdAlert('인증이 완료되었습니다.');
-      connectButtonMsg = '재설정';
+      setButtonMsg('재설정');
       onClose();
     } else {
       setPMsgStatus(false);
@@ -137,8 +146,8 @@ export const UserRegisterPage = () => {
         <ColorModeSwitcher pos="fixed" top={3} right={36} />
 
         <VStack flexDir="column" spacing={12} justifyContent="center" alignItems="center">
-          <VStack spacing="4px">
-            <Image width="32px" src={image} />
+          <VStack spacing="8px">
+            <Image width="40px" src={image} />
             <Box fontSize="30px" fontWeight="800">
               회원가입
             </Box>
@@ -171,15 +180,15 @@ export const UserRegisterPage = () => {
                     marginRight="12px"
                     placeholder="백준 아이디 입력"
                     onChange={e => setId(e.target.value)}
+                    isDisabled={checkMsg ? true : false}
                   />
                 </InputGroup>
                 <Button size="cxs" variant="secondary" onClick={checkId}>
-                  {connectButtonMsg}
+                  {ButtonMsg}
                 </Button>
               </Flex>
               <Box fontSize="12px" fontWeight="400" color="warning.50">
-                {' '}
-                {idAlert}{' '}
+                {idAlert}
               </Box>
             </Flex>
 
@@ -274,7 +283,9 @@ export const UserRegisterPage = () => {
 
           <Center>
             <Button
-              isDisabled={checkMsg ? false : true}
+              isDisabled={
+                pwCheck && password && password && pwCheck === password && checkMsg ? false : true
+              }
               variant="primary"
               size="cxl"
               type="submit"

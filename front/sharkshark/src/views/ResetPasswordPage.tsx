@@ -35,9 +35,7 @@ export const ResetPasswordPage = () => {
   const CFaLock = chakra(FaLock);
 
   const [id, setId] = useState('');
-  const [idAlert, setIdAlert] = useState(
-    "아이디 연동을 위해 '연동'을 눌러 백준 연동을 진행해주세요.",
-  );
+  const [idAlert, setIdAlert] = useState('인증이 필요합니다.');
 
   const [profileMsg, setProfileMsg] = useState('');
   const [pMsgStatus, setPMsgStatus] = useState(true);
@@ -49,24 +47,32 @@ export const ResetPasswordPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { hasCopied, onCopy } = useClipboard(profileMsg);
   const [showPassword, setShowPassword] = useState(false);
+  const [ButtonMsg, setButtonMsg] = useState('인증');
 
   const handleShowClick = () => setShowPassword(!showPassword);
   const modifyUser = 'https://www.acmicpc.net/modify';
-  let connectButtonMsg = '인증';
 
   const checkId = async () => {
-    if (id === '') {
-      setIdAlert('아이디를 입력해주세요.');
-      return;
+    if (checkMsg) {
+      setCheckMsg('');
+    } else {
+      if (id === '') {
+        setIdAlert('아이디를 입력해주세요.');
+        return;
+      }
+      const msg = await getProfileMsgAPI(id);
+      if (msg.detail === 'not BOJ user') {
+        setIdAlert('없는 백준 아이디입니다. 아이디를 정확하게 입력해주세요');
+        return;
+      } else if (msg.detail === 'new user') {
+        alert('회원이 아닙니다. 회원 가입을 먼저 진행해주세요.');
+        setIdAlert('샥샥 회원이 아닙니다. 회원 가입을 먼저 진행해주세요.');
+        return;
+      }
+      setPMsgStatus(true);
+      setProfileMsg(msg.msg);
+      onOpen();
     }
-    const msg = await getProfileMsgAPI(id);
-    if (msg === '-1') {
-      setIdAlert('없는 백준 아이디입니다. 아이디를 정확하게 입력해주세요');
-      return;
-    }
-    setPMsgStatus(true);
-    setProfileMsg(msg);
-    onOpen();
   };
 
   const checkProfileMsg = async () => {
@@ -75,7 +81,7 @@ export const ResetPasswordPage = () => {
       setPMsgStatus(true);
       setCheckMsg(msg);
       setIdAlert('인증이 완료되었습니다.');
-      connectButtonMsg = '재설정';
+      setButtonMsg('재인증');
       onClose();
     } else {
       setPMsgStatus(false);
@@ -137,8 +143,8 @@ export const ResetPasswordPage = () => {
         <ColorModeSwitcher pos="fixed" top={3} right={36} />
 
         <VStack flexDir="column" spacing={12} justifyContent="center" alignItems="center">
-          <VStack spacing="4px">
-            <Image width="32px" src={image} />
+          <VStack spacing="8px">
+            <Image width="40px" src={image} />
             <Box fontSize="30px" fontWeight="800">
               비밀번호 재설정
             </Box>
@@ -171,10 +177,11 @@ export const ResetPasswordPage = () => {
                     marginRight="12px"
                     placeholder="백준 아이디 입력"
                     onChange={e => setId(e.target.value)}
+                    isDisabled={checkMsg ? true : false}
                   />
                 </InputGroup>
                 <Button size="cxs" variant="secondary" onClick={checkId}>
-                  {connectButtonMsg}
+                  {ButtonMsg}
                 </Button>
               </Flex>
               <Box fontSize="12px" fontWeight="400" color="warning.50">
@@ -274,7 +281,9 @@ export const ResetPasswordPage = () => {
 
           <Center>
             <Button
-              isDisabled={checkMsg ? false : true}
+              isDisabled={
+                pwCheck && password && password && pwCheck === password && checkMsg ? false : true
+              }
               variant="primary"
               size="cxl"
               type="submit"

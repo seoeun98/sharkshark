@@ -4,21 +4,15 @@ import {
   Button,
   Flex,
   Input,
-  VStack,
-  Image,
   Center,
   FormLabel,
-  InputLeftElement,
   InputGroup,
-  chakra,
   InputRightElement,
   HStack,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { modifyPasswordAPI } from '../api/default';
-import { ColorModeSwitcher } from '../ColorModeSwitcher';
-import { FaUserAlt, FaLock } from 'react-icons/fa';
 import { getUserID } from '../api/common';
 
 export const ModifyPasswordPage = () => {

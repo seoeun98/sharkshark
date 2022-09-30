@@ -1,7 +1,6 @@
-import React from 'react';
 import Wave from 'react-wavify';
 import styled from '@emotion/styled';
-import { Box, Center, Flex, Text } from '@chakra-ui/react';
+import { Center, Box } from '@chakra-ui/react';
 
 const WaveContainer = styled.div`
   position: absolute;
@@ -13,9 +12,6 @@ const WaveContainer = styled.div`
 const FooterWave = () => {
   return (
     <Center>
-      <Center pos="sticky" fontSize="12px">
-        © 2022 SharkShark All Rights Reserved
-      </Center>
       <WaveContainer>
         <Wave
           fill="url(#gradient)"

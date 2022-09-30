@@ -23,6 +23,21 @@ export const UserLoginPage = () => {
 
   const image = '/assets/logo/symbol.png';
 
+  const [errorMessageForId, seterrorMessageForId] = useState('');
+  const [errorMessageForpassword, seterrorMessageForpassword] = useState('');
+
+  async function loginSubmit(id: string, password: string) {
+    let errmessage = loginAPI(id, password);
+    seterrorMessageForId('');
+    seterrorMessageForpassword('');
+
+    if ((await errmessage) === '가입된 아이디가 없습니다') {
+      seterrorMessageForId('가입된 아이디가 없습니다.');
+    } else if ((await errmessage) === '패스워드가 일치하지 않습니다') {
+      seterrorMessageForpassword('비밀번호가 일치하지 않습니다.');
+    }
+  }
+
   return (
     <>
       <Box
@@ -37,13 +52,13 @@ export const UserLoginPage = () => {
       />
       <Box
         bgImage="url(/assets/account/background/account_bottom.png)"
-        bgSize="contain"
-        bgRepeat="no-repeat"
         w="50vw"
-        h="60vh"
+        h="70vh"
         pos="fixed"
         left={0}
-        bottom={0}
+        bottom="0px"
+        bgSize="contain"
+        bgRepeat="no-repeat"
       />
       <Flex
         flexDirection="column"
@@ -71,8 +86,8 @@ export const UserLoginPage = () => {
         <ColorModeSwitcher pos="fixed" top={3} right={36} />
 
         <VStack flexDir="column" spacing={16} justifyContent="center" alignItems="center">
-          <VStack spacing="4px">
-            <Image width="32px" src={image} />
+          <VStack spacing="8px">
+            <Image width="40px" src={image} />
             <Box fontSize="30px" fontWeight="800">
               로그인
             </Box>
@@ -84,7 +99,7 @@ export const UserLoginPage = () => {
               extra="백준 연동을 위해 백준 아이디로 입력해주세요."
               type="text"
               mb="20px"
-              errorMessage=""
+              errorMessage={errorMessageForId}
               children_input={
                 <Input
                   type="text"
@@ -101,7 +116,7 @@ export const UserLoginPage = () => {
               extra=""
               type=""
               mb="20px"
-              errorMessage=""
+              errorMessage={errorMessageForpassword}
               value={id}
               children_input={
                 <Input
@@ -125,7 +140,7 @@ export const UserLoginPage = () => {
               variant="primary"
               size="cxl"
               type="submit"
-              onClick={() => loginAPI(id, password)}
+              onClick={() => loginSubmit(id, password)}
             >
               로그인
             </Button>

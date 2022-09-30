@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import myReducer from './myReducer';
+import ghAPIReducer from './ghAPIReducer';
 
 const rootReducer = combineReducers({
-  myReducer,
+  ghAPIReducer,
 });
 
 export default rootReducer;

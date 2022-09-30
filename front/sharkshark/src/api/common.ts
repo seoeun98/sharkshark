@@ -27,12 +27,12 @@ export const getUserID = () => {
   return decoded.id;
 };
 
-<<<<<<< HEAD
 export const logout = () => {
   localStorage.removeItem('access_token');
   localStorage.setItem('isLogin', 'false');
   window.location.href = '/login';
-=======
+};
+
 // github: repo 이미지 url 가져오기
 export const githubRepoImage = async (repo: string, token: string) => {
   let url = '';
@@ -103,5 +103,4 @@ export const githubUpload = (
       console.log(err);
       alert('githubUpload failed');
     });
->>>>>>> 122af942c6fbb03acac580c26be894b178a56fa1
 };

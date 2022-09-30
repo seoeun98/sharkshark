@@ -1,3 +1,4 @@
+import datetime
 from typing import Optional
 
 from pydantic import BaseModel
@@ -11,7 +12,6 @@ class getUser(BaseModel):
     token: str
     git: str
     dir: str
-    msg : str
 
     class Config:
         orm_mode = True
@@ -37,14 +37,20 @@ class Problem(BaseModel):
         orm_mode = True
 
 class Output(BaseModel) :
-    msg : Optional[str] = None
-    access_token : Optional[str] = None
+    msg: Optional[str] = None
+    access_token: Optional[str] = None
 
+class Period(BaseModel) :
+    startDate: datetime.date
+    endDate: datetime.date
 
-# class UserCreate(User):
-#     pw: str
-#
-# class showUser(UserBase):
-#
-#     class Config:
-#         orm_mode = True
+class proCntPerDay(BaseModel):
+    proCnt:int
+    day: datetime.date
+
+class authorizationCode(BaseModel):
+    authorizationCode:str
+
+class getMockRes(BaseModel):
+    probNo: int
+    start: str

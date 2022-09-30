@@ -9,7 +9,7 @@ def create_user(user: schemas.User, db: Session):
     check_user = db.query(models.User).filter(models.User.id == user.id).first()
 
     # 이미 존재하는 유저면 리턴
-    if check_user is not None: return 0
+    if check_user is not None: return False
 
     hashed_pw = bcrypt.hashpw(user.pw.encode('utf-8'), bcrypt.gensalt())
     db_user = models.User(id=user.id, pw=hashed_pw)
@@ -21,14 +21,16 @@ def create_user(user: schemas.User, db: Session):
     db.delete(db_msg)
     db.commit()
 
-    return 1
+    return True
 
 def login_user(user: schemas.User, db: Session):
     db_user = db.query(models.User).filter(models.User.id == user.id).first()
 
-    if db_user and bcrypt.checkpw(user.pw.encode('utf-8'), db_user.pw.encode('utf-8')):
-        return db_user
-    else : return None
+    if not db_user:
+        return "no user"
+    elif not bcrypt.checkpw(user.pw.encode('utf-8'), db_user.pw.encode('utf-8')) :
+        return "not correct pw"
+    else : return db_user
 
 def get_by_id(id: str, db: Session):
     db_user = db.query(models.User).filter(models.User.id == id).first()
@@ -62,6 +64,8 @@ def check_message(id: str, msg: str, db : Session) :
     db_user = db.query(models.userMsg).filter(models.userMsg.userId == id).first()
 
     if db_user:
+        print(msg)
+        print(db_user.userMsg)
         return msg.find(db_user.userMsg)
     return -1
 
@@ -71,10 +75,17 @@ def update_user(user: schemas.updateUser, db: Session):
     db_user = db.query(models.User).filter(models.User.id == user.id)
 
     if db_user.first():
-        db_user.update({'pw': bcrypt.hashpw(user.pw.encode('utf-8'), bcrypt.gensalt()), 'git': user.git, 'dir': user.dir, 'token': user.token})
+        if user.pw:
+            db_user.update({'pw': bcrypt.hashpw(user.pw.encode('utf-8'), bcrypt.gensalt())})
+        if user.token:
+            db_user.update({'token': user.token})
+        if user.git:
+            db_user.update({'git':user.git})
+        if user.dir:
+            db_user.update({'dir':user.dir})
         db.commit()
-        return 1
-    else: return 0
+        return True
+    else: return False
 
 def delete_user(user: schemas.User, db: Session):
     db_user = db.query(models.User).filter(models.User.id == user.id)
@@ -91,4 +102,3 @@ def get_all_user(db: Session):
     if not db_users:
         return None
     else: return db_users
-

@@ -33,3 +33,12 @@ export type rival = {
   rank?: number;
   organization?: string;
 };
+
+export type RivalInfo = {
+  id: string;
+  tier: string;
+  class: string;
+  totalSolvedCount: number;
+  rank: number;
+  rating: number;
+};

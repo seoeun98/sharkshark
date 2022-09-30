@@ -32,9 +32,9 @@ const getOutlineVariant = (props: Record<string, any>) => {
         boxShadow: `0 0 0 1.5px ${colors.primary.cyan0}`,
       },
       _disabled: {
-        opacity: 1,
         background: mode('neutral.50', 'neutral.800')(props),
         borderColor: mode('neutral.50', 'neutral.400')(props),
+        color: 'primary.cyan50',
         cursor: 'not-allowed',
         _placeholder: {
           color: mode('neutral.25', '#363A3F')(props),

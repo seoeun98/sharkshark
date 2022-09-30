@@ -1,6 +1,7 @@
 import { Box, Button, Center, Flex, Spacer, useColorModeValue } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaArrowLeft, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { probsByTagAPI } from '../../../api/auth';
 import { getUserID } from '../../../api/common';
 import { Problem } from '../../../types/DataTypes';
 import { Paragraph } from '../../common/Paragraph';
@@ -20,6 +21,15 @@ export const QuizMenuTag = () => {
   ];
 
   const [active, setActive] = useState(0);
+  const [list, setList] = useState<Problem[]>([]);
+
+  const getList = async (idx: number) => {
+    setList(await probsByTagAPI(Tags[active].split(' ')[1]));
+  };
+
+  useEffect(() => {
+    getList(active);
+  }, [active]);
 
   return (
     <Paragraph
@@ -33,7 +43,7 @@ export const QuizMenuTag = () => {
       }
     >
       <QuizTagCarousel tags={Tags} active={active} setActive={setActive} />
-      <QuizTable />
+      <QuizTable list={list} />
     </Paragraph>
   );
 };

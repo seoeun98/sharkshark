@@ -85,6 +85,22 @@ export const probsByCategoryAPI = async () => {
   return list;
 };
 
+// 유형별 선택 시 문제 추천
+export const probsByTagAPI = async (tagName: string) => {
+  let list: Array<Problem> = [];
+  await authAxios
+    .get(`/prob/tags/${tagName}`)
+    .then(res => {
+      console.log(res);
+      list = res.data;
+    })
+    .catch(err => {
+      console.log(err);
+      alert('probsByTagAPI failed');
+    });
+  return list;
+};
+
 // 모의 코테용 문제 목록
 export const probsForTestAPI = async () => {
   let list: Array<Problem> = [];

@@ -1,16 +1,17 @@
-import requests
+import requests, copy
 from bs4 import BeautifulSoup
 
 class result:
-    def __init__(self, solved, list: str):
+    def __init__(self, solved, time_sort_list: list, memory_sort_list: list):
         self.solved = solved
-        self.list = list
+        self.time_sort_list = time_sort_list
+        self.memory_sort_list = memory_sort_list
 
 class user:
-    def __init__(self, userId, probNo, meory, time, lang, timeStamp):
+    def __init__(self, userId, probNo, memory, time, lang, timeStamp):
         self.userId = userId
         self.probNo = probNo
-        self.meory = meory
+        self.memory = memory
         self.time = time
         self.lang = lang
         self.timeStamp =timeStamp
@@ -25,22 +26,29 @@ class detail:
         pass
 
 # 채점현황 크롤링
-def get_status_crawling(userId : str, probNo, langNum=-1, start='1900-01-01') -> list:
+def get_status_crawling(userId : str, probNo, langNum=-1, start='1900-01-01', page=1) -> list:
     url = f'https://www.acmicpc.net/status?problem_id={probNo}&user_id={userId}&language_id={langNum}&result_id=4&from_problem=1'
     headers = {'User-Agent': "Mediapartners-Google"}
     # 결과를 담을 배열
     statusRes = []
-  
-    response = requests.request("GET", url, headers=headers)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    problems = soup.find_all('tr')
+    for i in range(0, page):  
+        response = requests.request("GET", url, headers=headers)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        problems = soup.find_all('tr')
 
-    for i in range(1, len(problems)):
-        if problems[i].select_one('td:nth-of-type(9) > a')['title'] < start:
-            break;
+        # 페이지 내의 정보 리스트에 추가
+        for i in range(1, len(problems)):
+            if problems[i].select_one('td:nth-of-type(9) > a')['title'] < start:
+                break;
+            try:
+                statusRes.append([problems[i].select_one('td:nth-of-type(2) > a').text, problems[i].select_one('td:nth-of-type(3) > a').text, int(problems[i].select_one('td:nth-of-type(5)').text), int(problems[i].select_one('td:nth-of-type(6)').text), problems[i].select_one('td:nth-of-type(7)').text, problems[i].select_one('td:nth-of-type(9) > a')['title']])
+            except:            
+                return statusRes
+
+        # 다음 페이지
         try:
-            statusRes.append([problems[i].select_one('td:nth-of-type(2) > a').text, problems[i].select_one('td:nth-of-type(3) > a').text, int(problems[i].select_one('td:nth-of-type(5)').text), int(problems[i].select_one('td:nth-of-type(6)').text), problems[i].select_one('td:nth-of-type(7)').text, problems[i].select_one('td:nth-of-type(9) > a')['title']])
-        except:            
+            url = 'https://www.acmicpc.net' + soup.find('a', {'id':'next_page'})['href']
+        except: 
             return statusRes
     return statusRes
 
@@ -56,28 +64,36 @@ def get_mockRes(userId : str, probNo, start):
             langNum = 1001
         elif "Java" in lang:
             langNum = 1002
-        elif "Python" in lang | "PyPy" in lang:
+        elif "Python" in lang or "PyPy" in lang:
             langNum = 1003
         elif "C" in lang:
             langNum = 1004
         elif "Rust" in lang:
             langNum = 1005
 
-        list2 = get_status_crawling('', '1987', langNum)
-        # 코드 실행 속도 순, 같으면 메모리 낮은 순 정렬
-        list2.sort(key=lambda x: (x[3], x[2]))   
+        res_list = get_status_crawling('', probNo, langNum, '1900-01-01', 3)
 
         res = []
-        for l in list2[0:5]:
-            # user(userId, probNo, meory, time, lang, timeStamp)
+        for l in res_list:
+            # user(userId, probNo, memory, time, lang, timeStamp)
             res.append(user(l[0], l[1], l[2], l[3], l[4], l[5]))
 
-        res2 = result(True, res)
+        time_sort_list = res
+        memory_sort_list = copy.deepcopy(res)
+
+        # 코드 실행 속도 순 정렬
+        time_sort_list.sort(key=lambda x: (x.time, x.memory))
+        
+        # 메모리 크기 순 정렬
+        memory_sort_list.sort(key=lambda x: (x.memory, x.time))
+        
+
+        res2 = result(True, time_sort_list, memory_sort_list)
         return res2
 
     # 문제를 못 풀었을 경우
     else:
-        res2 = result(False, "")
+        res2 = result(False, [], [])
         return res2
 
 # 문제 상세내용 크롤링

@@ -1,5 +1,5 @@
 from typing import Optional
-import pandas as pd
+# import pandas as pd
 
 from fastapi import APIRouter, Depends, Header, HTTPException
 from sqlalchemy.orm import Session
@@ -66,3 +66,12 @@ def get_prob_detail(probNo: int, user: str = Depends(jwtRepository.JWTBearer()))
         return detail
     else:
         return HTTPException(status_code=401, detail="no item")
+
+@router.get("/tags/{tagName}")
+def get_probs_by_tags(tagName: str, db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())):
+    userId = JWTRepo.decode_token(user)
+    result = problemsRepository.get_probs_by_tag(userId, tagName, db);
+
+    if result:
+        return result
+    raise HTTPException(status_code=401, detail="no item")

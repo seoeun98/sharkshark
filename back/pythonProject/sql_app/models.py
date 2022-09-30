@@ -49,7 +49,7 @@ class BJ_user(Base):
     userId = Column(VARCHAR(45), unique=True)
     solvedCount = Column(Integer)
     userClass = Column(Integer)
-    tier = Column(VARCHAR(45)) 
+    tier = Column(Integer)
     rating = Column(Integer)
     ratingByProblemsSum = Column(Integer)
     ratingByClass = Column(Integer)

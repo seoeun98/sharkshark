@@ -50,7 +50,7 @@ export const RecQuizPage = () => {
 
       {/* main body */}
       <Box>
-        <Tabs variant="unstyled" orientation="vertical" mx="10vw" my="6vh">
+        <Tabs variant="unstyled" orientation="vertical" mx="10vw" my="6vh" isLazy>
           <Sidebar first="전체" second="사용자 기반 추천 문제" third="유형별 추천 문제" />
 
           <TabPanels ml="5vw">

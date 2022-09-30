@@ -1,20 +1,16 @@
 // Chakra imports
 import {
   Box,
-  Button,
   chakra,
   Flex,
   FormControl,
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  Input,
   InputGroup,
   InputLeftElement,
-  InputRightElement,
   Text,
 } from '@chakra-ui/react';
-import { useState } from 'react';
 import { FaUserAlt, FaLock } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -23,17 +19,15 @@ export const CustomInput = (props: {
   id: string;
   label: any;
   extra: any;
-  placeholder: any;
   type: any;
   mb: any;
   errorMessage: any;
+  children_input: any;
+  children_button: any;
 }) => {
-  const { id, label, extra, placeholder, type, mb, errorMessage } = props;
+  const { id, label, extra, errorMessage, children_input, children_button } = props;
   const CFaUserAlt = chakra(FaUserAlt);
   const CFaLock = chakra(FaLock);
-  const [showPassword, setShowPassword] = useState(false);
-
-  const handleShowClick = () => setShowPassword(!showPassword);
 
   return (
     <FormControl>
@@ -58,12 +52,8 @@ export const CustomInput = (props: {
               pointerEvents="none"
               children={<CFaLock fontSize="14px" color="neutral.200" />}
             />
-            <Input type={showPassword ? 'text' : 'password'} id={id} placeholder={placeholder} />
-            <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={handleShowClick} variant="secondary">
-                {showPassword ? 'Hide' : 'Show'}
-              </Button>
-            </InputRightElement>
+            {children_input}
+            {children_button}
           </InputGroup>
         ) : (
           <InputGroup>
@@ -71,7 +61,7 @@ export const CustomInput = (props: {
               pointerEvents="none"
               children={<CFaUserAlt fontSize="14px" color="neutral.200" />}
             />
-            <Input type={type} id={id} placeholder={placeholder} />
+            {children_input}
           </InputGroup>
         )}
         {errorMessage !== '' ? (

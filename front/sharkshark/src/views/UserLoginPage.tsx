@@ -1,14 +1,26 @@
-import { Box, Button, Flex, Image, VStack, Center, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  VStack,
+  Center,
+  Text,
+  Input,
+  InputRightElement,
+} from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { loginAPI } from '../api/default';
 import { ColorModeSwitcher } from '../ColorModeSwitcher';
 import { CustomInput } from '../components/common/Input';
-import { url } from 'inspector';
 
 export const UserLoginPage = () => {
-  const [id] = useState('');
-  const [password] = useState('');
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const handleShowClick = () => setShowPassword(!showPassword);
+
   const image = '/assets/logo/symbol.png';
 
   return (
@@ -70,19 +82,42 @@ export const UserLoginPage = () => {
               id="userId"
               label="아이디"
               extra="백준 연동을 위해 백준 아이디로 입력해주세요."
-              placeholder="백준 아이디 입력"
               type="text"
               mb="20px"
               errorMessage=""
+              children_input={
+                <Input
+                  type="text"
+                  placeholder="백준 아이디 입력"
+                  value={id}
+                  onChange={e => setId(e.target.value)}
+                />
+              }
+              children_button=""
             />
             <CustomInput
               id="password"
               label="비밀번호"
               extra=""
-              placeholder="비밀번호 입력"
               type=""
               mb="20px"
               errorMessage=""
+              value={id}
+              children_input={
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="비밀번호 입력"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                />
+              }
+              children_button={
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={handleShowClick} variant="secondary">
+                    {showPassword ? 'Hide' : 'Show'}
+                  </Button>
+                </InputRightElement>
+              }
             />
           </VStack>
           <Center>

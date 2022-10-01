@@ -17,11 +17,11 @@ export type UserInfo = {
 };
 
 export type rival = {
-  tier: number;
-  totalSolvedCnt?: number;
+  tier: string;
   userId: string;
+  userClass: number;
+  totalSolvedCnt?: number;
   solvedCount?: number;
-  userClass?: number;
   rating?: number;
   ratingByProblemsSum?: number;
   ratingByClass?: number;
@@ -32,4 +32,6 @@ export type rival = {
   maxStreak?: number;
   rank?: number;
   organization?: string;
+  no?: number;
+  problems?: string;
 };

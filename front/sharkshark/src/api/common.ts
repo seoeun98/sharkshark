@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import { Markdown } from '../types/DataTypes';
 
 // const SERVER_ADDRESS = 'http://j7b205.p.ssafy.io/api';
 const SERVER_ADDRESS = 'http://127.0.0.1:8000';
@@ -26,6 +27,31 @@ export const getUserID = () => {
   const decoded = JSON.parse(atob(token.split('.')[1]));
   return decoded.id;
 };
+
+export const buildMarkDown = (md: Markdown) => {
+  const content =
+    `# <img src="https://static.solved.ac/tier_small/${md.tier}.svg" alt="tier" height="32px" /> ${md.title} - ${md.no} \n\n` +
+    `## 문제\n\n` +
+    `> https://www.acmicpc.net/problem/${md.no}\n\n` +
+    `### 분류\n\n` +
+    `${md.tags?.split(',').map(text => text + ', ')}\n\n` +
+    `### 문제 설명\n\n` +
+    `${md.problem_description}\n\n` +
+    `#### 입력\n\n` +
+    `${md.input_description}\n\n` +
+    `#### 출력\n\n` +
+    `${md.output_description}\n\n` +
+    `#### 예제\n\n` +
+    `${md.example}\n\n` +
+    `####\n\n` +
+    `## 풀이 코드\n\n` +
+    `\`\`\`${md.lang}\n` +
+    `${md.code}\n\n` +
+    `\`\`\`${md.lang}\n`;
+
+  return content;
+};
+//===============================
 
 // github: repo 이미지 url 가져오기
 export const githubRepoImage = async (repo: string, token: string) => {

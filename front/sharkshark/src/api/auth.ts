@@ -1,4 +1,4 @@
-import { Problem, UserInfo } from '../types/DataTypes';
+import { Problem, ProblemDetail, UserInfo } from '../types/DataTypes';
 import { authAxios } from './common';
 
 // 계정 정보 조회
@@ -131,4 +131,26 @@ export const probsRecentAPI = async () => {
       alert('probsRecentAPI failed');
     });
   return list;
+};
+
+// 블로그 포스팅용 문제 상세
+export const probsDetailAPI = async (probNo: number) => {
+  let detail: ProblemDetail = {
+    probNo: 0,
+    problem_description: '',
+    input_description: '',
+    output_description: '',
+    example: '',
+  };
+  await authAxios
+    .get(`/prob/detail/${probNo}`)
+    .then(res => {
+      console.log(res);
+      detail = res.data;
+    })
+    .catch(err => {
+      console.log(err);
+      alert('probsDetailAPI failed');
+    });
+  return detail;
 };

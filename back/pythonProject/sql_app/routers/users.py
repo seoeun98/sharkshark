@@ -10,6 +10,7 @@ import sql_app.models
 from sql_app import schemas
 from sql_app.database import get_db
 from sql_app.repository import userRepository, jwtRepository
+from sql_app.service import crowling
 
 from util import user_message_crawling
 
@@ -43,8 +44,15 @@ def regist(request: schemas.User, db: Session = Depends(get_db)):
 def pass_message(id, db: Session = Depends(get_db)):
     # 백준 유저인지 확인
     user_msg = user_message_crawling(id)
+    # 백준 유저가 아닐 경우
     if user_msg == 'Not-Found-User':
         return HTTPException(status_code=401, detail="not BOJ user")        
+    # solved.ac 연동이 되어있는지 확인
+    if not crowling.is_in_solvedac(id):
+        return HTTPException(status_code=401, detail="not solved.ac user")
+    # DB(bj user 테이블)에 없는 아이디일 경우 
+    if not userRepository.get_by_id(id, db):
+        return HTTPException(status_code=401, detail="not on bj_user")
 
     user = userRepository.get_by_id(id, db)
     result = userRepository.set_message(id, db)

@@ -1,6 +1,6 @@
 import Wave from 'react-wavify';
 import styled from '@emotion/styled';
-import { Center, Box } from '@chakra-ui/react';
+import { Center } from '@chakra-ui/react';
 
 const WaveContainer = styled.div`
   position: absolute;

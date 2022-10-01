@@ -6,45 +6,46 @@ import {
   Box,
   Text,
   Button,
-  useDisclosure,
   Collapse,
   Spacer,
   Flex,
 } from '@chakra-ui/react';
-import { createRivalAPI, deleteRivalAPI } from '../../../api/rival';
+import { createRivalAPI } from '../../../api/rival';
 import { rival } from '../../../types/DataTypes';
 import { ColorText } from '../../common/ColorText';
 import { BasicInfoLayout } from './BasicInfoLayout';
 
-export const RivalBasicCard = (props: {
+export const RivalCarouselCard = (props: {
   RivalInfo: rival;
-  Rectype: string;
   bottompropFunction: (arg0: string) => void;
+  active: boolean;
 }) => {
-  const { RivalInfo, Rectype } = props;
-  const { isOpen, onToggle } = useDisclosure();
+  const { RivalInfo, active } = props;
   let children = {};
-  if (isOpen) {
+  if (active) {
     children = { bgGradient: 'linear(to-r, primary.cyan50, primary.purple0)' };
   } else {
     children = { bgGradient: '' };
   }
 
   return (
-    <Box>
+    <Box
+      style={{
+        transition: 'all 0.3s ease-out',
+      }}
+      h="600px"
+      mb="300px"
+    >
       <Box
         w="360px"
         borderRadius="10px"
         bg={useColorModeValue('#F1F3F5', 'neutral.500')}
+        boxShadow="dark-lg"
         {...children}
-        _hover={{
-          bgGradient: 'linear(to-r, #7B67BB, #4BA6B2)',
-          boxShadow: 'dark-lg',
-        }}
       >
         <Box>
-          <VStack spacing={6} onClick={onToggle}>
-            {!isOpen ? (
+          <VStack spacing={6}>
+            {!active ? (
               <HStack mt="30px" mb="50px">
                 <BasicInfoLayout
                   typeName="rival"
@@ -64,7 +65,7 @@ export const RivalBasicCard = (props: {
               </HStack>
             )}
 
-            <Collapse in={isOpen} animateOpacity={false}>
+            <Collapse in={active} animateOpacity={false}>
               <Box
                 p="16px"
                 bg={useColorModeValue('neutral.50', 'neutral.800')}
@@ -92,7 +93,7 @@ export const RivalBasicCard = (props: {
                     mx="8px"
                     bg={useColorModeValue('white', 'black')}
                     borderRadius="10px"
-                    p="10px"
+                    p="8px"
                     w="6vw"
                   >
                     <VStack spacing={1}>
@@ -163,39 +164,22 @@ export const RivalBasicCard = (props: {
       </Box>
       <Center mt="-30px" w="360px">
         <Box bg={useColorModeValue('white', 'black')} w="128px" borderRadius="36px">
-          {Rectype === 'nonRegistered' ? (
-            <Button
-              py="16px"
-              border="0px"
-              variant="secondary"
-              size="csm"
-              borderRadius="36px"
-              fontSize="14px"
-              fontWeight="800"
-              bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
-              bgClip="text"
-              boxShadow="base"
-              onClick={() => createRivalAPI(RivalInfo.userId)}
-            >
-              라이벌 등록
-            </Button>
-          ) : (
-            <Button
-              py="16px"
-              border="0px"
-              variant="secondary"
-              size="csm"
-              borderRadius="36px"
-              fontSize="14px"
-              fontWeight="800"
-              bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
-              bgClip="text"
-              boxShadow="base"
-              onClick={() => deleteRivalAPI(RivalInfo.userId)}
-            >
-              라이벌 해지
-            </Button>
-          )}
+          <Button
+            disabled={!active}
+            py="16px"
+            border="0px"
+            variant="secondary"
+            size="csm"
+            borderRadius="36px"
+            fontSize="14px"
+            fontWeight="800"
+            bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
+            bgClip="text"
+            boxShadow="base"
+            onClick={() => createRivalAPI(RivalInfo.userId)}
+          >
+            라이벌 등록
+          </Button>
         </Box>
       </Center>
     </Box>

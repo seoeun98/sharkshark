@@ -1,11 +1,12 @@
 import { Box, useColorModeValue, Flex, Center, HStack, Button } from '@chakra-ui/react';
+import { rival } from '../../../types/DataTypes';
 import { BasicInfoLayout } from './BasicInfoLayout';
-import { getUserID } from '../../../api/common';
 
 export const RivalPreviewCard = (props: {
-  userInfo: any;
+  RivalInfo: rival;
   bottompropFunction: (arg0: string) => void;
 }) => {
+  const { RivalInfo } = props;
   return (
     <Box>
       <Box py="18px">
@@ -13,9 +14,9 @@ export const RivalPreviewCard = (props: {
           <HStack>
             <BasicInfoLayout
               typeName="rivalSmall"
-              level={17}
-              classCount="Class 4"
-              id={getUserID()}
+              level={RivalInfo.tier}
+              userClass={RivalInfo.userClass}
+              id={RivalInfo.userId}
             />
           </HStack>
           <Center bg={useColorModeValue('white', 'black')} w="100px" h="40px" borderRadius="8px">

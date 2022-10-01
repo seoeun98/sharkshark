@@ -1,9 +1,9 @@
 import { GridItem, SimpleGrid } from '@chakra-ui/react';
 import { RivalBasicCard } from '../common/RivalBasicCard';
-import { getRivalAPI } from '../../../api/rival';
+import { getRivalAPI } from '../../../../api/auth/rival';
 import React, { useState, useEffect } from 'react';
 import NonRival from './NonRival';
-import { rival } from '../../../types/DataTypes';
+import { rival } from '../../../../types/DataTypes';
 
 export const RivalList = (props: { middlePropFunction: (arg0: string) => void }) => {
   const [rivalList, setrivalList] = useState<rival[]>([]);

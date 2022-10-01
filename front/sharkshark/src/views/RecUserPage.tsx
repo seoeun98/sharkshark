@@ -9,10 +9,10 @@ import {
 } from '@chakra-ui/react';
 import { Sidebar } from '../components/common/Sidebar';
 import { getUserID } from '../api/common';
-import { RivalListDefault } from '../components/recRival/setting/RivalListDefault';
+import { RivalListDefault } from '../components/layouts/recRival/setting/RivalListDefault';
 import { SetStateAction, useState } from 'react';
-import RivalRecMain from '../components/recRival/recommend/RivalRecMain';
-import { RivalCompareDetail } from '../components/recRival/recommend/RivalCompareDetail';
+import RivalRecMain from '../components/layouts/recRival/recommend/RivalRecMain';
+import { RivalCompareDetail } from '../components/layouts/recRival/recommend/RivalCompareDetail';
 
 export const RecUserPage = () => {
   const [tabIndex, setTabIndex] = useState(0);

@@ -1,6 +1,6 @@
 import { Box, Button, HStack, useColorModeValue } from '@chakra-ui/react';
-import { getUserID } from '../../../api/common';
-import { ColorText } from '../../common/ColorText';
+import { getUserID } from '../../../../api/common';
+import { ColorText } from '../../../common/ColorText';
 import { RivalList } from './RivalList';
 
 export const RivalListDefault = (props: { topPropFunction: (arg0: string) => void }) => {

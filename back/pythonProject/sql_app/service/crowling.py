@@ -149,3 +149,13 @@ def get_prob_detail(probNo : int):
   # 통신이 제대로 이루어지지 않은 경우
   else:
       return None
+
+def is_in_solvedac(userId : str):
+    url = f'https://solved.ac/api/v3/user/show?handle={userId}'
+    headers = { "Content-Type": "application/json" }
+    response = requests.request("GET", url, headers=headers)
+
+    if response.status_code == 404:
+        return False
+    else:        
+        return True

@@ -1,6 +1,6 @@
 import { Box, Center, HStack, useColorModeValue } from '@chakra-ui/react';
 import { useState } from 'react';
-import { rival } from '../../../types/DataTypes';
+import { rival } from '../../../../types/DataTypes';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { RivalCarouselCard } from '../common/RivalCarouselCard';
 

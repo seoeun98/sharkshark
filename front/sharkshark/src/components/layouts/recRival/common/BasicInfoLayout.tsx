@@ -1,6 +1,6 @@
 import { Center, VStack, useColorModeValue, Box } from '@chakra-ui/react';
-import { Tier } from '../../common/Tier';
-import { ColorText } from '../../common/ColorText';
+import { Tier } from '../../../common/Tier';
+import { ColorText } from '../../../common/ColorText';
 
 export const BasicInfoLayout = (props: {
   typeName: string;

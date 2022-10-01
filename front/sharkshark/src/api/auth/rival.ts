@@ -1,5 +1,5 @@
-import { rival } from '../types/DataTypes';
-import { authAxios } from './common';
+import { rival } from '../../types/DataTypes';
+import { authAxios } from '../common';
 
 // 추천 사용자 목록 조회
 export const getRecUserAPI = async () => {

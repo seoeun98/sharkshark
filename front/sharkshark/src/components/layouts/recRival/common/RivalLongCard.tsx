@@ -10,9 +10,9 @@ import {
   HStack,
   Button,
 } from '@chakra-ui/react';
-import { createRivalAPI } from '../../../api/rival';
-import { rival } from '../../../types/DataTypes';
-import { ColorText } from '../../common/ColorText';
+import { createRivalAPI } from '../../../../api/auth/rival';
+import { rival } from '../../../../types/DataTypes';
+import { ColorText } from '../../../common/ColorText';
 import { BasicInfoLayout } from './BasicInfoLayout';
 
 export const RivalLongCard = (props: {

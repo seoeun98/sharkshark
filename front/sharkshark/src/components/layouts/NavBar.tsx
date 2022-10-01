@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 import { ColorText } from '../common/ColorText';
 import { getUserID, logout } from '../../api/common';
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 
 const menu = [
   { url: '/', text: 'HOME' },
@@ -43,7 +43,7 @@ export const NavBar = (isLoggedIn: any) => {
 
   // eslint-disable-next-line react/destructuring-assignment
   const [isLogin, setLoginin] = useState(isLoggedIn.status);
-
+  const [tabIndex, setTabIndex] = useState(0);
   useEffect(() => {
     const userId = getUserID();
     if (userId !== '') {
@@ -57,6 +57,9 @@ export const NavBar = (isLoggedIn: any) => {
     logout();
     setLoginin(false);
   }
+  const handleTabsChange = (index: SetStateAction<number>) => {
+    setTabIndex(index);
+  };
 
   return (
     <div>
@@ -80,7 +83,13 @@ export const NavBar = (isLoggedIn: any) => {
             />
           ) : null}
           <HStack alignItems="center">
-            <Tabs variant="unstyled" isLazy={true} isManual>
+            <Tabs
+              variant="unstyled"
+              isLazy={true}
+              isManual
+              index={tabIndex}
+              onChange={handleTabsChange}
+            >
               <TabList as="nav" display={{ base: 'none', md: 'flex' }}>
                 {isLogin ? (
                   <>

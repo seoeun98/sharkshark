@@ -1,9 +1,24 @@
 import { HStack, Box, Flex, Center, VStack, Text, useColorModeValue } from '@chakra-ui/react';
-import { getUserID } from '../../../api/common';
 import { BasicInfoLayout } from './BasicInfoLayout';
 import { ColorText } from '../../common/ColorText';
+import { getRivalInfoAPI } from '../../../api/rival';
+import { useEffect, useState } from 'react';
+import { getUserID } from '../../../api/common';
+import { rival } from '../../../types/DataTypes';
 
 export const UserBasicCard = () => {
+  const [userInfo, setuserInfo] = useState<rival>({ tier: '0', userId: '', userClass: 0 });
+
+  const fetchuserInfo = async () => {
+    setuserInfo(await getRivalInfoAPI(getUserID()));
+  };
+
+  // 일단 유저 정보 뽑기 위해 라이벌 정보 조회로 가져옴.
+  // TODO : 수정 필요
+  useEffect(() => {
+    fetchuserInfo();
+  }, []);
+
   return (
     <Flex>
       <HStack
@@ -11,10 +26,15 @@ export const UserBasicCard = () => {
         maxW="380px"
         h="140px"
         borderRadius="10px"
-        pl="50px"
-        pr="150px"
       >
-        <BasicInfoLayout typeName="user" level={17} classCount="Class 4" id={getUserID()} />
+        <Flex ml="50px" mr="160px">
+          <BasicInfoLayout
+            typeName="user"
+            level={userInfo.tier}
+            userClass={userInfo.userClass}
+            id={getUserID()}
+          />
+        </Flex>
       </HStack>
       <HStack ml="-100px" spacing={3}>
         {/* solved */}
@@ -27,14 +47,14 @@ export const UserBasicCard = () => {
         >
           <VStack spacing={1}>
             <Text
-              fontSize="14px"
+              fontSize="16px"
               fontWeight="600"
               color={useColorModeValue('neutral.700', 'neutral.50')}
             >
-              해결한 문제 수
+              해결한 문제
             </Text>
             <Box fontSize="28px" fontWeight="800">
-              <ColorText>271</ColorText>
+              <ColorText>{userInfo.solvedCount}</ColorText>
             </Box>
           </VStack>
         </Center>
@@ -49,14 +69,14 @@ export const UserBasicCard = () => {
         >
           <VStack spacing={1}>
             <Text
-              fontSize="14px"
+              fontSize="16px"
               fontWeight="600"
               color={useColorModeValue('neutral.700', 'neutral.50')}
             >
               랭크
             </Text>
             <Box fontSize="28px" fontWeight="800">
-              <ColorText>7129</ColorText>
+              <ColorText>{userInfo.rank}</ColorText>
             </Box>
           </VStack>
         </Center>
@@ -71,14 +91,14 @@ export const UserBasicCard = () => {
         >
           <VStack spacing={1}>
             <Text
-              fontSize="14px"
+              fontSize="16px"
               fontWeight="600"
               color={useColorModeValue('neutral.700', 'neutral.50')}
             >
-              상위 100제 난이도 합
+              레이팅
             </Text>
             <Box fontSize="28px" fontWeight="800">
-              <ColorText>1165</ColorText>
+              <ColorText>{userInfo.rating}</ColorText>
             </Box>
           </VStack>
         </Center>

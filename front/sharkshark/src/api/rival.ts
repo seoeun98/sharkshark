@@ -1,26 +1,29 @@
+import { rival } from '../types/DataTypes';
 import { authAxios } from './common';
 
 // 추천 사용자 목록 조회
-export const getRecUserAPI = () => {
-  authAxios
+export const getRecUserAPI = async () => {
+  let rivalRecList: Array<rival> = [];
+  await authAxios
     .get('/rival')
     .then(res => {
-      console.log(res.data);
+      rivalRecList = res.data;
     })
     .catch(err => {
       console.log(err);
       alert('라이벌 추천 목록 조회 실패');
     });
+  return rivalRecList;
 };
 
 // 등록한 라이벌 목록 조회
-export const getRivalAPI = () => {
-  let rivalList: never[] = [];
-  authAxios
+export const getRivalAPI = async () => {
+  let rivalList: Array<rival> = [];
+  await authAxios
     .get('/rival/list')
     .then(res => {
-      console.log(res.data);
-      rivalList = res.data.id;
+      rivalList = res.data;
+      console.log(rivalList);
     })
     .catch(err => {
       console.log(err);
@@ -45,9 +48,10 @@ export const createRivalAPI = (id: string) => {
 // 라이벌 삭제
 export const deleteRivalAPI = (id: string) => {
   authAxios
-    .post(`/rival/${id}`)
+    .delete(`/rival/${id}`)
     .then(res => {
       console.log(res.data);
+      alert('라이벌 해지가 완료되었습니다.');
     })
     .catch(err => {
       console.log(err);
@@ -56,12 +60,15 @@ export const deleteRivalAPI = (id: string) => {
 };
 
 // 라이벌 정보 조회
-export const getRivalInfoAPI = (id: string) => {
-  let rivalInfo = {};
-  authAxios
+export const getRivalInfoAPI = async (id: string) => {
+  let rivalInfo: rival = {
+    tier: '0',
+    userId: '',
+    userClass: 0,
+  };
+  await authAxios
     .get(`/rival/${id}`)
     .then(res => {
-      console.log(res.data);
       rivalInfo = res.data;
     })
     .catch(err => {

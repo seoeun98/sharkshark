@@ -1,20 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Center, Flex, useColorModeValue, Text } from '@chakra-ui/react';
 import { getUserID } from '../../../api/common';
 import { UserBasicCard } from '../common/UserBasicCard';
 import RivalPreviewList from './RivalPreviewList';
 import RivalAllList from './RivalRecAllList';
 import RivalRecList from './RivalRecList';
+import { getRecUserAPI } from '../../../api/rival';
+import { rival } from '../../../types/DataTypes';
 
 export const RivalRecMain = (props: { propFunction: (arg0: string) => void }) => {
   const titlefw = useColorModeValue(700, 500);
   const subtitleColor = useColorModeValue('neutral.700', 'neutral.50');
   const subtitlefw = useColorModeValue(500, 300);
+
   const highFunction = (text: any) => {
     console.log(text);
     // eslint-disable-next-line react/destructuring-assignment
     props.propFunction(text);
   };
+
+  const [rivalRecList, setrivalRecList] = useState<rival[]>([]);
+
+  const fetchrivalRecList = async () => {
+    setrivalRecList(await getRecUserAPI());
+  };
+
+  useEffect(() => {
+    fetchrivalRecList();
+  }, []);
+
   return (
     <Box>
       {/* <Box children={comp} /> */}
@@ -32,11 +46,11 @@ export const RivalRecMain = (props: { propFunction: (arg0: string) => void }) =>
             클릭을 통해 자세한 정보를 볼 수 있답니다.
           </Box>
         </Box>
-        <RivalRecList middlePropFunction={highFunction} />
+        <RivalRecList middlePropFunction={highFunction} rivalRecList={rivalRecList} />
       </Box>
       <Box mt="8vh">
         <Flex>
-          <RivalAllList middlePropFunction={highFunction} />
+          <RivalAllList middlePropFunction={highFunction} rivalRecList={rivalRecList} />
           <Box w="24vw">
             <Flex justifyContent="space-between">
               <Box fontSize="24px" fontWeight={titlefw} mb="6vh">

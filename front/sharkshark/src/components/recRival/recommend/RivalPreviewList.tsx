@@ -1,29 +1,34 @@
 import { Box, Divider, useColorModeValue } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getRivalAPI } from '../../../api/rival';
+import { rival } from '../../../types/DataTypes';
 import { RivalPreviewCard } from '../common/RivalPreviewCard';
+import NonRival from '../setting/NonRival';
 
 const RivalPreviewList = (props: { middlePropFunction: (arg0: string) => void }) => {
+  const [rivalList, setrivalList] = useState<rival[]>([]);
+
+  const fetchRivalList = async () => {
+    setrivalList(await getRivalAPI());
+  };
+
+  useEffect(() => {
+    fetchRivalList();
+  }, []);
+
+  const bg = useColorModeValue('neutral.0', 'neutral.500');
+
   const middleFunction = (text: any) => {
     console.log(text);
     // eslint-disable-next-line react/destructuring-assignment
     props.middlePropFunction(text);
   };
-  const testdata = [
-    { id: 'id', className: 'Class 4', level: 18 },
-    { id: 'dddddd', className: 'Class 3', level: 18 },
-    { id: 'isfsfsd', className: 'Class 44', level: 18 },
-    { id: 'isfddf', className: 'Class 4', level: 18 },
-    { id: 'idsffd', className: 'Class 4', level: 18 },
-    { id: 'id', className: 'Class 4', level: 18 },
-    { id: 'id', className: 'Class 4', level: 18 },
-  ];
-  const bg = useColorModeValue('neutral.0', 'neutral.500');
 
   return (
     <Box
       ml="1vw"
       mr="1vw"
-      h="60vh"
+      maxH="60vh"
       bg={bg}
       borderRadius="10px"
       overflow="auto"
@@ -42,13 +47,17 @@ const RivalPreviewList = (props: { middlePropFunction: (arg0: string) => void })
       }}
     >
       <Box>
-        {testdata.map((item, index) => (
-          <Box m="12px" mr="8px" key={index}>
-            {index !== 0 ? <Divider /> : <></>}
+        {rivalList.length !== 0 ? (
+          rivalList.map((item: any, index: React.Key | null | undefined) => (
+            <Box m="12px" mr="8px" key={index}>
+              {index !== 0 ? <Divider /> : <></>}
 
-            <RivalPreviewCard bottompropFunction={middleFunction} userInfo={item} />
-          </Box>
-        ))}
+              <RivalPreviewCard bottompropFunction={middleFunction} RivalInfo={item} />
+            </Box>
+          ))
+        ) : (
+          <NonRival />
+        )}
       </Box>
     </Box>
   );

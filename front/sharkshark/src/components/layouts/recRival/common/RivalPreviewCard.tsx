@@ -1,5 +1,5 @@
 import { Box, useColorModeValue, Flex, Center, HStack, Button } from '@chakra-ui/react';
-import { rival } from '../../../types/DataTypes';
+import { rival } from '../../../../types/DataTypes';
 import { BasicInfoLayout } from './BasicInfoLayout';
 
 export const RivalPreviewCard = (props: {

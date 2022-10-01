@@ -5,6 +5,7 @@ export const Paragraph = (props: { title: any; description: any; children: any }
   const titlefw = useColorModeValue(700, 500);
   const subtitlefw = useColorModeValue(500, 300);
   const subtitleColor = useColorModeValue('neutral.700', 'neutral.50');
+
   return (
     <Box mb="6vh">
       <Box mb="4vh">

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Center, Flex, useColorModeValue, Text } from '@chakra-ui/react';
-import { getUserID } from '../../../api/common';
+import { getUserID } from '../../../../api/common';
 import { UserBasicCard } from '../common/UserBasicCard';
 import RivalPreviewList from './RivalPreviewList';
 import RivalAllList from './RivalRecAllList';
 import RivalRecList from './RivalRecList';
-import { getRecUserAPI } from '../../../api/rival';
-import { rival } from '../../../types/DataTypes';
+import { getRecUserAPI } from '../../../../api/auth/rival';
+import { rival } from '../../../../types/DataTypes';
 
 export const RivalRecMain = (props: { propFunction: (arg0: string) => void }) => {
   const titlefw = useColorModeValue(700, 500);

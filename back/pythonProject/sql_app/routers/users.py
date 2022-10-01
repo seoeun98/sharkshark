@@ -51,7 +51,7 @@ def pass_message(id, db: Session = Depends(get_db)):
     if not crowling.is_in_solvedac(id):
         return HTTPException(status_code=401, detail="not solved.ac user")
     # DB(bj user 테이블)에 없는 아이디일 경우 
-    if not userRepository.get_by_id(id, db):
+    if not userRepository.get_bjuser_by_id(id, db):
         return HTTPException(status_code=401, detail="not on bj_user")
 
     user = userRepository.get_by_id(id, db)

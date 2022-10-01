@@ -1,25 +1,19 @@
 import {
-  Avatar,
   Box,
   Button,
   Center,
   Flex,
   Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalOverlay,
   Tag,
+  Textarea,
   useColorModeValue,
-  useDisclosure,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { FaGithub, FaDatabase } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { probsRecentAPI } from '../../../api/auth';
-import { githubUpload } from '../../../api/common';
+import { probsDetailAPI, probsRecentAPI } from '../../../api/auth';
+import { buildMarkDown, githubUpload } from '../../../api/common';
 import { setAuthToken, setRepo } from '../../../reducers/ghAPIReducer';
 import { Problem } from '../../../types/DataTypes';
 import { ColorText } from '../../common/ColorText';
@@ -30,6 +24,7 @@ import { Tier } from '../../common/Tier';
 export const BlogPosting = () => {
   const [problems, setProblems] = useState<Array<Problem>>([]);
   const [selected, setSelected] = useState(-1);
+  const [code, setCode] = useState('');
   const itemcolor = useColorModeValue('neutral.25', 'neutral.500');
 
   const authToken = useSelector((state: any) => state.ghAPIReducer.authToken);
@@ -39,13 +34,7 @@ export const BlogPosting = () => {
   const [metainfo, setMetaInfo] = useState([
     { text: '문제 등급', toggle: false },
     { text: '문제 설명', toggle: false },
-    { text: '사용 언어', toggle: false },
     { text: '문제 분류', toggle: false },
-  ]);
-  const [userinfo, setUserInfo] = useState([
-    { text: '코드', toggle: false },
-    { text: '사용한 메모리', toggle: false },
-    { text: '실행 시간', toggle: false },
   ]);
 
   const getProblems = async () => {
@@ -55,9 +44,21 @@ export const BlogPosting = () => {
     getProblems();
   }, []);
 
-  const uploadPost = () => {
+  const uploadPost = async () => {
+    const prob = problems[selected];
+    const detail = await probsDetailAPI(prob.no);
+
     const message = 'uploaded from sharkshark';
+
+    const text = buildMarkDown({
+      title: prob.title,
+      no: prob.no,
+      code: code,
+      lang: 'c',
+    });
+
     const content = btoa('test string');
+
     const filename = 'test.md';
     githubUpload(authToken, message, content, repo.name, repo.dir, filename);
   };
@@ -156,35 +157,24 @@ export const BlogPosting = () => {
             </Button>
           ))}
         </Flex>
-        <Flex h="48px" mb="16px">
+        <Flex mb="16px">
           <Box w="120px" lineHeight="44px">
             사용자 제출 정보
           </Box>
-          {userinfo.map((item, index) => (
-            <Button
-              key={index}
-              w="48px"
-              mx="8px"
-              borderRadius="10px"
-              variant={item.toggle ? 'primary' : 'solid'}
-              onClick={() =>
-                setUserInfo(data => {
-                  const temp = [...data];
-                  temp[index].toggle = !temp[index].toggle;
-                  return temp;
-                })
-              }
-            >
-              {item.text}
-            </Button>
-          ))}
+          <Box w="full" ml="16px">
+            <Textarea
+              variant="outline"
+              placeholder="코드 입력"
+              rows={6}
+              w="full"
+              onChange={e => setCode(e.target.value)}
+            />
+          </Box>
         </Flex>
-        <Center>
-          <Button mt="32px" onClick={uploadPost}>
-            테스트 포스팅
-          </Button>
-        </Center>
       </Paragraph>
+      <Center>
+        <Button onClick={uploadPost}>테스트 포스팅</Button>
+      </Center>
     </>
   );
 };

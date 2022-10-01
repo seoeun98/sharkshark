@@ -1,5 +1,4 @@
 export type Problem = {
-  star?: boolean;
   no: number;
   title: string;
   acceptedUserCnt: number;
@@ -7,6 +6,14 @@ export type Problem = {
   avgTries: number;
   isSolvable?: boolean;
   tags: string;
+};
+
+export type ProblemDetail = {
+  probNo: number;
+  problem_description: string;
+  input_description: string;
+  output_description: string;
+  example: string;
 };
 
 export type UserInfo = {
@@ -32,4 +39,17 @@ export type rival = {
   maxStreak?: number;
   rank?: number;
   organization?: string;
+};
+
+export type Markdown = {
+  tier?: number;
+  title: string;
+  no: number;
+  problem_description?: string;
+  input_description?: string;
+  output_description?: string;
+  example?: string[];
+  tags?: string;
+  code: string;
+  lang: string;
 };

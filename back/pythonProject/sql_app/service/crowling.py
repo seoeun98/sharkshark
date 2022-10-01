@@ -17,12 +17,13 @@ class user:
         self.timeStamp =timeStamp
 
 class detail:
-    def __init__(self, probNo: int, problem_description: str, input_description: str, output_description: str, example: str) -> None:
+    def __init__(self, probNo: int, problem_description: str, input_description: str, output_description: str, in_list: list, out_list: list) -> None:
         self.probNo = probNo
         self.problem_description = problem_description
         self.input_description = input_description
         self.output_description = output_description
-        self.example = example
+        self.in_list = in_list
+        self.out_list = out_list
         pass
 
 # 채점현황 크롤링
@@ -117,45 +118,31 @@ def get_prob_detail(probNo : int):
       sample_o = soup.select("pre[id^=sample-output]")
 
       # 문제 내용
-      str_list = []
-      str_list.append("#####   Problem " + str(probNo) + "  ######\n")
+      str_list = []      
       for i in problem_description:
           str_list.append(i.text.strip() + '\n\n')
       p_pd = ''.join(str_list)
 
       # 입력
       str_list = []
-      str_list.append("IN\n")
       for i in input_description:
           str_list.append(i.text.strip() + '\n\n')
-          # print(i.text.strip(), end = '\n\n')
       p_id = ''.join(str_list)
 
       # 출력
       str_list = []          
-      str_list.append("OUT\n")
-      # print("OUT")
       for i in output_description:
           str_list.append(i.text.strip() + '\n\n')
-          # print(i.text.strip(), end = '\n\n')
       p_od = ''.join(str_list)
 
       # 예제
-      str_list = []
-      str_list.append("EXAMPLE\n")
-      # print("EXAMPLE")
+      in_list = []
+      out_list = []
       for i in range(len(sample_i)):
-          str_list.append("### IN" + str(i+1) + ' ###\n')
-          # print("### IN", i+1, '###')
-          str_list.append(sample_i[i].text.strip() + '\n\n')
-          # print(sample_i[i].text.strip(), end='\n\n')
-          str_list.append("### OUT" + str(i+1) + ' ###\n')
-          # print("### OUT", i+1, '###')
-          str_list.append(sample_o[i].text.strip() + '\n\n')
-          # print(sample_o[i].text.strip(), end='\n\n')
-      p_e = ''.join(str_list)
+          in_list.append(sample_i[i].text.strip())
+          out_list.append(sample_o[i].text.strip())
 
-      prob_detail = detail(probNo, p_pd, p_id, p_od, p_e)
+      prob_detail = detail(probNo, p_pd, p_id, p_od, in_list, out_list)
 
       return prob_detail   
 

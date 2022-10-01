@@ -2,7 +2,11 @@ from sqlalchemy.orm import Session
 from sql_app import models, schemas
 
 def get_recommend_rivals_list(user: str, db: Session) :
-    rivals = db.query(models.rec_rival).filter(models.rec_rival.userId == user).first().__dict__
+    try:
+        rivals = db.query(models.rec_rival).filter(models.rec_rival.userId == user).first().__dict__        
+    except Exception as e:
+        # 추천 테이블에 없는 경우 -> bj_user 에 없는 경우
+        raise None
     list = rivals['rivalIds'].split(',')
     result_list = []
 

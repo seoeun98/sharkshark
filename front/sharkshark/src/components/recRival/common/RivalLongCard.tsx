@@ -3,8 +3,6 @@ import {
   useColorModeValue,
   Collapse,
   Flex,
-  Spacer,
-  Tag,
   Text,
   useDisclosure,
   Center,
@@ -12,16 +10,17 @@ import {
   HStack,
   Button,
 } from '@chakra-ui/react';
+import { createRivalAPI } from '../../../api/rival';
+import { rival } from '../../../types/DataTypes';
 import { ColorText } from '../../common/ColorText';
 import { BasicInfoLayout } from './BasicInfoLayout';
-import { getUserID } from '../../../api/common';
 
 export const RivalLongCard = (props: {
-  userInfo: any;
+  RivalInfo: rival;
   bottompropFunction: (arg0: string) => void;
 }) => {
+  const { RivalInfo } = props;
   const { isOpen, onToggle } = useDisclosure();
-  const { userInfo } = props;
   let children = {};
   if (isOpen) {
     children = { bgGradient: 'linear(to-r, primary.cyan50, primary.purple0)' };
@@ -44,9 +43,9 @@ export const RivalLongCard = (props: {
           <HStack>
             <BasicInfoLayout
               typeName="rivalSmall"
-              level={17}
-              classCount="Class 4"
-              id={getUserID()}
+              level={RivalInfo.tier}
+              userClass={RivalInfo.userClass}
+              id={RivalInfo.userId}
             />
           </HStack>
           <Center bg={useColorModeValue('white', 'black')} w="100px" h="40px" borderRadius="36px">
@@ -61,6 +60,7 @@ export const RivalLongCard = (props: {
               bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
               bgClip="text"
               boxShadow="base"
+              onClick={() => createRivalAPI(RivalInfo.userId)}
             >
               라이벌 등록
             </Button>
@@ -84,10 +84,10 @@ export const RivalLongCard = (props: {
                     fontWeight="600"
                     color={useColorModeValue('neutral.700', 'neutral.50')}
                   >
-                    해결한 문제 수
+                    해결한 문제
                   </Text>
                   <Box fontSize="16px" fontWeight="800">
-                    <ColorText>271</ColorText>
+                    <ColorText>{RivalInfo.solvedCount}</ColorText>
                   </Box>
                 </VStack>
               </Center>
@@ -105,7 +105,7 @@ export const RivalLongCard = (props: {
                   </Text>
                   <VStack spacing={0}>
                     <Box fontSize="16px" fontWeight="800">
-                      <ColorText>7129</ColorText>
+                      <ColorText>{RivalInfo.rank}</ColorText>
                     </Box>
                   </VStack>
                 </VStack>
@@ -120,10 +120,10 @@ export const RivalLongCard = (props: {
                     color={useColorModeValue('neutral.700', 'neutral.50')}
                     textAlign="center"
                   >
-                    상위 100제 난이도 합
+                    레이팅
                   </Text>
                   <Box fontSize="16px" fontWeight="800">
-                    <ColorText>1165</ColorText>
+                    <ColorText>{RivalInfo.rating}</ColorText>
                   </Box>
                 </VStack>
               </Center>

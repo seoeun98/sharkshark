@@ -1,19 +1,17 @@
-import { Box, useColorModeValue } from '@chakra-ui/react';
+import { Box, Center, useColorModeValue } from '@chakra-ui/react';
+import { Key } from 'react';
+import { rival } from '../../../types/DataTypes';
 import { RivalLongCard } from '../common/RivalLongCard';
 
-const RivalAllList = (props: { middlePropFunction: (arg0: string) => void }) => {
+const RivalAllList = (props: {
+  middlePropFunction: (arg0: string) => void;
+  rivalRecList: rival[];
+}) => {
   const titlefw = useColorModeValue(700, 500);
-  const testdata = [
-    { id: 'id', className: 'Class 4', level: 18 },
-    { id: 'dddddd', className: 'Class 3', level: 18 },
-    { id: 'isfsfsd', className: 'Class 44', level: 18 },
-    { id: 'isfddf', className: 'Class 4', level: 18 },
-    { id: 'idsffd', className: 'Class 4', level: 18 },
-    { id: 'id', className: 'Class 4', level: 18 },
-    { id: 'id', className: 'Class 4', level: 18 },
-  ];
+  const { rivalRecList } = props;
+  const bgcolor = useColorModeValue('neutral.25', 'neutral.500');
+
   const middleFunction = (text: any) => {
-    console.log(text);
     // eslint-disable-next-line react/destructuring-assignment
     props.middlePropFunction(text);
   };
@@ -41,11 +39,17 @@ const RivalAllList = (props: { middlePropFunction: (arg0: string) => void }) => 
           },
         }}
       >
-        {testdata.map((item, index) => (
-          <Box mb="8px" mr="8px" key={index}>
-            <RivalLongCard bottompropFunction={middleFunction} userInfo={item} />
-          </Box>
-        ))}
+        {rivalRecList.length > 0 ? (
+          rivalRecList.map((item: any, index: Key | null | undefined) => (
+            <Box mb="8px" mr="8px" key={index}>
+              <RivalLongCard bottompropFunction={middleFunction} RivalInfo={item} />
+            </Box>
+          ))
+        ) : (
+          <Center bg={bgcolor} borderRadius="12px" p="32px">
+            ~ 목록이 없습니다 ~
+          </Center>
+        )}
       </Box>
     </Box>
   );

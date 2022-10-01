@@ -17,6 +17,7 @@ export const RivalListDefault = (props: { topPropFunction: (arg0: string) => voi
     // eslint-disable-next-line react/destructuring-assignment
     props.topPropFunction(sendText);
   };
+
   return (
     <>
       <HStack justifyContent="space-between">
@@ -24,7 +25,12 @@ export const RivalListDefault = (props: { topPropFunction: (arg0: string) => voi
           <ColorText>{getUserID()}</ColorText>
           <Box>님의 라이벌 목록</Box>
         </HStack>
-        <Button variant="secondary" size="csm" borderRadius="10px">
+        <Button
+          variant="secondary"
+          size="csm"
+          borderRadius="10px"
+          onClick={() => (window.location.href = '/data/chart')}
+        >
           <ColorText>라이벌 실력 분석 통계</ColorText>
         </Button>
       </HStack>

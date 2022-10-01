@@ -3,19 +3,19 @@ import { Tier } from '../../common/Tier';
 import { ColorText } from '../../common/ColorText';
 
 export const BasicInfoLayout = (props: {
-  typeName: any;
-  level: number;
-  classCount: any;
-  id: any;
+  typeName: string;
+  level: string;
+  userClass: number;
+  id: string;
 }) => {
-  const { typeName, level, classCount, id } = props;
+  const { typeName, level, userClass, id } = props;
   const bgCondition = useColorModeValue('white', 'black');
   let style = {
-    width: '48px',
-    margin: '18px',
-    px: '16px',
-    py: '4px',
-    fontSize: '16px',
+    width: '42px',
+    margin: '14px',
+    px: '14px',
+    py: '2px',
+    fontSize: '14px',
     borderRadius: '50px',
     idFontSize: '24px',
   };
@@ -37,10 +37,12 @@ export const BasicInfoLayout = (props: {
     style.borderRadius = '28px';
     style.idFontSize = '16px';
   }
+
+  let levelForTier = parseInt(level);
   return (
     <>
       <Box w={style.width} mr={style.margin}>
-        <Tier level={level} size="auto" />
+        <Tier level={levelForTier} size="auto" />
       </Box>
       <VStack alignItems="flex-start" spacing={0}>
         {/* class */}
@@ -51,7 +53,7 @@ export const BasicInfoLayout = (props: {
           fontSize={style.fontSize}
           borderRadius={style.borderRadius}
         >
-          <ColorText>{classCount}</ColorText>
+          <ColorText>Class {userClass}</ColorText>
         </Center>
         {/* userId */}
         <Box fontSize={style.idFontSize} fontWeight="700">

@@ -12,7 +12,7 @@ def get_recommend_rivals_list(user: str, db: Session) :
 
 def get_rivals_list(user: str, db: Session) :
     rivals = db.query(models.rival).filter(models.rival.userId == user).first().__dict__
-    list = rivals['rivalIds'].split(',')
+    list = rivals['rivalId'].split(',')
     result_list = []
 
     for one in list:
@@ -21,15 +21,19 @@ def get_rivals_list(user: str, db: Session) :
 
 def put_rival(rivalId, db: Session, user: str) :
     check_rival = db.query(models.rival).filter(models.rival.rivalId == rivalId).filter(models.rival.userId == user).first()
+    # 이미 등록된 경우
+    if check_rival: 
+        return 0    
 
-    if check_rival: return False
+    try:
+        db_rival = models.rival(rivalId=rivalId, userId=user)
+        db.add(db_rival)
+        db.commit()        
 
-    db_rival = models.rival(rivalId=rivalId, userId=user)
-    db.add(db_rival)
-    db.commit()
-    db.refresh(db_rival)
-
-    return True
+        return True
+    # bj_user table에 없는 경우
+    except Exception as e:
+        return 1        
 
 def delete_rival(rivalId, db: Session, user: str) :
     db_rival = db.query(models.rival).filter(models.rival.rivalId == rivalId).filter(models.rival.userId == user).first()
@@ -38,7 +42,6 @@ def delete_rival(rivalId, db: Session, user: str) :
 
     db.delete(db_rival)
     db.commit()
-    db.refresh(db_rival)
 
     return True
 

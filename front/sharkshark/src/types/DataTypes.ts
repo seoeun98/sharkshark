@@ -35,3 +35,13 @@ export type rival = {
   no?: number;
   problems?: string;
 };
+
+export type CTproblem = {
+  no: number;
+  title: string;
+  acceptedUserCnt: number;
+  level: number;
+  avgTries: number;
+  isSolvable: Boolean;
+  tags: string; // "implementation,arithmetic,math"
+};

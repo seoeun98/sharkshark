@@ -1,10 +1,10 @@
 import { HStack, Box, Flex, Center, VStack, Text, useColorModeValue } from '@chakra-ui/react';
 import { BasicInfoLayout } from './BasicInfoLayout';
-import { ColorText } from '../../common/ColorText';
-import { getRivalInfoAPI } from '../../../api/rival';
+import { ColorText } from '../../../common/ColorText';
+import { getRivalInfoAPI } from '../../../../api/auth/rival';
 import { useEffect, useState } from 'react';
-import { getUserID } from '../../../api/common';
-import { rival } from '../../../types/DataTypes';
+import { getUserID } from '../../../../api/common';
+import { rival } from '../../../../types/DataTypes';
 
 export const UserBasicCard = () => {
   const [userInfo, setuserInfo] = useState<rival>({ tier: '0', userId: '', userClass: 0 });

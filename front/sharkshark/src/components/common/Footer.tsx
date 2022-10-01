@@ -5,11 +5,9 @@ import {
   Image,
   Text,
   Box,
-  Flex,
   Link,
   HStack,
 } from '@chakra-ui/react';
-import FooterWave from './FooterWave';
 
 const Footer = () => {
   const image = useColorModeValue('/assets/logo/logo_dark.svg', '/assets/logo/logo_light.svg');

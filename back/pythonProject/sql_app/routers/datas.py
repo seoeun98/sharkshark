@@ -49,7 +49,7 @@ def get_history(period: Period, db: Session = Depends(get_db), user: str = Depen
 @router.get("/wrong")
 def get_major_wrong(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
     userId = JWTRepo.decode_token(user)
-    result = dataRepository.dataRepository.get_major_wrong(userId, db)
+    result = dataRepository.get_major_wrong(userId, db)
 
     if result:
         return result

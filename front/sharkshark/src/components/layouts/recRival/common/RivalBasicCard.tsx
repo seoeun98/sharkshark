@@ -11,9 +11,9 @@ import {
   Spacer,
   Flex,
 } from '@chakra-ui/react';
-import { createRivalAPI, deleteRivalAPI } from '../../../api/rival';
-import { rival } from '../../../types/DataTypes';
-import { ColorText } from '../../common/ColorText';
+import { createRivalAPI, deleteRivalAPI } from '../../../../api/auth/rival';
+import { rival } from '../../../../types/DataTypes';
+import { ColorText } from '../../../common/ColorText';
 import { BasicInfoLayout } from './BasicInfoLayout';
 
 export const RivalBasicCard = (props: {

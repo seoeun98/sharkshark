@@ -1,7 +1,7 @@
 import { Box, Divider, useColorModeValue } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { getRivalAPI } from '../../../api/rival';
-import { rival } from '../../../types/DataTypes';
+import { getRivalAPI } from '../../../../api/auth/rival';
+import { rival } from '../../../../types/DataTypes';
 import { RivalPreviewCard } from '../common/RivalPreviewCard';
 import NonRival from '../setting/NonRival';
 
@@ -50,7 +50,7 @@ const RivalPreviewList = (props: { middlePropFunction: (arg0: string) => void })
         {rivalList.length !== 0 ? (
           rivalList.map((item: any, index: React.Key | null | undefined) => (
             <Box m="12px" mr="8px" key={index}>
-              {index !== 0 ? <Divider /> : <></>}
+              {index !== 0 ? <Divider /> : null}
 
               <RivalPreviewCard bottompropFunction={middleFunction} RivalInfo={item} />
             </Box>

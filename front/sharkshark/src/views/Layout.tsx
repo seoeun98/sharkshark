@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { NavBar } from '../components/layouts/NavBar';
+import { NavBar } from '../components/common/NavBar';
 import React, { useEffect, useState } from 'react';
 import { getUserID } from '../api/common';
 

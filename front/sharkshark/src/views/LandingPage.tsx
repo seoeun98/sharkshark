@@ -1,6 +1,6 @@
 import { Box, Text } from '@chakra-ui/react';
-import Footer from '../components/layouts/Footer';
-import FooterWave from '../components/layouts/FooterWave';
+import Footer from '../components/common/Footer';
+import FooterWave from '../components/common/FooterWave';
 
 export const LandingPage = () => {
   return (

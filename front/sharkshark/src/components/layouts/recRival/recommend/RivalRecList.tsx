@@ -1,10 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
-import { RivalBasicCard } from '../common/RivalBasicCard';
-import { Box, Center, HStack, Tbody, useColorModeValue } from '@chakra-ui/react';
-import Carousel from 'react-spring-3d-carousel';
-import { SetStateAction, useState } from 'react';
-import { useSpring, animated, config } from 'react-spring';
-import { rival } from '../../../types/DataTypes';
+import { Box, Center, HStack, useColorModeValue } from '@chakra-ui/react';
+import { useState } from 'react';
+import { rival } from '../../../../types/DataTypes';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { RivalCarouselCard } from '../common/RivalCarouselCard';
 

@@ -1,6 +1,6 @@
 import { Box, Center, useColorModeValue } from '@chakra-ui/react';
 import { Key } from 'react';
-import { rival } from '../../../types/DataTypes';
+import { rival } from '../../../../types/DataTypes';
 import { RivalLongCard } from '../common/RivalLongCard';
 
 const RivalAllList = (props: {

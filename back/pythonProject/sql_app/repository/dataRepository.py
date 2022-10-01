@@ -26,10 +26,11 @@ def get_roadMap(userId: str, db: Session):
     rival_list = []
     first_aver = []
     first_tags = []
-    rivals = rivalRepository.get_recommend_rivals_list(userId, db).__dict__['rivalIds'].split(',')
+    # rivals = rivalRepository.get_recommend_rivals_list(userId, db).__dict__['rivalIds'].split(',')
+    rivals = rivalRepository.get_recommend_rivals_list(userId, db)
 
     for rival in rivals:
-        rival_probs = db.query(models.solvedProblem).filter(models.solvedProblem.userId == rival).order_by(models.solvedProblem.solvedDate.desc()).all()
+        rival_probs = db.query(models.solvedProblem).filter(models.solvedProblem.userId == rival.userId).order_by(models.solvedProblem.solvedDate.desc()).all()
         rival_prob_list = []
 
         for one in rival_probs:

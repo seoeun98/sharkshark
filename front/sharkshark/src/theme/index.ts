@@ -23,7 +23,7 @@ const customTheme = extendTheme({
   styles: {
     global: {
       body: {
-        bg: mode('white', 'black'),
+        bg: mode('neutral.0', 'black'),
         overflowX: 'hidden',
         fontFamily: 'Pretendard',
       },

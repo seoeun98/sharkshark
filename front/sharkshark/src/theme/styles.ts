@@ -5,7 +5,7 @@ export const theme = {
   styles: {
     global: (props: StyleFunctionProps) => ({
       body: {
-        bg: mode('white', 'black')(props),
+        bg: mode('neutral.0', 'black')(props),
         overflowX: 'hidden',
         fontFamily: 'Pretendard',
         letterSpacing: '-0.5px',

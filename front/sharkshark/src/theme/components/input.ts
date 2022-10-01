@@ -4,8 +4,6 @@ import colors from '../foundations/Color/colors';
 export { default as colors } from '../foundations/Color/colors';
 
 const getOutlineVariant = (props: Record<string, any>) => {
-  const { theme } = props;
-
   return {
     field: {
       h: '48px',

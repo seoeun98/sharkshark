@@ -102,3 +102,10 @@ def get_all_user(db: Session):
     if not db_users:
         return None
     else: return db_users
+
+def get_bjuser_by_id(id: str, db: Session):
+    db_bjuser = db.query(models.BJ_user).filter(models.BJ_user.userId == id).first()
+
+    if db_bjuser:
+        return db_bjuser
+    else: return 0

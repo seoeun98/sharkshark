@@ -6,7 +6,7 @@ export const RivalPreviewCard = (props: {
   RivalInfo: rival;
   bottompropFunction: (arg0: string) => void;
 }) => {
-  const { RivalInfo } = props;
+  const { RivalInfo, bottompropFunction } = props;
   return (
     <Box>
       <Box py="18px">
@@ -31,7 +31,7 @@ export const RivalPreviewCard = (props: {
               bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
               bgClip="text"
               boxShadow="base"
-              onClick={() => props.bottompropFunction('RivalCompareForRegistered')}
+              onClick={() => bottompropFunction('RivalCompareForRegistered')}
             >
               실력 분석
             </Button>

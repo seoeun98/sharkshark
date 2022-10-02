@@ -7,8 +7,8 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { getUserID } from '../api/common';
 import CodingTestAnalysis from '../components/layouts/codingTest/CodingTestAnalysis';
 import { CodingTestDefault } from '../components/layouts/codingTest/CodingTestDefault';
@@ -19,31 +19,40 @@ export const CodeTestPage = () => {
   const handleTabsChange = (index: number) => {
     setTabIndex(index);
   };
+  const compStatus = useSelector((state: any) => state.CTReducer.compStatus);
+
+  if (compStatus === 1 && tabIndex === 0) {
+    setTabIndex(1);
+  } else if (compStatus === 2 && tabIndex === 1) {
+    setTabIndex(2);
+  }
+
+  const bgImage = useColorModeValue(
+    'url(/assets/header/CT_header_light.png)',
+    'url(/assets/header/CT_header.png)',
+  );
+  const mainFW = useColorModeValue(800, 700);
+  const subFW = useColorModeValue(500, 200);
 
   return (
     <Box>
-      {/* image & slogan */}
-      <Center
-        bgImage={useColorModeValue(
-          'url(/assets/header/CT_header_light.png)',
-          'url(/assets/header/CT_header.png)',
-        )}
-        bgSize="cover"
-        bgPos="center"
-        h="35vh"
-        textAlign="center"
-      >
-        <VStack spacing="1vh">
-          <Box fontSize="32px" pt="4vh" fontWeight={useColorModeValue(800, 700)}>
-            나만의 실전 연습, 모의 코딩 테스트
-          </Box>
-          <Box fontSize="16px" fontWeight={useColorModeValue(500, 200)}>
-            {getUserID()} 님의 실력을 분석해 모의 코딩 테스트를 준비했습니다.
-            <br />
-            실제 코딩 테스트처럼 연습해보고, 실력을 점검해보세요!
-          </Box>
-        </VStack>
-      </Center>
+      {tabIndex === 0 ? (
+        <Center bgImage={bgImage} bgSize="cover" bgPos="center" h="35vh" textAlign="center">
+          <VStack spacing="1vh">
+            <Box fontSize="32px" pt="4vh" fontWeight={mainFW}>
+              나만의 실전 연습, 모의 코딩 테스트
+            </Box>
+            <Box fontSize="16px" fontWeight={subFW}>
+              {getUserID()} 님의 실력을 분석해 모의 코딩 테스트를 준비했습니다.
+              <br />
+              실제 코딩 테스트처럼 연습해보고, 실력을 점검해보세요!
+            </Box>
+          </VStack>
+        </Center>
+      ) : (
+        <Box h="8vh" />
+      )}
+
       {/* main body */}
       <Box ml="24vw" my="6vh">
         <Tabs index={tabIndex} onChange={handleTabsChange}>

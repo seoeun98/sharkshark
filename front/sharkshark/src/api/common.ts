@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 
-// const SERVER_ADDRESS = 'http://j7b205.p.ssafy.io/api';
+// const SERVER_ADDRESS = 'https://j7b205.p.ssafy.io/api';
 const SERVER_ADDRESS = 'http://127.0.0.1:8000';
 
 export const authAxios: AxiosInstance = axios.create({

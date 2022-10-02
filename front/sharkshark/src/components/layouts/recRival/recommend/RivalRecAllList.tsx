@@ -10,6 +10,7 @@ const RivalAllList = (props: {
   const titlefw = useColorModeValue(700, 500);
   const { rivalRecList } = props;
   const bgcolor = useColorModeValue('neutral.25', 'neutral.500');
+  console.log(rivalRecList);
 
   const middleFunction = (text: any) => {
     // eslint-disable-next-line react/destructuring-assignment

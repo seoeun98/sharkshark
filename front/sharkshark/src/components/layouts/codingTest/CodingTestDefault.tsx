@@ -13,23 +13,26 @@ import {
   useDisclosure,
   Image,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getCTproblemAPI } from '../../../api/auth/codingTest';
 import { getUserID } from '../../../api/common';
 import { CTproblem } from '../../../types/DataTypes';
 import { ColorText } from '../../common/ColorText';
 import { Paragraph } from '../../common/Paragraph';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeStatus } from '../../../reducers/CTReducer';
+import { useDispatch } from 'react-redux';
+import { setCompStatus, setProblemNum } from '../../../reducers/CTReducer';
 
 export const CodingTestDefault = () => {
-  const [CTPList, setCTPList] = useState<CTproblem[]>([]);
+  const dispatch = useDispatch();
+
   const [selected, setSelected] = useState(-1);
   const [CTtime, setCTtime] = useState(0);
+  const [CTPList, setCTPList] = useState([] as Array<CTproblem>);
+
   const boxBG = useColorModeValue('neutral.0', 'black');
   const { isOpen, onClose, onOpen } = useDisclosure();
   const modalBg = useColorModeValue('neutral.0', 'neutral.500');
-  const dispatch = useDispatch();
+  const fontWeight = useColorModeValue(600, 400);
 
   const sharkjoonImage = useColorModeValue(
     '/assets/logo/sharkjoon_light_logo.png',
@@ -52,11 +55,13 @@ export const CodingTestDefault = () => {
       allLevel += problem.level;
     }
     let avgLevel = Math.floor(allLevel / 5);
+
     setCTtime(Math.floor((avgLevel * 4) / 10) * 10);
   };
 
   const goCodingTest = () => {
-    dispatch(changeStatus(1));
+    dispatch(setCompStatus(1));
+    dispatch(setProblemNum(selected + 2));
     onClose();
   };
 
@@ -118,21 +123,22 @@ export const CodingTestDefault = () => {
               <Center mb={2}>
                 <Image src={sharkjoonImage} w="240px" />
               </Center>
-              <Box fontSize="16px" fontWeight="700" mb={8}>
+              <Box fontSize="16px" fontWeight="700" mb={4}>
                 <Badge p={1} fontSize="16px" borderRadius="4px" color="white" variant="subtle">
                   <ColorText>사전 안내</ColorText>
                 </Badge>
               </Box>
 
-              <Box fontSize="14px" my="10px" fontWeight="500" mb={10}>
-                <Center mb={1}>
-                  문제를 풀고, 문제 완료를&nbsp;&nbsp;
-                  <Box fontSize="16px" fontWeight="700">
+              <Box fontSize="16px" my="10px" fontWeight={fontWeight} mb={10}>
+                <Center>
+                  문제를 풀고 문제 완료를&nbsp;&nbsp;
+                  <Box fontSize="18px" fontWeight="700">
                     <ColorText>'꼭'&nbsp;&nbsp;</ColorText>
                   </Box>
                   눌러주세요.
                 </Center>
-                코딩 테스트가 종료되면, 해당 문제에 대한 사용자 실력 분석을 제공해드립니다.
+                코딩 테스트가 종료되면, <br />
+                해당 문제에 대한 사용자 실력 분석을 제공해드립니다.
               </Box>
 
               <Button size="cmd" onClick={goCodingTest}>

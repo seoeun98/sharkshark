@@ -127,7 +127,7 @@ export const BlogSetting = () => {
           </Flex>
         </Box>
       ) : (
-        <Box></Box>
+        <Box />
       )}
 
       {/* modal */}

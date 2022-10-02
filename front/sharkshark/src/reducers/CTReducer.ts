@@ -1,19 +1,20 @@
-export const CTCHANGE: any = 'CTCHANGE';
-export const changeStatus = (CTStatus: number) => ({ type: CTCHANGE, CTStatus });
+import { createSlice } from '@reduxjs/toolkit';
 
-const initalState = {
-  CTStatus: 0,
-};
+const CTAPIReducer = createSlice({
+  name: 'CTAPIReducer',
+  initialState: {
+    compStatus: 0,
+    problemNum: 0,
+  },
+  reducers: {
+    setCompStatus(state, { payload: input }) {
+      return { ...state, compStatus: input };
+    },
+    setProblemNum(state, { payload: input }) {
+      return { ...state, problemNum: input };
+    },
+  },
+});
 
-const CTReducer = (state = initalState, action: { type: any; CTStatus: any }) => {
-  switch (action.type) {
-    case CTCHANGE:
-      return {
-        ...state,
-        CTStatus: action.CTStatus,
-      };
-
-    default:
-      return state;
-  }
-};
+export const { setCompStatus, setProblemNum } = CTAPIReducer.actions;
+export default CTAPIReducer.reducer;

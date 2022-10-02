@@ -19,7 +19,10 @@ def get_recommend_rival_list(db: Session = Depends(get_db), user: str = Depends(
     userId = JWTRepo.decode_token(user)
 
     if userId:
-        return rivalRepository.get_recommend_rivals_list(userId, db)
+        result = rivalRepository.get_recommend_rivals_list(userId, db)
+        if result is None:
+            raise HTTPException(status_code=401, detail="not on bj_user")
+        return result
     raise HTTPException(status_code=401, detail="not authorized")
 
 # 등록한 라이벌 목록을 조회한다
@@ -39,7 +42,7 @@ def put_rival(id, db: Session = Depends(get_db), user: str = Depends(jwtReposito
         raise HTTPException(status_code=401, detail="already registered")
     elif result == 1:
         raise HTTPException(status_code=401, detail="not on bj_user")
-        
+
 
 # 라이벌을 삭제한다. (삭제할 라이벌의 id를 pathVariable에 넣는다)
 @router.delete("/{id}", status_code=200)

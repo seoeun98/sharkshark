@@ -40,7 +40,7 @@ def put_rival(id, db: Session = Depends(get_db), user: str = Depends(jwtReposito
     result = rivalRepository.put_rival(id, db, userId)
     if result == 0:
         raise HTTPException(status_code=401, detail="already registered")
-    elif result == 1:
+    elif result == 2:
         raise HTTPException(status_code=401, detail="not on bj_user")
 
 

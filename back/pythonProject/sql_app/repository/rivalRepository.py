@@ -9,18 +9,18 @@ def get_recommend_rivals_list(user: str, db: Session) :
         raise None
     list = rivals['rivalIds'].split(',')
     result_list = []
-
+    print(list)
     for one in list:
         result_list.append(get_rival(one, db))
     return result_list
 
 def get_rivals_list(user: str, db: Session) :
-    rivals = db.query(models.rival).filter(models.rival.userId == user).first().__dict__
-    list = rivals['rivalId'].split(',')
+    rivals = db.query(models.rival).filter(models.rival.userId == user).all()
+
     result_list = []
 
-    for one in list:
-        result_list.append(get_rival(one, db))
+    for one in rivals:
+        result_list.append(get_rival(one.rivalId, db))
     return result_list
 
 def put_rival(rivalId, db: Session, user: str) :

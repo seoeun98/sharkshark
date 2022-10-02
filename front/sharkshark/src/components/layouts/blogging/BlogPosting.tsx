@@ -4,6 +4,7 @@ import {
   Center,
   Flex,
   Input,
+  Spacer,
   Tag,
   Textarea,
   useColorModeValue,
@@ -26,6 +27,7 @@ export const BlogPosting = () => {
   const [selected, setSelected] = useState(-1);
   const [code, setCode] = useState('');
   const itemcolor = useColorModeValue('neutral.25', 'neutral.500');
+  const tagcolor = useColorModeValue('neutral.0', 'neutral.900');
 
   const authToken = useSelector((state: any) => state.ghAPIReducer.authToken);
   const repo = useSelector((state: any) => state.ghAPIReducer.repo);
@@ -79,9 +81,12 @@ export const BlogPosting = () => {
           problems.map((item, index) => (
             <Box
               key={index}
-              p="32px"
-              bg={index === selected ? 'cyan.200' : itemcolor}
-              borderRadius="10px"
+              px="24px"
+              py="16px"
+              bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
+              bg={index === selected ? '' : itemcolor}
+              borderRadius="20px"
+              mb="12px"
               onClick={() => setSelected(index)}
             >
               <Flex>
@@ -98,11 +103,23 @@ export const BlogPosting = () => {
                   <Box mb="16px">{item.title}</Box>
                   <Box>
                     {item.tags.split(',').map((e, idx) => (
-                      <Tag borderRadius="20px" py="6px" px="12px" mr="8px" key={idx}>
+                      <Tag bg={tagcolor} borderRadius="20px" py="6px" px="12px" mr="8px" key={idx}>
                         <ColorText># {e}</ColorText>
                       </Tag>
                     ))}
                   </Box>
+                </Box>
+
+                <Spacer />
+                <Box
+                  mx="8px"
+                  borderRadius="10px"
+                  p="8px"
+                  onClick={() =>
+                    window.open(`https://www.acmicpc.net/problem/${item.no}`, '_blank')
+                  }
+                >
+                  📖 문제 보기
                 </Box>
               </Flex>
             </Box>

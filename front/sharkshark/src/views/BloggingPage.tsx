@@ -26,16 +26,17 @@ export const BloggingPage = () => {
   const dispatch = useDispatch();
 
   const initSeq = async () => {
+    // 유저 정보 조회
     const userinfo = await getUserInfoAPI(getUserID());
-
-    dispatch(setAuthToken(userinfo.token));
-    dispatch(
-      setRepo({
-        name: userinfo.git,
-        url: await githubRepoImage(userinfo.git, userinfo.token),
-        dir: userinfo.dir,
-      }),
-    );
+    if (userinfo.token) dispatch(setAuthToken(userinfo.token));
+    if (userinfo.git && userinfo.dir)
+      dispatch(
+        setRepo({
+          name: userinfo.git,
+          url: await githubRepoImage(userinfo.git, userinfo.token),
+          dir: userinfo.dir,
+        }),
+      );
 
     if (userinfo.token && userinfo.dir) setTabIndex(0);
     else setTabIndex(1);
@@ -88,6 +89,7 @@ export const BloggingPage = () => {
           my="6vh"
           index={tabIndex}
           onChange={handleTabsChange}
+          isLazy
         >
           <Sidebar first="블로그 포스팅" second="블로그 계정 설정" third="" />
 

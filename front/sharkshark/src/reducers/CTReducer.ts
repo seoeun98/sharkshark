@@ -5,6 +5,9 @@ const CTAPIReducer = createSlice({
   initialState: {
     compStatus: 0,
     problemNum: 0,
+    CTPList: [],
+    CTtimer: 0,
+    solvingStatus: '',
   },
   reducers: {
     setCompStatus(state, { payload: input }) {
@@ -13,8 +16,17 @@ const CTAPIReducer = createSlice({
     setProblemNum(state, { payload: input }) {
       return { ...state, problemNum: input };
     },
+    setCTPList(state, { payload: input }) {
+      return { ...state, CTPList: input };
+    },
+    setTimer(state, { payload: input }) {
+      return { ...state, CTtimer: input };
+    },
+    setSolvingStatus(state, { payload: input }) {
+      return { ...state, solvingStatus: input };
+    },
   },
 });
 
-export const { setCompStatus, setProblemNum } = CTAPIReducer.actions;
+export const { setCompStatus, setProblemNum, setCTPList, setTimer } = CTAPIReducer.actions;
 export default CTAPIReducer.reducer;

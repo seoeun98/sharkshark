@@ -18,8 +18,10 @@ export const CodeTestPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const handleTabsChange = (index: number) => {
     setTabIndex(index);
+    CTPList([]);
   };
   const compStatus = useSelector((state: any) => state.CTReducer.compStatus);
+  const CTPList = useSelector((state: any) => state.CTReducer.CTPList);
 
   if (compStatus === 1 && tabIndex === 0) {
     setTabIndex(1);
@@ -54,7 +56,7 @@ export const CodeTestPage = () => {
       )}
 
       {/* main body */}
-      <Box ml="24vw" my="6vh">
+      <Box my="4vh">
         <Tabs index={tabIndex} onChange={handleTabsChange}>
           <TabPanels>
             <TabPanel>

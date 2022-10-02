@@ -19,20 +19,21 @@ import { getUserID } from '../../../api/common';
 import { CTproblem } from '../../../types/DataTypes';
 import { ColorText } from '../../common/ColorText';
 import { Paragraph } from '../../common/Paragraph';
-import { useDispatch } from 'react-redux';
-import { setCompStatus, setProblemNum } from '../../../reducers/CTReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCompStatus, setProblemNum, setCTPList, setTimer } from '../../../reducers/CTReducer';
 
 export const CodingTestDefault = () => {
   const dispatch = useDispatch();
 
   const [selected, setSelected] = useState(-1);
   const [CTtime, setCTtime] = useState(0);
-  const [CTPList, setCTPList] = useState([] as Array<CTproblem>);
+  const [problemList, setproblemList] = useState<CTproblem[]>([]);
 
   const boxBG = useColorModeValue('neutral.0', 'black');
   const { isOpen, onClose, onOpen } = useDisclosure();
   const modalBg = useColorModeValue('neutral.0', 'neutral.500');
   const fontWeight = useColorModeValue(600, 400);
+  const CTtimer = useSelector((state: any) => state.CTReducer.CTtimer);
 
   const sharkjoonImage = useColorModeValue(
     '/assets/logo/sharkjoon_light_logo.png',
@@ -42,8 +43,9 @@ export const CodingTestDefault = () => {
   let problemNum = [2, 3, 4, 5];
 
   const fetchCTPList = async () => {
-    setCTPList(await getCTproblemAPI());
+    setproblemList(await getCTproblemAPI());
   };
+
   useEffect(() => {
     fetchCTPList();
   }, []);
@@ -51,7 +53,7 @@ export const CodingTestDefault = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchavgLevel = () => {
     let allLevel = 0;
-    for (let problem of CTPList) {
+    for (let problem of problemList) {
       allLevel += problem.level;
     }
     let avgLevel = Math.floor(allLevel / 5);
@@ -62,7 +64,17 @@ export const CodingTestDefault = () => {
   const goCodingTest = () => {
     dispatch(setCompStatus(1));
     dispatch(setProblemNum(selected + 2));
+    console.log(CTtime * (selected + 2));
+    dispatch(setTimer(CTtime * (selected + 2)));
+    console.log(CTtimer);
+    selectedProblem();
     onClose();
+  };
+
+  const selectedProblem = () => {
+    let newList: CTproblem[] = [];
+    newList = problemList.slice(0, selected + 2);
+    dispatch(setCTPList(newList));
   };
 
   useEffect(() => {
@@ -70,7 +82,7 @@ export const CodingTestDefault = () => {
   }, [fetchavgLevel]);
 
   return (
-    <Box>
+    <Box ml="24vw">
       <Paragraph
         title="문제 수 선택"
         description={
@@ -90,7 +102,7 @@ export const CodingTestDefault = () => {
                 onClick={() => setSelected(index)}
                 variant={index === selected ? 'primary' : 'secondary'}
               >
-                {item} 개
+                {item} 문제
               </Button>
             ))}
           </HStack>

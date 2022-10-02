@@ -8,7 +8,6 @@ export const getCTproblemAPI = async () => {
   await authAxios
     .get('/prob/mock')
     .then(res => {
-      console.log(res.data);
       CTproblemList = res.data;
     })
     .catch(err => {

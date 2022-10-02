@@ -102,8 +102,9 @@ def login(request: schemas.User, db: Session = Depends(get_db)):
 # 계정 정보 조회
 @router.get("/{id}", response_model=schemas.getUser, dependencies=[Depends(jwtRepository.JWTBearer())], status_code=200)
 def get_by_id(id: str, db: Session = Depends(get_db)):
-    if userRepository.get_by_id(id, db):
-        return
+    user = userRepository.get_by_id(id, db)
+    if user:
+        return user
     raise JSONResponse(status_code=500, content=dict(detail="NOT_UPDATED"))
 
 # 계정 정보 업데이트
@@ -146,7 +147,10 @@ def get_github_access_token(request: schemas.authorizationCode, id: str, db: Ses
             raise HTTPException(status_code=401, detail="code already used")
         user = userRepository.get_by_id(id, db)
         if user:
-            user.token = github_access_token
-            userRepository.update_user(user, db)
+            update_user = sql_app.models.User()
+            update_user.id = user.id
+            update_user.token = github_access_token        
+            userRepository.update_user(update_user, db)
+
             return {"github_access_token": github_access_token}
     raise HTTPException(status_code=401, detail="github connection error")

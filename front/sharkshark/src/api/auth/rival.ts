@@ -23,7 +23,6 @@ export const getRivalAPI = async () => {
     .get('/rival/list')
     .then(res => {
       rivalList = res.data;
-      console.log(rivalList);
     })
     .catch(err => {
       console.log(err);

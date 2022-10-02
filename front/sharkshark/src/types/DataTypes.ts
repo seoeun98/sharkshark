@@ -1,3 +1,5 @@
+import { ListFormat } from 'typescript';
+
 export type Problem = {
   star?: boolean;
   no: number;
@@ -44,4 +46,9 @@ export type CTproblem = {
   avgTries: number;
   isSolvable: Boolean;
   tags: string; // "implementation,arithmetic,math"
+};
+
+export type solvedData = {
+  solved: Boolean;
+  time_sort_list?: ListFormat;
 };

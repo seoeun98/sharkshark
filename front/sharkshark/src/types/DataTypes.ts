@@ -25,11 +25,11 @@ export type UserInfo = {
 };
 
 export type rival = {
-  tier: number;
-  totalSolvedCnt?: number;
+  tier: string;
   userId: string;
+  userClass: number;
+  totalSolvedCnt?: number;
   solvedCount?: number;
-  userClass?: number;
   rating?: number;
   ratingByProblemsSum?: number;
   ratingByClass?: number;
@@ -40,6 +40,18 @@ export type rival = {
   maxStreak?: number;
   rank?: number;
   organization?: string;
+  no?: number;
+  problems?: string;
+};
+
+export type CTproblem = {
+  no: number;
+  title: string;
+  acceptedUserCnt: number;
+  level: number;
+  avgTries: number;
+  isSolvable: Boolean;
+  tags: string; // "implementation,arithmetic,math"
 };
 
 export type Markdown = {

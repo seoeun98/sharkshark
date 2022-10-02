@@ -64,7 +64,6 @@ def check_message(id: str, msg: str, db : Session) :
     db_user = db.query(models.userMsg).filter(models.userMsg.userId == id).first()
 
     if db_user:
-        print("Dfasgsagasgd")
         print(msg)
         print(db_user.userMsg)
         return msg.find(db_user.userMsg)
@@ -76,10 +75,17 @@ def update_user(user: schemas.updateUser, db: Session):
     db_user = db.query(models.User).filter(models.User.id == user.id)
 
     if db_user.first():
-        db_user.update({'pw': bcrypt.hashpw(user.pw.encode('utf-8'), bcrypt.gensalt()), 'git': user.git, 'dir': user.dir, 'token': user.token})
+        if user.pw:
+            db_user.update({'pw': bcrypt.hashpw(user.pw.encode('utf-8'), bcrypt.gensalt())})
+        if user.token:
+            db_user.update({'token': user.token})
+        if user.git:
+            db_user.update({'git':user.git})
+        if user.dir:
+            db_user.update({'dir':user.dir})
         db.commit()
-        return 1
-    else: return 0
+        return True
+    else: return False
 
 def delete_user(user: schemas.User, db: Session):
     db_user = db.query(models.User).filter(models.User.id == user.id)
@@ -96,3 +102,10 @@ def get_all_user(db: Session):
     if not db_users:
         return None
     else: return db_users
+
+def get_bjuser_by_id(id: str, db: Session):
+    db_bjuser = db.query(models.BJ_user).filter(models.BJ_user.userId == id).first()
+
+    if db_bjuser:
+        return db_bjuser
+    else: return 0

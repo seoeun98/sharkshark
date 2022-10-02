@@ -146,8 +146,10 @@ def get_github_access_token(request: schemas.authorizationCode, id: str, db: Ses
             raise HTTPException(status_code=401, detail="code already used")
         user = userRepository.get_by_id(id, db)
         if user:
-            user.token = github_access_token
-            user.pw = ""
-            userRepository.update_user(user, db)
+            update_user = sql_app.models.User()
+            update_user.id = user.id
+            update_user.token = github_access_token        
+            userRepository.update_user(update_user, db)
+
             return {"github_access_token": github_access_token}
     raise HTTPException(status_code=401, detail="github connection error")

@@ -102,8 +102,9 @@ def login(request: schemas.User, db: Session = Depends(get_db)):
 # 계정 정보 조회
 @router.get("/{id}", response_model=schemas.getUser, dependencies=[Depends(jwtRepository.JWTBearer())], status_code=200)
 def get_by_id(id: str, db: Session = Depends(get_db)):
-    if userRepository.get_by_id(id, db):
-        return
+    user = userRepository.get_by_id(id, db)
+    if user:
+        return user
     raise JSONResponse(status_code=500, content=dict(detail="NOT_UPDATED"))
 
 # 계정 정보 업데이트

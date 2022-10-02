@@ -67,14 +67,25 @@ const Footer = () => {
             <Image src="/assets/footer/mail.svg" w="24px" />
           </Center>
         </HStack>
+        <Box>
+          <Center
+            fontSize="12px"
+            fontWeight="400"
+            color={useColorModeValue('neutral.500', 'neutral.0')}
+            mb={4}
+          >
+            <Text fontWeight="700">SharkShark by Team.B205 &nbsp;|&nbsp;&nbsp;</Text> 김정윤 ·
+            박서은 · 이길상 · 진윤아 · 최진호
+          </Center>
 
-        <Center
-          fontSize="12px"
-          fontWeight="400"
-          color={useColorModeValue('neutral.500', 'neutral.0')}
-        >
-          © 2022 SharkShark All Rights Reserved
-        </Center>
+          <Center
+            fontSize="12px"
+            fontWeight="400"
+            color={useColorModeValue('neutral.500', 'neutral.0')}
+          >
+            © 2022 SharkShark All Rights Reserved
+          </Center>
+        </Box>
       </VStack>
     </Box>
   );

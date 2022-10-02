@@ -10,6 +10,7 @@ import sql_app.models
 from sql_app import schemas
 from sql_app.database import get_db
 from sql_app.repository import userRepository, jwtRepository
+from sql_app.service import crowling
 
 from util import user_message_crawling
 
@@ -43,8 +44,15 @@ def regist(request: schemas.User, db: Session = Depends(get_db)):
 def pass_message(id, db: Session = Depends(get_db)):
     # 백준 유저인지 확인
     user_msg = user_message_crawling(id)
+    # 백준 유저가 아닐 경우
     if user_msg == 'Not-Found-User':
         return HTTPException(status_code=401, detail="not BOJ user")        
+    # solved.ac 연동이 되어있는지 확인
+    if not crowling.is_in_solvedac(id):
+        return HTTPException(status_code=401, detail="not solved.ac user")
+    # DB(bj user 테이블)에 없는 아이디일 경우 
+    if not userRepository.get_bjuser_by_id(id, db):
+        return HTTPException(status_code=401, detail="not on bj_user")
 
     user = userRepository.get_by_id(id, db)
     result = userRepository.set_message(id, db)
@@ -94,8 +102,9 @@ def login(request: schemas.User, db: Session = Depends(get_db)):
 # 계정 정보 조회
 @router.get("/{id}", response_model=schemas.getUser, dependencies=[Depends(jwtRepository.JWTBearer())], status_code=200)
 def get_by_id(id: str, db: Session = Depends(get_db)):
-    if userRepository.get_by_id(id, db):
-        return
+    user = userRepository.get_by_id(id, db)
+    if user:
+        return user
     raise JSONResponse(status_code=500, content=dict(detail="NOT_UPDATED"))
 
 # 계정 정보 업데이트
@@ -138,7 +147,10 @@ def get_github_access_token(request: schemas.authorizationCode, id: str, db: Ses
             raise HTTPException(status_code=401, detail="code already used")
         user = userRepository.get_by_id(id, db)
         if user:
-            user.token = github_access_token
-            userRepository.update_user(user, db)
+            update_user = sql_app.models.User()
+            update_user.id = user.id
+            update_user.token = github_access_token        
+            userRepository.update_user(update_user, db)
+
             return {"github_access_token": github_access_token}
     raise HTTPException(status_code=401, detail="github connection error")

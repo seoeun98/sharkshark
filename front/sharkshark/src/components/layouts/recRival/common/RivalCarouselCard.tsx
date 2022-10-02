@@ -33,7 +33,6 @@ export const RivalCarouselCard = (props: {
       style={{
         transition: 'all 0.3s ease-out',
       }}
-      h="600px"
       mb="300px"
     >
       <Box

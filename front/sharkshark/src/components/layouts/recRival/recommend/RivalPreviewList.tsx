@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { getRivalAPI } from '../../../../api/auth/rival';
 import { rival } from '../../../../types/DataTypes';
 import { RivalPreviewCard } from '../common/RivalPreviewCard';
-import NonRival from '../setting/NonRival';
+import NonRival from '../../NonRival';
 
 const RivalPreviewList = (props: { middlePropFunction: (arg0: string) => void }) => {
   const [rivalList, setrivalList] = useState<rival[]>([]);

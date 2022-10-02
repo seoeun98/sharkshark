@@ -22,11 +22,11 @@ export const RivalRecList = (props: {
     <Box
       pos="relative"
       width="full"
-      h="20vh"
+      h="24vh"
       display="flex"
       alignItems="center"
       justifyContent="center"
-      mb="24vh"
+      mb="18vh"
     >
       {len_rival === 0 ? (
         <Center bg={bgcolor} borderRadius="12px" p="32px">

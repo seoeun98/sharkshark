@@ -54,7 +54,7 @@ export const BlogSetting = () => {
   };
 
   const setOnClose = () => {
-    updateUserInfoAPI('', '', ghRepo.name, ghRepo.dir);
+    updateUserInfoAPI('', '', '', ghRepo.name, ghRepo.dir);
     dispatch(setRepo(ghRepo));
     onClose();
   };
@@ -127,7 +127,7 @@ export const BlogSetting = () => {
           </Flex>
         </Box>
       ) : (
-        <Box></Box>
+        <Box />
       )}
 
       {/* modal */}

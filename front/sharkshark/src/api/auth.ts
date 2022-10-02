@@ -5,6 +5,7 @@ import { authAxios } from './common';
 export const getUserInfoAPI = async (id: string) => {
   let userinfo: UserInfo = {
     id: '',
+    pw: '',
     token: '',
     git: '',
     dir: '',
@@ -23,9 +24,15 @@ export const getUserInfoAPI = async (id: string) => {
 };
 
 // 계정 정보 업데이트
-export const updateUserInfoAPI = (id: string, password: string, git: string, dir: string) => {
+export const updateUserInfoAPI = (
+  id: string,
+  password: string,
+  token: string,
+  git: string,
+  dir: string,
+) => {
   authAxios
-    .put(`/user/${id}`, { id: id, password: password, git: git, dir: dir })
+    .put(`/user/${id}`, { id: id, password: password, token: token, git: git, dir: dir })
     .then(res => {
       console.log(res);
     })

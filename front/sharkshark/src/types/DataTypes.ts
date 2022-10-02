@@ -18,6 +18,7 @@ export type ProblemDetail = {
 
 export type UserInfo = {
   id: string;
+  pw: string;
   token: string;
   git: string;
   dir: string;

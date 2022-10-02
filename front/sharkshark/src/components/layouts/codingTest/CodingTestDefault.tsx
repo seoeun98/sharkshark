@@ -61,12 +61,10 @@ export const CodingTestDefault = () => {
     setCTtime(Math.floor((avgLevel * 4) / 10) * 10);
   };
 
-  const goCodingTest = () => {
+  const goCodingTest = async () => {
     dispatch(setCompStatus(1));
     dispatch(setProblemNum(selected + 2));
-    console.log(CTtime * (selected + 2));
     dispatch(setTimer(CTtime * (selected + 2)));
-    console.log(CTtimer);
     selectedProblem();
     onClose();
   };

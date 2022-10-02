@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import { ColorText } from '../../../common/ColorText';
 import Wave from 'react-wavify';
 import styled from '@emotion/styled';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSolvingStatus, setTimer } from '../../../../reducers/CTReducer';
 
 const WaveContainer = styled.div`
   position: absolute;
@@ -12,64 +14,82 @@ const WaveContainer = styled.div`
   border-radius: 10px;
   overflow: hidden;
 `;
+const Timer = () => {
+  const CTtimer = useSelector((state: any) => state.CTReducer.CTtimer);
+  const [hours, setHours] = useState(Math.floor(CTtimer / 60));
+  const [minutes, setMinutes] = useState(CTtimer - Math.floor(CTtimer / 60) * 60);
+  const [seconds, setSeconds] = useState(0);
+  const [remainTime, setremainTime] = useState(CTtimer);
+  const CTstatus = useSelector((state: any) => state.CTReducer.solvingStatus);
 
-const Timer = (props: { hh: number; mm: number; ss: number }) => {
-  const { hh, mm, ss } = props;
-  const [hours, setHours] = useState(hh);
-  const [minutes, setMinutes] = useState(mm);
-  const [seconds, setSeconds] = useState(ss);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const countdown = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(seconds - 1);
-      }
-      if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(countdown);
-          if (hours === 0) {
-            clearInterval(countdown);
-          } else {
-            setHours(hours - 1);
-            setMinutes(59);
-          }
-        } else {
-          setMinutes(minutes - 1);
-          setSeconds(59);
+    if (CTstatus === 'start') {
+      const countdown = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
         }
-      }
-    }, 1000);
-    return () => clearInterval(countdown);
-  }, [hours, minutes, seconds]);
+        if (seconds === 0) {
+          if (minutes === 0) {
+            clearInterval(countdown);
+            if (hours === 0) {
+              clearInterval(countdown);
+            } else {
+              setHours(hours - 1);
+              setMinutes(59);
+            }
+          } else {
+            setMinutes(minutes - 1);
+            setSeconds(59);
+          }
+        }
+        setremainTime(remainTime - 1 / 60);
+      }, 1000);
+      return () => clearInterval(countdown);
+    }
+  }, [CTstatus, CTtimer, hours, minutes, seconds]);
+
+  if (CTstatus === 'start' && hours === 0 && minutes === 0 && seconds === 0) {
+    dispatch(setSolvingStatus('end'));
+  }
+
+  let remainHeight = (CTtimer - remainTime) * (160 / CTtimer);
 
   return (
     <VStack
       w="32vw"
       h="16vh"
       bg={useColorModeValue('neutral.25', 'neutral.500')}
+      bgGradient={CTstatus === '' ? 'linear(to-r, #1B3E44, #2C2947)' : ''}
       borderRadius="10px"
       position="relative"
     >
-      <WaveContainer>
-        <Wave
-          fill="url(#gradient)"
-          paused={false}
-          opacity="0.30"
-          options={{
-            height: 0,
-            amplitude: 10,
-            speed: 0.4,
-            points: 6,
-          }}
-        >
-          <defs>
-            <linearGradient id="gradient">
-              <stop offset="10%" stopColor="rgba(153, 123, 237, 0.8)" />
-              <stop offset="90%" stopColor="rgba(157, 236, 249, 0.8)" />
-            </linearGradient>
-          </defs>
-        </Wave>
-      </WaveContainer>
+      {CTstatus === '' ? (
+        <Box m="-0.5" />
+      ) : (
+        <WaveContainer>
+          <Wave
+            fill="url(#gradient)"
+            paused={false}
+            opacity="0.30"
+            options={{
+              height: remainHeight,
+              amplitude: 20,
+              speed: 0.4,
+              points: 6,
+            }}
+          >
+            <defs>
+              <linearGradient id="gradient">
+                <stop offset="10%" stopColor="rgba(153, 123, 237, 0.8)" />
+                <stop offset="90%" stopColor="rgba(157, 236, 249, 0.8)" />
+              </linearGradient>
+            </defs>
+          </Wave>
+        </WaveContainer>
+      )}
+
       <VStack spacing={6}>
         <Center
           borderRadius="4px"
@@ -80,7 +100,7 @@ const Timer = (props: { hh: number; mm: number; ss: number }) => {
           fontWeight="600"
           mt="-3vh"
         >
-          제한 시간
+          {CTstatus === '' ? '제한 시간' : '남은 시간'}
         </Center>
         <HStack spacing={5}>
           <Center w="72px" h="80px" bg="white" borderRadius="10px">

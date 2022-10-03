@@ -23,7 +23,7 @@ import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 import { ColorText } from '../common/ColorText';
 import { getUserID, logout } from '../../api/common';
 import { SetStateAction, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setCompStatus } from '../../reducers/CTReducer';
 
 const menu = [
@@ -46,7 +46,6 @@ export const NavBar = (isLoggedIn: any) => {
   // eslint-disable-next-line react/destructuring-assignment
   const [isLogin, setLoginin] = useState(isLoggedIn.status);
   const [tabIndex, setTabIndex] = useState(0);
-  const compStatus = useSelector((state: any) => state.CTReducer.compStatus);
   const dispatch = useDispatch();
 
   useEffect(() => {

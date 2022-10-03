@@ -11,16 +11,15 @@ import {
   Spacer,
   Flex,
 } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
 import { createRivalAPI, deleteRivalAPI } from '../../../../api/auth/rival';
+import { setClickedRivalId, setCompStatus } from '../../../../reducers/rivalAPIReducer';
 import { rival } from '../../../../types/DataTypes';
 import { ColorText } from '../../../common/ColorText';
 import { BasicInfoLayout } from './BasicInfoLayout';
 
-export const RivalBasicCard = (props: {
-  RivalInfo: rival;
-  Rectype: string;
-  bottompropFunction: (arg0: string) => void;
-}) => {
+export const RivalBasicCard = (props: { RivalInfo: rival; Rectype: string }) => {
+  const dispatch = useDispatch();
   const { RivalInfo, Rectype } = props;
   const { isOpen, onToggle } = useDisclosure();
   let children = {};
@@ -29,7 +28,10 @@ export const RivalBasicCard = (props: {
   } else {
     children = { bgGradient: '' };
   }
-
+  const analysis = () => {
+    dispatch(setClickedRivalId(RivalInfo.userId));
+    dispatch(setCompStatus('RivalCompare'));
+  };
   return (
     <Box>
       <Box
@@ -79,7 +81,7 @@ export const RivalBasicCard = (props: {
                     size="xs"
                     borderRadius="4px"
                     // eslint-disable-next-line react/destructuring-assignment
-                    onClick={() => props.bottompropFunction('RivalCompare')}
+                    onClick={analysis}
                   >
                     실력 분석
                   </Button>

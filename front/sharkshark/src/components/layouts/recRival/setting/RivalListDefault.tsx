@@ -1,5 +1,5 @@
 import { Box, Button, HStack, useColorModeValue } from '@chakra-ui/react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getUserID } from '../../../../api/common';
 import { ColorText } from '../../../common/ColorText';
 import { RivalList } from './RivalList';
@@ -7,7 +7,7 @@ import { RivalList } from './RivalList';
 import { setAnalysisCompStatus } from '../../../../reducers/CTReducer';
 import { Link } from 'react-router-dom';
 
-export const RivalListDefault = (props: { topPropFunction: (arg0: string) => void }) => {
+export const RivalListDefault = () => {
   const titlefw = useColorModeValue(700, 500);
   const subtitleColor = useColorModeValue('neutral.700', 'neutral.50');
   const subtitlefw = useColorModeValue(500, 300);
@@ -16,16 +16,6 @@ export const RivalListDefault = (props: { topPropFunction: (arg0: string) => voi
 
   const movePage = async () => {
     dispatch(setAnalysisCompStatus(2));
-  };
-
-  const highFunction = (text: any) => {
-    console.log(text);
-    let sendText = text;
-    if (text === 'RivalCompare') {
-      sendText = 'RivalCompareForRegistered';
-    }
-    // eslint-disable-next-line react/destructuring-assignment
-    props.topPropFunction(sendText);
   };
 
   return (
@@ -47,7 +37,7 @@ export const RivalListDefault = (props: { topPropFunction: (arg0: string) => voi
         자유롭게 라이벌을 지정하고 관리해보세요.
       </Box>
       <Box>
-        <RivalList middlePropFunction={highFunction} />
+        <RivalList />
       </Box>
     </>
   );

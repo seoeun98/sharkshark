@@ -1,20 +1,13 @@
 import { Box, Center, useColorModeValue } from '@chakra-ui/react';
-import { Key } from 'react';
+import { useSelector } from 'react-redux';
 import { rival } from '../../../../types/DataTypes';
 import { RivalLongCard } from '../common/RivalLongCard';
 
-const RivalAllList = (props: {
-  middlePropFunction: (arg0: string) => void;
-  rivalRecList: rival[];
-}) => {
+const RivalAllList = () => {
   const titlefw = useColorModeValue(700, 500);
-  const { rivalRecList } = props;
   const bgcolor = useColorModeValue('neutral.25', 'neutral.500');
+  const rivalRecList = useSelector((state: any) => state.rivalAPIReducer.rivalRecList);
 
-  const middleFunction = (text: any) => {
-    // eslint-disable-next-line react/destructuring-assignment
-    props.middlePropFunction(text);
-  };
   return (
     <Box w="40vw">
       <Box fontSize="24px" fontWeight={titlefw} mb="6vh">
@@ -40,9 +33,9 @@ const RivalAllList = (props: {
         }}
       >
         {rivalRecList.length > 0 ? (
-          rivalRecList.map((item: any, index: Key | null | undefined) => (
+          rivalRecList.map((item: rival, index: number) => (
             <Box mb="8px" mr="8px" key={index}>
-              <RivalLongCard bottompropFunction={middleFunction} RivalInfo={item} />
+              <RivalLongCard RivalInfo={item} />
             </Box>
           ))
         ) : (

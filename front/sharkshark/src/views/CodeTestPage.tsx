@@ -7,16 +7,14 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { getUserID } from '../api/common';
 import CodingTestAnalysis from '../components/layouts/codingTest/CodingTestAnalysis';
 import { CodingTestDefault } from '../components/layouts/codingTest/CodingTestDefault';
 import CodingTestMain from '../components/layouts/codingTest/CodingTestMain';
-import { setSolvingStatus } from '../reducers/CTReducer';
 
 export const CodeTestPage = () => {
-  const dispatch = useDispatch();
   const [tabIndex, setTabIndex] = useState(0);
   const handleTabsChange = (index: number) => {
     setTabIndex(index);
@@ -24,7 +22,6 @@ export const CodeTestPage = () => {
   };
   const compStatus = useSelector((state: any) => state.CTReducer.compStatus);
   const CTPList = useSelector((state: any) => state.CTReducer.CTPList);
-  const CTstatus = useSelector((state: any) => state.CTReducer.solvingStatus);
 
   if (compStatus === 1 && tabIndex === 0) {
     setTabIndex(1);
@@ -60,7 +57,7 @@ export const CodeTestPage = () => {
 
       {/* main body */}
       <Box my="4vh">
-        <Tabs index={tabIndex} onChange={handleTabsChange}>
+        <Tabs index={tabIndex} onChange={handleTabsChange} isLazy={true}>
           <TabPanels>
             <TabPanel>
               <CodingTestDefault />

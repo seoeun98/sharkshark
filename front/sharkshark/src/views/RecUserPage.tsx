@@ -12,35 +12,43 @@ import { getUserID } from '../api/common';
 import { RivalListDefault } from '../components/layouts/recRival/setting/RivalListDefault';
 import { SetStateAction, useState } from 'react';
 import RivalRecMain from '../components/layouts/recRival/recommend/RivalRecMain';
-import { RivalCompareDetail } from '../components/layouts/recRival/recommend/RivalCompareDetail';
+import RivalCompareChart from '../components/layouts/dataChart/rival/RivalCompareChart';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCompStatus } from '../reducers/rivalAPIReducer';
 
 export const RecUserPage = () => {
+  const dispatch = useDispatch();
   const [tabIndex, setTabIndex] = useState(0);
-
-  const highFunction = (text: any) => {
-    console.log(text);
-    if (text === 'RivalList') {
-      setTabIndex(1);
-    } else if (text === 'RivalCompare') {
-      setTabIndex(0);
-      setComp(RivalCompareDetail);
-    } else {
-      setTabIndex(1);
-      setComp2(RivalCompareDetail);
-    }
-  };
-
-  const [comp, setComp] = useState(<RivalRecMain propFunction={highFunction} />);
-  const [comp2, setComp2] = useState(<RivalListDefault topPropFunction={highFunction} />);
+  const [tabIndex2, setTabIndex2] = useState(0);
+  const [tabIndex3, setTabIndex3] = useState(0);
+  let mb = '10vh';
+  const compStatus = useSelector((state: any) => state.rivalAPIReducer.compStatus);
 
   const handleTabsChange = (index: SetStateAction<number>) => {
     setTabIndex(index);
-    if (index === 0) {
-      setComp(<RivalRecMain propFunction={highFunction} />);
-    } else {
-      setComp2(<RivalListDefault topPropFunction={highFunction} />);
-    }
   };
+
+  const handleTabsChange2 = (index: SetStateAction<number>) => {
+    setTabIndex2(index);
+  };
+  const handleTabsChange3 = (index: SetStateAction<number>) => {
+    setTabIndex3(index);
+  };
+  if (compStatus === 'RivalCompare' && tabIndex2 === 0 && tabIndex === 0) {
+    setTabIndex2(1);
+    dispatch(setCompStatus(''));
+  }
+
+  if (compStatus === 'RivalCompare' && tabIndex3 === 0 && tabIndex === 1) {
+    setTabIndex3(1);
+    dispatch(setCompStatus(''));
+  }
+
+  if (compStatus === 'RivalAccount' && tabIndex === 0) {
+    setTabIndex(1);
+    setTabIndex3(0);
+    dispatch(setCompStatus(''));
+  }
 
   return (
     <Box>
@@ -74,14 +82,33 @@ export const RecUserPage = () => {
           my="6vh"
           index={tabIndex}
           onChange={handleTabsChange}
+          isLazy={true}
         >
           <Sidebar first="라이벌 추천 목록" second="라이벌 관리" third="" />
-          <TabPanels ml="4vw" bg="" mb="10vh">
+          <TabPanels ml="4vw" bg="" mb={mb}>
             <TabPanel>
-              <Box children={comp} />
+              <Tabs index={tabIndex2} onChange={handleTabsChange2} isLazy={true}>
+                <TabPanels>
+                  <TabPanel>
+                    <RivalRecMain />
+                  </TabPanel>
+                  <TabPanel>
+                    <RivalCompareChart />
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
             </TabPanel>
             <TabPanel>
-              <Box children={comp2} />
+              <Tabs index={tabIndex3} onChange={handleTabsChange3} isLazy={true}>
+                <TabPanels>
+                  <TabPanel>
+                    <RivalListDefault />
+                  </TabPanel>
+                  <TabPanel>
+                    <RivalCompareChart />
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
             </TabPanel>
           </TabPanels>
         </Tabs>

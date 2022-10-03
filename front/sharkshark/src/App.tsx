@@ -10,7 +10,6 @@ import { CodeTestPage } from './views/CodeTestPage';
 import { BloggingPage } from './views/BloggingPage';
 import { UserLoginPage } from './views/UserLoginPage';
 import { UserRegisterPage } from './views/UserRegisterPage';
-import { SettingPage } from './views/SettingPage';
 import { ResetPasswordPage } from './views/ResetPasswordPage';
 import { ModifyPasswordPage } from './views/ModifyPasswordPage';
 import customTheme from './theme/index';
@@ -25,8 +24,7 @@ export const App = () => (
         <Route path="codingtest" element={<CodeTestPage />} />
         <Route path="blogging" element={<BloggingPage />} />
         <Route path="data/chart" element={<DataChartMainPage />} />
-        <Route path="setting" element={<SettingPage />} />
-        <Route path="password-modify" element={<ModifyPasswordPage />} />
+        <Route path="setting" element={<ModifyPasswordPage />} />
         <Route index element={<Navigate to="home" replace />} />
       </Route>
       <Route path="login" element={<UserLoginPage />} />

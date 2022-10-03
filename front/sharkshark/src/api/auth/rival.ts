@@ -23,7 +23,6 @@ export const getRivalAPI = async () => {
     .get('/rival/list')
     .then(res => {
       rivalList = res.data;
-      console.log(rivalList);
     })
     .catch(err => {
       console.log(err);
@@ -37,7 +36,7 @@ export const createRivalAPI = (id: string) => {
   authAxios
     .post(`/rival/${id}`)
     .then(res => {
-      console.log(res.data);
+      alert('라이벌 등록이 완료되었습니다.');
     })
     .catch(err => {
       console.log(err);

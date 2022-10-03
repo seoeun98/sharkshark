@@ -1,3 +1,5 @@
+import { ListFormat } from 'typescript';
+
 export type Problem = {
   no: number;
   title: string;
@@ -66,4 +68,9 @@ export type Markdown = {
   tags?: string;
   code: string;
   lang: string;
+};
+
+export type solvedData = {
+  solved: Boolean;
+  time_sort_list?: ListFormat;
 };

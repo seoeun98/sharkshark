@@ -16,7 +16,8 @@ class getUser(BaseModel):
     class Config:
         orm_mode = True
 
-class updateUser(User):
+class updateUser(BaseModel):
+    pw: str
     git:str
     token: str
     dir:str

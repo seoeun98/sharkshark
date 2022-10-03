@@ -70,9 +70,8 @@ def check_message(id: str, msg: str, db : Session) :
     return -1
 
 
-
-def update_user(user: schemas.updateUser, db: Session):
-    db_user = db.query(models.User).filter(models.User.id == user.id)
+def update_user(user_id: str, user: schemas.updateUser, db: Session):
+    db_user = db.query(models.User).filter(models.User.id == user_id)
 
     if db_user.first():
         if user.pw:

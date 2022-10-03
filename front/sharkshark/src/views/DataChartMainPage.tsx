@@ -7,12 +7,32 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
+import { SetStateAction, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Sidebar } from '../components/common/Sidebar';
+import { setAnalysisCompStatus } from '../reducers/CTReducer';
 import DataChartPage from './DataChartPage';
 import { DataRivalPage } from './DataRivalPage';
 import { DataRoadPage } from './DataRoadPage';
 
 export const DataChartMainPage = () => {
+  const [tabIndex, setTabIndex] = useState(0);
+  const analysisCompStatus = useSelector((state: any) => state.CTReducer.analysisCompStatus);
+
+  const dispatch = useDispatch();
+
+  const handleTabsChange = (index: SetStateAction<number>) => {
+    setTabIndex(index);
+  };
+
+  useEffect(() => {
+    console.log(analysisCompStatus);
+    if (analysisCompStatus === 2) {
+      setTabIndex(2);
+    }
+    dispatch(setAnalysisCompStatus(0));
+  });
+
   return (
     <Box>
       {/* image & slogan */}
@@ -39,7 +59,14 @@ export const DataChartMainPage = () => {
       </Center>
       {/* main body */}
       <Box>
-        <Tabs variant="unstyled" orientation="vertical" mx="10vw" my="6vh">
+        <Tabs
+          variant="unstyled"
+          orientation="vertical"
+          mx="10vw"
+          my="6vh"
+          index={tabIndex}
+          onChange={handleTabsChange}
+        >
           <Sidebar first="알고리즘 실력 분석" second="티어 로드맵" third="라이벌 분석" />
           <TabPanels ml="4vw" bg="" mb="10vh">
             <TabPanel>

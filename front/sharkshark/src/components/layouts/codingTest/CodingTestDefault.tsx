@@ -19,7 +19,7 @@ import { getUserID } from '../../../api/common';
 import { CTproblem } from '../../../types/DataTypes';
 import { ColorText } from '../../common/ColorText';
 import { Paragraph } from '../../common/Paragraph';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setCompStatus, setProblemNum, setCTPList, setTimer } from '../../../reducers/CTReducer';
 
 export const CodingTestDefault = () => {
@@ -33,7 +33,6 @@ export const CodingTestDefault = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const modalBg = useColorModeValue('neutral.0', 'neutral.500');
   const fontWeight = useColorModeValue(600, 400);
-  const CTtimer = useSelector((state: any) => state.CTReducer.CTtimer);
 
   const sharkjoonImage = useColorModeValue(
     '/assets/logo/sharkjoon_light_logo.png',

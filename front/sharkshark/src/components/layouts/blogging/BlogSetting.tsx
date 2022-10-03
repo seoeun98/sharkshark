@@ -54,7 +54,7 @@ export const BlogSetting = () => {
   };
 
   const setOnClose = () => {
-    updateUserInfoAPI('', '', ghRepo.name, ghRepo.dir);
+    updateUserInfoAPI(getUserID(), '', '', ghRepo.name, ghRepo.dir);
     dispatch(setRepo(ghRepo));
     onClose();
   };
@@ -68,8 +68,7 @@ export const BlogSetting = () => {
       getAuthToken(authorizationCode);
       //dispatch(setAuthToken('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'));
     } else {
-      // token이 db에 존재하는지 확인
-      // checkdbtokenapi
+      //else
     }
   }, []);
   return (

@@ -9,6 +9,8 @@ const rivalAPIReducer = createSlice({
     rivalList: [],
     rivalRecList: [],
     clickedRivalId: '',
+    goHome: false,
+    registed: 'nonRegistered',
   },
   reducers: {
     setCompStatus(state, { payload: input }) {
@@ -29,6 +31,12 @@ const rivalAPIReducer = createSlice({
     setClickedRivalId(state, { payload: input }) {
       return { ...state, clickedRivalId: input };
     },
+    setGoHome(state, { payload: input }) {
+      return { ...state, goHome: input };
+    },
+    setRegisted(state, { payload: input }) {
+      return { ...state, registed: input };
+    },
   },
 });
 
@@ -39,5 +47,7 @@ export const {
   setRivalList,
   setRecRivalList,
   setClickedRivalId,
+  setGoHome,
+  setRegisted,
 } = rivalAPIReducer.actions;
 export default rivalAPIReducer.reducer;

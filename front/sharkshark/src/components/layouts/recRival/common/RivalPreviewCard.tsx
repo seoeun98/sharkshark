@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import {
   setClickedRivalId,
   setCompStatus,
+  setRegisted,
   setRivalInfo,
 } from '../../../../reducers/rivalAPIReducer';
 import { rival } from '../../../../types/DataTypes';
@@ -15,6 +16,7 @@ export const RivalPreviewCard = (props: { RivalInfo: rival }) => {
     dispatch(setCompStatus('RivalCompare'));
     dispatch(setClickedRivalId(RivalInfo.userId));
     dispatch(setRivalInfo(RivalInfo));
+    dispatch(setRegisted(''));
   };
   return (
     <Box>

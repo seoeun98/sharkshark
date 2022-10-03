@@ -1,9 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { Markdown } from '../types/DataTypes';
 
-// const SERVER_ADDRESS = 'https://j7b205.p.ssafy.io/api';
-const SERVER_ADDRESS = 'http://127.0.0.1:8000';
-// const SERVER_ADDRESS = '/api';
+const SERVER_ADDRESS = 'https://j7b205.p.ssafy.io/api';
 
 export const authAxios: AxiosInstance = axios.create({
   baseURL: `${SERVER_ADDRESS}`,

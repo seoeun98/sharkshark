@@ -74,3 +74,15 @@ export type solvedData = {
   solved: Boolean;
   time_sort_list?: ListFormat;
 };
+
+export type tagInfo = {
+  userId: string;
+  math: number;
+  implementation: number;
+  greedy: number;
+  string: number;
+  dataStructure: number;
+  graph: number;
+  dp: number;
+  bruteforce: number;
+};

@@ -11,6 +11,7 @@ const CTAPIReducer = createSlice({
     startime: '',
     solvedNum: [],
     allsolved: false,
+    analysisCompStatus: 0,
   },
   reducers: {
     setCompStatus(state, { payload: input }) {
@@ -37,6 +38,9 @@ const CTAPIReducer = createSlice({
     setAllSolved(state, { payload: input }) {
       return { ...state, allsolved: input };
     },
+    setAnalysisCompStatus(state, { payload: input }) {
+      return { ...state, analysisCompStatus: input };
+    },
   },
 });
 
@@ -49,5 +53,6 @@ export const {
   setStarttime,
   setSolvedNum,
   setAllSolved,
+  setAnalysisCompStatus,
 } = CTAPIReducer.actions;
 export default CTAPIReducer.reducer;

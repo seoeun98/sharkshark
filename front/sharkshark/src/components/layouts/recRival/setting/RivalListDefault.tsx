@@ -1,12 +1,22 @@
 import { Box, Button, HStack, useColorModeValue } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUserID } from '../../../../api/common';
 import { ColorText } from '../../../common/ColorText';
 import { RivalList } from './RivalList';
+
+import { setAnalysisCompStatus } from '../../../../reducers/CTReducer';
+import { Link } from 'react-router-dom';
 
 export const RivalListDefault = (props: { topPropFunction: (arg0: string) => void }) => {
   const titlefw = useColorModeValue(700, 500);
   const subtitleColor = useColorModeValue('neutral.700', 'neutral.50');
   const subtitlefw = useColorModeValue(500, 300);
+
+  const dispatch = useDispatch();
+
+  const movePage = async () => {
+    dispatch(setAnalysisCompStatus(2));
+  };
 
   const highFunction = (text: any) => {
     console.log(text);
@@ -25,13 +35,10 @@ export const RivalListDefault = (props: { topPropFunction: (arg0: string) => voi
           <ColorText>{getUserID()}</ColorText>
           <Box>님의 라이벌 목록</Box>
         </HStack>
-        <Button
-          variant="secondary"
-          size="csm"
-          borderRadius="10px"
-          onClick={() => (window.location.href = '/data/chart')}
-        >
-          <ColorText>라이벌 실력 분석 통계</ColorText>
+        <Button variant="secondary" size="csm" borderRadius="10px" onClick={movePage}>
+          <Link to="/data/chart">
+            <ColorText>라이벌 실력 분석 통계</ColorText>
+          </Link>
         </Button>
       </HStack>
 

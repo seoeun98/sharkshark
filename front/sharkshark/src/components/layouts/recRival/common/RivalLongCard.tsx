@@ -10,30 +10,26 @@ import {
   HStack,
   Button,
 } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
 import { createRivalAPI } from '../../../../api/auth/rival';
+import { setClickedRivalId, setCompStatus } from '../../../../reducers/rivalAPIReducer';
 import { rival } from '../../../../types/DataTypes';
 import { ColorText } from '../../../common/ColorText';
 import { BasicInfoLayout } from './BasicInfoLayout';
 
-export const RivalLongCard = (props: {
-  RivalInfo: rival;
-  bottompropFunction: (arg0: string) => void;
-}) => {
+export const RivalLongCard = (props: { RivalInfo: rival }) => {
+  const dispatch = useDispatch();
   const { RivalInfo } = props;
   const { isOpen, onToggle } = useDisclosure();
-  let children = {};
-  if (isOpen) {
-    children = { bgGradient: 'linear(to-r, primary.cyan50, primary.purple0)' };
-  } else {
-    children = { bgGradient: '' };
-  }
+  const bgcolor = useColorModeValue('neutral.25', 'neutral.500');
 
   return (
     <Box
-      bg={useColorModeValue('neutral.0', 'neutral.500')}
-      {...children}
+      bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
+      bg={isOpen ? '' : bgcolor}
       borderRadius="10px"
       _hover={{
+        bg: '',
         bgGradient: 'linear(to-r, #7B67BB, #4BA6B2)',
         boxShadow: 'dark-lg',
       }}
@@ -48,7 +44,7 @@ export const RivalLongCard = (props: {
               id={RivalInfo.userId}
             />
           </HStack>
-          <Center bg={useColorModeValue('white', 'black')} w="100px" h="40px" borderRadius="36px">
+          <Flex bg={useColorModeValue('white', 'black')} w="100px" h="40px" borderRadius="36px">
             <Button
               py="12px"
               px="24px"
@@ -64,7 +60,7 @@ export const RivalLongCard = (props: {
             >
               라이벌 등록
             </Button>
-          </Center>
+          </Flex>
         </Flex>
       </Box>
       <Collapse in={isOpen} animateOpacity={false}>
@@ -135,7 +131,10 @@ export const RivalLongCard = (props: {
               size="xs"
               borderRadius="4px"
               // eslint-disable-next-line react/destructuring-assignment
-              onClick={() => props.bottompropFunction('RivalCompare')}
+              onClick={() => {
+                dispatch(setClickedRivalId(RivalInfo.userId));
+                dispatch(setCompStatus('RivalCompare'));
+              }}
             >
               실력 분석
             </Button>

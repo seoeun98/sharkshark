@@ -2,22 +2,24 @@ import { HStack, Box, Flex, Center, VStack, Text, useColorModeValue } from '@cha
 import { BasicInfoLayout } from './BasicInfoLayout';
 import { ColorText } from '../../../common/ColorText';
 import { getRivalInfoAPI } from '../../../../api/auth/rival';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getUserID } from '../../../../api/common';
-import { rival } from '../../../../types/DataTypes';
+import { setUserInfo } from '../../../../reducers/rivalAPIReducer';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const UserBasicCard = () => {
-  const [userInfo, setuserInfo] = useState<rival>({ tier: '0', userId: '', userClass: 0 });
+  const dispatch = useDispatch();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchuserInfo = async () => {
-    setuserInfo(await getRivalInfoAPI(getUserID()));
+    dispatch(setUserInfo(await getRivalInfoAPI(getUserID())));
   };
 
-  // 일단 유저 정보 뽑기 위해 라이벌 정보 조회로 가져옴.
-  // TODO : 수정 필요
   useEffect(() => {
     fetchuserInfo();
   }, []);
+
+  const userInfo = useSelector((state: any) => state.rivalAPIReducer.userInfo);
 
   return (
     <Flex>

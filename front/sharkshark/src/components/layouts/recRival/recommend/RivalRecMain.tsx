@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Box, Center, Flex, useColorModeValue, Text } from '@chakra-ui/react';
 import { getUserID } from '../../../../api/common';
 import { UserBasicCard } from '../common/UserBasicCard';
@@ -6,23 +6,17 @@ import RivalPreviewList from './RivalPreviewList';
 import RivalAllList from './RivalRecAllList';
 import RivalRecList from './RivalRecList';
 import { getRecUserAPI } from '../../../../api/auth/rival';
-import { rival } from '../../../../types/DataTypes';
+import { useDispatch } from 'react-redux';
+import { setCompStatus, setRecRivalList } from '../../../../reducers/rivalAPIReducer';
 
-export const RivalRecMain = (props: { propFunction: (arg0: string) => void }) => {
+export const RivalRecMain = () => {
   const titlefw = useColorModeValue(700, 500);
   const subtitleColor = useColorModeValue('neutral.700', 'neutral.50');
   const subtitlefw = useColorModeValue(500, 300);
-
-  const highFunction = (text: any) => {
-    console.log(text);
-    // eslint-disable-next-line react/destructuring-assignment
-    props.propFunction(text);
-  };
-
-  const [rivalRecList, setrivalRecList] = useState<rival[]>([]);
+  const dispatch = useDispatch();
 
   const fetchrivalRecList = async () => {
-    setrivalRecList(await getRecUserAPI());
+    dispatch(setRecRivalList(await getRecUserAPI()));
   };
 
   useEffect(() => {
@@ -46,11 +40,11 @@ export const RivalRecMain = (props: { propFunction: (arg0: string) => void }) =>
             클릭을 통해 자세한 정보를 볼 수 있답니다.
           </Box>
         </Box>
-        <RivalRecList middlePropFunction={highFunction} rivalRecList={rivalRecList} />
+        <RivalRecList />
       </Box>
       <Box mt="8vh">
         <Flex>
-          <RivalAllList middlePropFunction={highFunction} rivalRecList={rivalRecList} />
+          <RivalAllList />
           <Box w="24vw">
             <Flex justifyContent="space-between">
               <Box fontSize="24px" fontWeight={titlefw} mb="6vh">
@@ -63,13 +57,12 @@ export const RivalRecMain = (props: { propFunction: (arg0: string) => void }) =>
                 _hover={{
                   color: 'primary.cyan0',
                 }}
-                // eslint-disable-next-line react/destructuring-assignment
-                onClick={() => props.propFunction('RivalList')}
+                onClick={() => dispatch(setCompStatus('RivalAccount'))}
               >
                 자세히 보기
               </Text>
             </Flex>
-            <RivalPreviewList middlePropFunction={highFunction} />
+            <RivalPreviewList />
           </Box>
         </Flex>
       </Box>

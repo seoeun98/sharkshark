@@ -4,25 +4,24 @@ import { getRivalAPI } from '../../../../api/auth/rival';
 import { rival } from '../../../../types/DataTypes';
 import { RivalPreviewCard } from '../common/RivalPreviewCard';
 import NonRival from '../../NonRival';
+import { useDispatch, useSelector } from 'react-redux';
+import { setRivalList } from '../../../../reducers/rivalAPIReducer';
 
-const RivalPreviewList = (props: { middlePropFunction: (arg0: string) => void }) => {
-  const [rivalList, setrivalList] = useState<rival[]>([]);
+const RivalPreviewList = () => {
+  const dispatch = useDispatch();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchRivalList = async () => {
-    setrivalList(await getRivalAPI());
+    dispatch(setRivalList(await getRivalAPI()));
   };
 
   useEffect(() => {
     fetchRivalList();
-  }, []);
+  }, [fetchRivalList]);
+
+  const rivalList = useSelector((state: any) => state.rivalAPIReducer.rivalList);
 
   const bg = useColorModeValue('neutral.0', 'neutral.500');
-
-  const middleFunction = (text: any) => {
-    console.log(text);
-    // eslint-disable-next-line react/destructuring-assignment
-    props.middlePropFunction(text);
-  };
 
   return (
     <Box
@@ -52,7 +51,7 @@ const RivalPreviewList = (props: { middlePropFunction: (arg0: string) => void })
             <Box m="12px" mr="8px" key={index}>
               {index !== 0 ? <Divider /> : null}
 
-              <RivalPreviewCard bottompropFunction={middleFunction} RivalInfo={item} />
+              <RivalPreviewCard RivalInfo={item} />
             </Box>
           ))
         ) : (

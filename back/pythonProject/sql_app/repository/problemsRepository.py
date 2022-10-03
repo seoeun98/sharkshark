@@ -1,9 +1,22 @@
+from typing import List
+
 from sqlalchemy.orm import Session
 from sql_app import models, schemas
 import random
 
+def probs_filter(id: str, prob_list: List , db: Session):
+    db_user_probs_list = db.query(models.solvedProblem).filter(models.solvedProblem.userId == id).all()
+    result_list = []
+
+    for prob_one in prob_list:
+        if not prob_one in db_user_probs_list:
+            result_list.append(prob_one)
+
+    return result_list
+
 def get_probs_by_rival(id: str, db: Session):
     prob_list = db.query(models.rec_problems).filter(models.rec_problems.userId == id).first().problems.split(',')
+    prob_list = probs_filter(id, prob_list, db)
     result_list = []
 
     if prob_list:
@@ -15,6 +28,7 @@ def get_probs_by_rival(id: str, db: Session):
 
 def get_probs_by_category(id: str, db: Session):
     prob_list = db.query(models.rec_problems_tag).filter(models.rec_problems_tag.userId == id).first().problems.split(',')
+    prob_list = probs_filter(id, prob_list, db)
     result_list = []
 
     for prob_no in prob_list:

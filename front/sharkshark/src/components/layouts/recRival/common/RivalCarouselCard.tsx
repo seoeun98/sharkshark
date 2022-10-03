@@ -12,7 +12,11 @@ import {
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { createRivalAPI } from '../../../../api/auth/rival';
-import { setClickedRivalId, setCompStatus } from '../../../../reducers/rivalAPIReducer';
+import {
+  setClickedRivalId,
+  setCompStatus,
+  setRivalInfo,
+} from '../../../../reducers/rivalAPIReducer';
 import { rival } from '../../../../types/DataTypes';
 import { ColorText } from '../../../common/ColorText';
 import { BasicInfoLayout } from './BasicInfoLayout';
@@ -80,6 +84,7 @@ export const RivalCarouselCard = (props: { RivalInfo: rival; active: boolean }) 
                     onClick={() => {
                       dispatch(setCompStatus('RivalCompare'));
                       dispatch(setClickedRivalId(RivalInfo.userId));
+                      dispatch(setRivalInfo(RivalInfo));
                     }}
                   >
                     실력 분석

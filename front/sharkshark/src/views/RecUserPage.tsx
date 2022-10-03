@@ -25,6 +25,8 @@ export const RecUserPage = () => {
   const compStatus = useSelector((state: any) => state.rivalAPIReducer.compStatus);
 
   const handleTabsChange = (index: SetStateAction<number>) => {
+    setTabIndex2(0);
+    setTabIndex3(0);
     setTabIndex(index);
   };
 

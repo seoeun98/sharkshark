@@ -126,9 +126,15 @@ def update_pw_by_id(request: schemas.User, db: Session = Depends(get_db)):
     user = userRepository.get_by_id(id, db)
     if user:
         user.pw = request.pw
-        return userRepository.update_user(user, db)
-    else:
-        raise HTTPException(status_code=401, detail="not registered")
+        # 인증 메시지 제거
+        if userRepository.delete_user_msg(id, db):
+            # 유저 비밀번호 업데이트
+            if userRepository.update_user(id, user, db):    
+                return True
+        else:
+            raise HTTPException(status_code=401, detail="msg already used")                
+
+    raise HTTPException(status_code=401, detail="not registered")
 
 # 회원 탈퇴
 @router.delete("", dependencies=[Depends(jwtRepository.JWTBearer())])
@@ -152,7 +158,7 @@ def get_github_access_token(request: schemas.authorizationCode, id: str, db: Ses
             update_user = sql_app.models.User()
             update_user.id = user.id
             update_user.token = github_access_token        
-            userRepository.update_user(update_user, db)
+            userRepository.update_user(id, update_user, db)
 
             return {"github_access_token": github_access_token}
     raise HTTPException(status_code=401, detail="github connection error")

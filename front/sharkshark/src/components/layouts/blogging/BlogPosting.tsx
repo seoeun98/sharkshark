@@ -26,6 +26,7 @@ export const BlogPosting = () => {
   const [problems, setProblems] = useState<Array<Problem>>([]);
   const [selected, setSelected] = useState(-1);
   const [code, setCode] = useState('');
+  const [filename, setFilename] = useState('');
   const itemcolor = useColorModeValue('neutral.25', 'neutral.500');
   const tagcolor = useColorModeValue('neutral.0', 'neutral.900');
 
@@ -51,17 +52,39 @@ export const BlogPosting = () => {
     const detail = await probsDetailAPI(prob.no);
 
     const message = 'uploaded from sharkshark';
-
+    const example = detail.in_list
+      .map((item, idx) => {
+        return (
+          `<table><tr><th><img width=120/>입력 ${
+            idx + 1
+          }<img width=120/></th><th><img width=120/>출력 ${
+            idx + 1
+          }<img width=120/></th></tr><tr><td>\n\n` +
+          '```\n' +
+          item +
+          '\n```\n' +
+          '</td><td>\n\n' +
+          '```\n' +
+          detail.out_list[idx] +
+          '\n```\n' +
+          '</td></tr></table>\n'
+        );
+      })
+      .join('');
     const text = buildMarkDown({
       title: prob.title,
       no: prob.no,
       code: code,
+      tier: metainfo[0].toggle ? prob.level : undefined,
+      tags: metainfo[2].toggle ? prob.tags : undefined,
+      problem_description: metainfo[1].toggle ? detail.problem_description : undefined,
+      input_description: detail.input_description,
+      output_description: detail.output_description,
+      example: example,
       lang: 'c',
     });
 
-    const content = btoa('test string');
-
-    const filename = 'test.md';
+    const content = btoa(unescape(encodeURIComponent(text)));
     githubUpload(authToken, message, content, repo.name, repo.dir, filename);
   };
 
@@ -87,7 +110,10 @@ export const BlogPosting = () => {
               bg={index === selected ? '' : itemcolor}
               borderRadius="20px"
               mb="12px"
-              onClick={() => setSelected(index)}
+              onClick={() => {
+                setSelected(index);
+                setFilename(problems[index].no + '_' + problems[index].title + '.md');
+              }}
             >
               <Flex>
                 {/* level */}
@@ -111,16 +137,17 @@ export const BlogPosting = () => {
                 </Box>
 
                 <Spacer />
-                <Box
+                <Button
                   mx="8px"
-                  borderRadius="10px"
-                  p="8px"
+                  h="32px"
+                  fontSize="16px"
+                  variant="unstyled"
                   onClick={() =>
                     window.open(`https://www.acmicpc.net/problem/${item.no}`, '_blank')
                   }
                 >
                   📖 문제 보기
-                </Box>
+                </Button>
               </Flex>
             </Box>
           ))
@@ -146,7 +173,7 @@ export const BlogPosting = () => {
             필수 정보
           </Box>
           {required.map((item, index) => (
-            <Button key={index} w="48px" mx="8px" borderRadius="10px" disabled>
+            <Button key={index} w="162px" mx="8px" borderRadius="10px" disabled>
               {item}
             </Button>
           ))}
@@ -158,7 +185,7 @@ export const BlogPosting = () => {
           {metainfo.map((item, index) => (
             <Button
               key={index}
-              w="48px"
+              w="162px"
               mx="8px"
               borderRadius="10px"
               variant={item.toggle ? 'primary' : 'solid'}
@@ -176,15 +203,30 @@ export const BlogPosting = () => {
         </Flex>
         <Flex mb="16px">
           <Box w="120px" lineHeight="44px">
-            사용자 제출 정보
+            풀이 코드
           </Box>
           <Box w="full" ml="16px">
             <Textarea
-              variant="outline"
+              mx="8px"
+              sx={style}
               placeholder="코드 입력"
               rows={6}
               w="full"
               onChange={e => setCode(e.target.value)}
+            />
+          </Box>
+        </Flex>
+        <Flex mb="16px">
+          <Box w="120px" lineHeight="44px">
+            파일명
+          </Box>
+          <Box w="full" ml="16px">
+            <Input
+              mx="8px"
+              placeholder="코드 입력"
+              w="full"
+              value={filename}
+              onChange={e => setFilename(e.target.value)}
             />
           </Box>
         </Flex>
@@ -194,4 +236,23 @@ export const BlogPosting = () => {
       </Center>
     </>
   );
+};
+
+const style = {
+  fontSize: '16px',
+  fontWeight: '500',
+  errorBorderColor: 'warning.0',
+  _placeholder: {
+    color: 'neutral.50',
+    fontWeight: '300',
+    opacity: '2',
+  },
+  _hover: {
+    color: 'primary.cyan50',
+    borderColor: 'primary.cyan50',
+  },
+  _focus: {
+    borderColor: 'primary.cyan50',
+    boxShadow: `0 0 0 1.5px #9DECF9`,
+  },
 };

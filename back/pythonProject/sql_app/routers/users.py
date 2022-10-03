@@ -10,6 +10,7 @@ import sql_app.models
 from sql_app import schemas
 from sql_app.database import get_db
 from sql_app.repository import userRepository, jwtRepository
+from sql_app.repository.jwtRepository import JWTRepo
 from sql_app.service import crowling
 
 from util import user_message_crawling
@@ -108,9 +109,10 @@ def get_by_id(id: str, db: Session = Depends(get_db)):
     raise JSONResponse(status_code=500, content=dict(detail="NOT_UPDATED"))
 
 # 계정 정보 업데이트
-@router.put("", dependencies=[Depends(jwtRepository.JWTBearer())])
-def update_by_id(request: schemas.updateUser, db: Session = Depends(get_db)):
-    return userRepository.update_user(request, db)
+@router.put("")
+def update_by_id(request: schemas.updateUser, db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())):
+    user_id = JWTRepo.decode_token(user)
+    return userRepository.update_user(user_id, request, db)
 
 # 계정 비밀번호 재설정
 @router.put("/pw")

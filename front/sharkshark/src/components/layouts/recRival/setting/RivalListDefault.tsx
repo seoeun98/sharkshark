@@ -1,21 +1,21 @@
 import { Box, Button, HStack, useColorModeValue } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
 import { getUserID } from '../../../../api/common';
 import { ColorText } from '../../../common/ColorText';
 import { RivalList } from './RivalList';
 
-export const RivalListDefault = (props: { topPropFunction: (arg0: string) => void }) => {
+import { setAnalysisCompStatus } from '../../../../reducers/CTReducer';
+import { Link } from 'react-router-dom';
+
+export const RivalListDefault = () => {
   const titlefw = useColorModeValue(700, 500);
   const subtitleColor = useColorModeValue('neutral.700', 'neutral.50');
   const subtitlefw = useColorModeValue(500, 300);
 
-  const highFunction = (text: any) => {
-    console.log(text);
-    let sendText = text;
-    if (text === 'RivalCompare') {
-      sendText = 'RivalCompareForRegistered';
-    }
-    // eslint-disable-next-line react/destructuring-assignment
-    props.topPropFunction(sendText);
+  const dispatch = useDispatch();
+
+  const movePage = async () => {
+    dispatch(setAnalysisCompStatus(2));
   };
 
   return (
@@ -25,13 +25,10 @@ export const RivalListDefault = (props: { topPropFunction: (arg0: string) => voi
           <ColorText>{getUserID()}</ColorText>
           <Box>님의 라이벌 목록</Box>
         </HStack>
-        <Button
-          variant="secondary"
-          size="csm"
-          borderRadius="10px"
-          onClick={() => (window.location.href = '/data/chart')}
-        >
-          <ColorText>라이벌 실력 분석 통계</ColorText>
+        <Button variant="secondary" size="csm" borderRadius="10px" onClick={movePage}>
+          <Link to="/data/chart">
+            <ColorText>라이벌 실력 분석 통계</ColorText>
+          </Link>
         </Button>
       </HStack>
 
@@ -40,7 +37,7 @@ export const RivalListDefault = (props: { topPropFunction: (arg0: string) => voi
         자유롭게 라이벌을 지정하고 관리해보세요.
       </Box>
       <Box>
-        <RivalList middlePropFunction={highFunction} />
+        <RivalList />
       </Box>
     </>
   );

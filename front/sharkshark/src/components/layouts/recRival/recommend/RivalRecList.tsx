@@ -3,30 +3,24 @@ import { useState } from 'react';
 import { rival } from '../../../../types/DataTypes';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { RivalCarouselCard } from '../common/RivalCarouselCard';
+import { useSelector } from 'react-redux';
 
-export const RivalRecList = (props: {
-  middlePropFunction: (arg0: string) => void;
-  rivalRecList: rival[];
-}) => {
-  const { rivalRecList } = props;
+export const RivalRecList = () => {
   const bgcolor = useColorModeValue('#DEE2E6', '#292835');
   const [active, setActive] = useState(0);
-  const middleFunction = (text: any) => {
-    console.log(text);
-    // eslint-disable-next-line react/destructuring-assignment
-    props.middlePropFunction(text);
-  };
+  const rivalRecList = useSelector((state: any) => state.rivalAPIReducer.rivalRecList);
+
   let len_rival = rivalRecList.length;
 
   return (
     <Box
       pos="relative"
       width="full"
-      h="20vh"
+      h="24vh"
       display="flex"
       alignItems="center"
       justifyContent="center"
-      mb="24vh"
+      mb="18vh"
     >
       {len_rival === 0 ? (
         <Center bg={bgcolor} borderRadius="12px" p="32px">
@@ -49,7 +43,7 @@ export const RivalRecList = (props: {
                 transformStyle: 'preserve-3d',
               }}
             >
-              {rivalRecList.map((item, index) => {
+              {rivalRecList.map((item: rival, index: number) => {
                 const abs_offset = Math.min(Math.abs(index - active), 8 - Math.abs(index - active));
                 const direction =
                   active - index > 0 ? (active - index < 4 ? -1 : 1) : index - active < 4 ? 1 : -1;
@@ -66,11 +60,7 @@ export const RivalRecList = (props: {
                       marginBottom: `${active === index ? '30px' : ''}`,
                     }}
                   >
-                    <RivalCarouselCard
-                      RivalInfo={item}
-                      bottompropFunction={middleFunction}
-                      active={index === active}
-                    />
+                    <RivalCarouselCard RivalInfo={item} active={index === active} />
                   </Center>
                 );
               })}

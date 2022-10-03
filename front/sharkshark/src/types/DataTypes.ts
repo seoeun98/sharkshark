@@ -28,7 +28,7 @@ export type rival = {
   ratingByProblemsSum?: number;
   ratingByClass?: number;
   ratingBySolvedCount?: number;
-  exp?: number;
+  exp: number;
   rivalCount?: number;
   reverseRivalCount?: number;
   maxStreak?: number;

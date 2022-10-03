@@ -11,9 +11,9 @@ import { SetStateAction, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Sidebar } from '../components/common/Sidebar';
 import { setAnalysisCompStatus } from '../reducers/CTReducer';
-import DataChartPage from './DataChartPage';
-import { DataRivalPage } from './DataRivalPage';
-import { DataRoadPage } from './DataRoadPage';
+import DataChartPage from '../components/layouts/dataChart/DataChartPage';
+import { DataRivalPage } from '../components/layouts/dataChart/DataRivalPage';
+import { DataRoadPage } from '../components/layouts/dataChart/DataRoadPage';
 
 export const DataChartMainPage = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -31,7 +31,7 @@ export const DataChartMainPage = () => {
       setTabIndex(2);
     }
     dispatch(setAnalysisCompStatus(0));
-  });
+  }, [analysisCompStatus, dispatch]);
 
   return (
     <Box>
@@ -66,6 +66,7 @@ export const DataChartMainPage = () => {
           my="6vh"
           index={tabIndex}
           onChange={handleTabsChange}
+          isLazy={true}
         >
           <Sidebar first="알고리즘 실력 분석" second="티어 로드맵" third="라이벌 분석" />
           <TabPanels ml="4vw" bg="" mb="10vh">

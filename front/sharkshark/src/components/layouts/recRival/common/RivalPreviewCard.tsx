@@ -1,12 +1,16 @@
 import { Box, useColorModeValue, Flex, Center, HStack, Button } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
+import { setClickedRivalId, setCompStatus } from '../../../../reducers/rivalAPIReducer';
 import { rival } from '../../../../types/DataTypes';
 import { BasicInfoLayout } from './BasicInfoLayout';
 
-export const RivalPreviewCard = (props: {
-  RivalInfo: rival;
-  bottompropFunction: (arg0: string) => void;
-}) => {
-  const { RivalInfo, bottompropFunction } = props;
+export const RivalPreviewCard = (props: { RivalInfo: rival }) => {
+  const dispatch = useDispatch();
+  const { RivalInfo } = props;
+  const analysis = () => {
+    dispatch(setCompStatus('RivalCompare'));
+    dispatch(setClickedRivalId(RivalInfo.userId));
+  };
   return (
     <Box>
       <Box py="18px">
@@ -31,7 +35,7 @@ export const RivalPreviewCard = (props: {
               bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
               bgClip="text"
               boxShadow="base"
-              onClick={() => bottompropFunction('RivalCompareForRegistered')}
+              onClick={analysis}
             >
               실력 분석
             </Button>

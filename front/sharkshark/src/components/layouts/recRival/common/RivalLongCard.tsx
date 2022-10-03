@@ -10,15 +10,15 @@ import {
   HStack,
   Button,
 } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
 import { createRivalAPI } from '../../../../api/auth/rival';
+import { setClickedRivalId, setCompStatus } from '../../../../reducers/rivalAPIReducer';
 import { rival } from '../../../../types/DataTypes';
 import { ColorText } from '../../../common/ColorText';
 import { BasicInfoLayout } from './BasicInfoLayout';
 
-export const RivalLongCard = (props: {
-  RivalInfo: rival;
-  bottompropFunction: (arg0: string) => void;
-}) => {
+export const RivalLongCard = (props: { RivalInfo: rival }) => {
+  const dispatch = useDispatch();
   const { RivalInfo } = props;
   const { isOpen, onToggle } = useDisclosure();
   const bgcolor = useColorModeValue('neutral.25', 'neutral.500');
@@ -131,7 +131,10 @@ export const RivalLongCard = (props: {
               size="xs"
               borderRadius="4px"
               // eslint-disable-next-line react/destructuring-assignment
-              onClick={() => props.bottompropFunction('RivalCompare')}
+              onClick={() => {
+                dispatch(setClickedRivalId(RivalInfo.userId));
+                dispatch(setCompStatus('RivalCompare'));
+              }}
             >
               실력 분석
             </Button>

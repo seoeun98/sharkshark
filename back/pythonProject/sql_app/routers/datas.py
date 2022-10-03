@@ -25,10 +25,10 @@ def get_tier_roadmap(db: Session = Depends(get_db), user: str = Depends(jwtRepos
     raise HTTPException(status_code=401, detail="no item")
 
 # 주요 유형 조회
-@router.get("/category")
-def get_major_category(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
-    userId = JWTRepo.decode_token(user)
-    result = dataRepository.get_major_category(userId, db)
+@router.get("/category/{id}")
+def get_major_category(id, db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
+    # userId = JWTRepo.decode_token(user)
+    result = dataRepository.get_major_category(id, db)
 
     if result:
         return result

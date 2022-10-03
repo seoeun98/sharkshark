@@ -36,7 +36,7 @@ export const createRivalAPI = (id: string) => {
   authAxios
     .post(`/rival/${id}`)
     .then(res => {
-      console.log(res.data);
+      alert('라이벌 등록이 완료되었습니다.');
     })
     .catch(err => {
       console.log(err);

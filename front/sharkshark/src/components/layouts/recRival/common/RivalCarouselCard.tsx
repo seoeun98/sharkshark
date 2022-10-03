@@ -10,24 +10,23 @@ import {
   Spacer,
   Flex,
 } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
 import { createRivalAPI } from '../../../../api/auth/rival';
+import { setClickedRivalId, setCompStatus } from '../../../../reducers/rivalAPIReducer';
 import { rival } from '../../../../types/DataTypes';
 import { ColorText } from '../../../common/ColorText';
 import { BasicInfoLayout } from './BasicInfoLayout';
 
-export const RivalCarouselCard = (props: {
-  RivalInfo: rival;
-  bottompropFunction: (arg0: string) => void;
-  active: boolean;
-}) => {
+export const RivalCarouselCard = (props: { RivalInfo: rival; active: boolean }) => {
+  const dispatch = useDispatch();
   const { RivalInfo, active } = props;
+
   let children = {};
   if (active) {
     children = { bgGradient: 'linear(to-r, primary.cyan50, primary.purple0)' };
   } else {
     children = { bgGradient: '' };
   }
-
   return (
     <Box
       style={{
@@ -78,8 +77,10 @@ export const RivalCarouselCard = (props: {
                     w="72px"
                     size="xs"
                     borderRadius="4px"
-                    // eslint-disable-next-line react/destructuring-assignment
-                    onClick={() => props.bottompropFunction('RivalCompare')}
+                    onClick={() => {
+                      dispatch(setCompStatus('RivalCompare'));
+                      dispatch(setClickedRivalId(RivalInfo.userId));
+                    }}
                   >
                     실력 분석
                   </Button>

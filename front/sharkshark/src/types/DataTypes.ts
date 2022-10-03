@@ -13,7 +13,8 @@ export type ProblemDetail = {
   problem_description: string;
   input_description: string;
   output_description: string;
-  example: string;
+  in_list: string[];
+  out_list: string[];
 };
 
 export type UserInfo = {
@@ -61,7 +62,7 @@ export type Markdown = {
   problem_description?: string;
   input_description?: string;
   output_description?: string;
-  example?: string[];
+  example?: string;
   tags?: string;
   code: string;
   lang: string;

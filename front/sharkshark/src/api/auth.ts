@@ -129,7 +129,7 @@ export const probsRecentAPI = async () => {
   await authAxios
     .get('/prob/recent')
     .then(res => {
-      console.log(res);
+      //console.log(res);
       list = res.data;
     })
     .catch(err => {
@@ -146,7 +146,8 @@ export const probsDetailAPI = async (probNo: number) => {
     problem_description: '',
     input_description: '',
     output_description: '',
-    example: '',
+    in_list: [],
+    out_list: [],
   };
   await authAxios
     .get(`/prob/detail/${probNo}`)

@@ -34,13 +34,16 @@ export const logout = () => {
 
 export const buildMarkDown = (md: Markdown) => {
   const content =
-    `# <img src="https://static.solved.ac/tier_small/${md.tier}.svg" alt="tier" height="32px" /> ${md.title} - ${md.no} \n\n` +
+    `<img src="https://j7b205.p.ssafy.io/assets/header/markdown_header.png" />\n\n` +
+    `# ` +
+    (md.tier
+      ? `<img src="https://static.solved.ac/tier_small/${md.tier}.svg" alt="tier" height="32px" />`
+      : '') +
+    ` ${md.title} - ${md.no} \n\n` +
     `## 문제\n\n` +
     `> https://www.acmicpc.net/problem/${md.no}\n\n` +
-    `### 분류\n\n` +
-    `${md.tags?.split(',').map(text => text + ', ')}\n\n` +
-    `### 문제 설명\n\n` +
-    `${md.problem_description}\n\n` +
+    (md.tags ? `### 분류\n\n` + `${md.tags}\n\n` : '') +
+    (md.problem_description ? `### 문제 설명\n\n` + `${md.problem_description}\n\n` : '') +
     `#### 입력\n\n` +
     `${md.input_description}\n\n` +
     `#### 출력\n\n` +
@@ -51,7 +54,7 @@ export const buildMarkDown = (md: Markdown) => {
     `## 풀이 코드\n\n` +
     `\`\`\`${md.lang}\n` +
     `${md.code}\n\n` +
-    `\`\`\`${md.lang}\n`;
+    `\`\`\`\n`;
 
   return content;
 };

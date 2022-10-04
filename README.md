@@ -513,7 +513,4 @@
   
   ![PT_37](./images/README/PT_37.png)
 
---------------------------
-
-  
 ![Footer](./images/README/Footer.png)

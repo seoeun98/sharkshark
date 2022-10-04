@@ -12,7 +12,7 @@ from sql_app import models
 
 ACCESS_KEY = "access"
 REFRESH_KEY = "refresh"
-ACCESS_EXPIRES = timedelta(hours=1)
+ACCESS_EXPIRES = timedelta(seconds=1)
 REFRESH_EXPIRES = timedelta(days=14)
 
 ALGORITHM = "HS256"
@@ -101,10 +101,10 @@ class JWTBearer(HTTPBearer):
         if credentials:
             if not credentials.scheme == "Bearer":
                 raise HTTPException(
-                    status_code=403, detail="Invalid authentication sheme.")
-            if self.verfity_jwt(credentials.credentials):
+                    status_code=403, detail="Invalid authentication scheme.")
+            if not self.verfity_jwt(credentials.credentials):
                 raise HTTPException(
-                    status_code=403, detail="Invalid token or expiredd token.")
+                    status_code=403, detail="Invalid token or expired token.")
             return credentials.credentials
         else:
             raise HTTPException(
@@ -120,4 +120,5 @@ class JWTBearer(HTTPBearer):
 
         if payload:
             isTokenValid = True
+
         return isTokenValid

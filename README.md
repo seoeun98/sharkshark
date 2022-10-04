@@ -36,13 +36,13 @@
   
 ## 2-1. 환경 설정
     
-  **🐥Front-end**
+  **🧑‍💻 Front-end**
     
     - React 18.2.0
 
     - ChakraUI 2.3.2
 
-  **Back-end**
+  **👨‍💻 Back-end**
     
     - Python 3.9
       
@@ -56,7 +56,7 @@
 
     ※ [설치 파일](./back/pythonProject/requirements.txt)
     
-  **CI/CD**  
+  **👩‍💻 CI/CD**  
     
     - AWS EC2
       

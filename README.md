@@ -491,7 +491,7 @@
 
 
 
-# 7. Cooperation & Promise
+# 7. Cooperation&Promises
 ------------------------------------------------------
   
   ## 7-1. Tools

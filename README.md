@@ -49,6 +49,8 @@
     - npm 8.5.5
 
     - Fast API
+
+    ※ [설치 파일](./back/pythonProject/requirements.txt)
     
   **Server**  
     

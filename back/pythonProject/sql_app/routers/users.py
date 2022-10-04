@@ -75,6 +75,8 @@ def confirm_message(id, db: Session = Depends(get_db)):
 # 전체 유저 조회
 @router.get("", dependencies=[Depends(jwtRepository.JWTBearer())])
 def get_all_user(db: Session = Depends(get_db)):
+
+
     return db.query(sql_app.models.User).all()
 
 # 로그인

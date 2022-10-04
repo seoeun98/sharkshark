@@ -154,7 +154,7 @@ def get_github_access_token(request: schemas.authorizationCode, id: str, db: Ses
     # 요청 상태 코드 확인
     if res.status_code == 200:
         github_access_token = res.text.split("&")[0].split("=")[1]
-        if 'error' in github_access_token:
+        if 'error' in github_access_token | 'bad_verification_code' in get_github_access_token:
             raise HTTPException(status_code=401, detail="code already used")
         user = userRepository.get_by_id(user_id, db)
         if user:

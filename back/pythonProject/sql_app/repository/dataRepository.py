@@ -1,5 +1,6 @@
 import datetime
 import json
+import numpy as np
 
 from requests import Session
 from sql_app.repository import rivalRepository
@@ -91,7 +92,7 @@ def get_roadMap(userId: str, db: Session):
 def get_major_category(userId: str, db: Session):
     return db.query(models.major_category).filter(models.major_category.userId == userId).first()
 
-# 주요 유형 추천 유저 평균
+# 추천 유저들의 주요 유형 평균
 def get_major_category_avg(userId: str, db: Session):
     rec_rivals = db.query(models.rec_rival).filter(models.rec_rival.userId == userId).first().__dict__        
     rec_rival_list = rec_rivals['rivalIds'].split(',')
@@ -141,3 +142,26 @@ def get_period_problem(period: Period, userId: str, db: Session):
 # 주요 오답 유형 조회
 def get_major_wrong(userId: str, db: Session):
     return db.query(models.wrongType).filter(models.wrongType.userId == userId).first()
+
+def get_level_avg(userId: str, db: Session):
+    # 라이벌 조회
+    rec_rivals = db.query(models.rec_rival).filter(models.rec_rival.userId == userId).first().__dict__
+    rec_rival_list = rec_rivals['rivalIds'].split(',')
+
+    solved_pb_list = db.query(models.solvedProblem).filter(models.solvedProblem.userId.in_(rec_rival_list)).all()
+
+    pb_no_list = []
+    for one in solved_pb_list:
+        pb_no_list.append(one.probNo)
+
+    pb_no_set = set(pb_no_list)
+
+    pb_list = db.query(models.problem.no, models.problem.title, models.problem.level).filter(models.problem.no.in_(pb_no_set)).all()
+    
+    pb_lv_list = []
+    for one in pb_list:
+        pb_lv_list.append(one.level)    
+
+    lv_avg = np.mean(pb_lv_list)
+
+    return pb_list, lv_avg

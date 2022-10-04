@@ -35,6 +35,29 @@
 # 2. 개발 환경
   
 ## 2-1. 환경 설정
+    
+  **Frontend**
+    
+    - React
+
+  **Backend**
+    
+    - Pyhton
+      
+    - Pycharm, Google Colab
+    
+  **Server**  
+    
+    - AWS EC2
+      
+    - Jenkins
+      
+    - Docker
+      
+    - Docker-compose
+      
+    
+  - AWS EC2
   
 ## 2-2. 서비스 아키텍처
   

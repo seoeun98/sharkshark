@@ -64,3 +64,10 @@ def get_major_wrong(db: Session = Depends(get_db), user: str = Depends(jwtReposi
     if result:
         return result
     raise HTTPException(status_code=401, detail="no item")
+
+@router.get("/levelavg")
+def get_level_avg(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
+    userId = JWTRepo.decode_token(user)
+    print(userId)
+    pb_list, lv_avg = dataRepository.get_level_avg(userId, db)
+    return {"level_avg" : lv_avg, "list" : pb_list}

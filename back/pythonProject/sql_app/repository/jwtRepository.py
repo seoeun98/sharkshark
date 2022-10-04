@@ -12,10 +12,11 @@ from sql_app import models
 
 ACCESS_KEY = "access"
 REFRESH_KEY = "refresh"
-ACCESS_EXPIRES = timedelta(hours=1)
+ACCESS_EXPIRES = timedelta(seconds=10)
 REFRESH_EXPIRES = timedelta(days=14)
 
 ALGORITHM = "HS256"
+
 
 class JWTRepo():
 
@@ -42,6 +43,7 @@ class JWTRepo():
     def generate_access_token(data: dict, expires_delta: Optional[timedelta] = None):
         to_encode = data.copy()
         if expires_delta:
+
             expire = datetime.utcnow() + ACCESS_EXPIRES
         else:
             expire = datetime.utcnow() + ACCESS_EXPIRES
@@ -64,7 +66,6 @@ class JWTRepo():
     def decode_token(token: str):
         try:
             decode_token = jwt.decode(token, ACCESS_KEY, ALGORITHM)
-            # if decode_token["exp"] >= datetime.time() else None
             return decode_token['id']
         except:
             print(traceback.format_exc())
@@ -73,8 +74,6 @@ class JWTRepo():
     def decode_refresh_token(token: str):
         try:
             decode_token = jwt.decode(token, REFRESH_KEY, ALGORITHM)
-            # if decode_token["exp"] >= datetime.time() else None
-
             return decode_token['id']
         except:
             print("error on decoding refresh token")
@@ -101,10 +100,10 @@ class JWTBearer(HTTPBearer):
         if credentials:
             if not credentials.scheme == "Bearer":
                 raise HTTPException(
-                    status_code=403, detail="Invalid authentication sheme.")
-            if self.verfity_jwt(credentials.credentials):
+                    status_code=403, detail="Invalid authentication scheme.")
+            if not self.verfity_jwt(credentials.credentials):
                 raise HTTPException(
-                    status_code=403, detail="Invalid token or expiredd token.")
+                    status_code=403, detail="Invalid token or expired token.")
             return credentials.credentials
         else:
             raise HTTPException(
@@ -114,8 +113,9 @@ class JWTBearer(HTTPBearer):
         isTokenValid: bool = False
 
         try:
-            payload = jwt.decode(jwttoken, ALGORITHM)
+            payload = jwt.decode(jwttoken, ACCESS_KEY, ALGORITHM)
         except:
+            print(traceback.format_exc())
             payload = None
 
         if payload:

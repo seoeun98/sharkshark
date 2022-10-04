@@ -7,6 +7,18 @@ from sql_app import models
 from sql_app.schemas import Period
 from sql_app.service import roadMap
 
+class major_category_avg:
+    def __init__(self, userId="", math=0, implementation=0, greedy=0, string=0, dataStructure=0, graph=0, dp=0, bruteforce=0):
+        self.userId = userId
+        self.math = math
+        self.implementation = implementation
+        self.greedy = greedy
+        self.string = string
+        self.dataStructure = dataStructure
+        self.graph = graph
+        self.dp = dp
+        self.bruteforce = bruteforce
+        pass
 
 # 티어 상승 로드맵을 가져온다
 def get_roadMap(userId: str, db: Session):
@@ -78,6 +90,38 @@ def get_roadMap(userId: str, db: Session):
 # 주요 유형 조회. 유형별 능력치 표현
 def get_major_category(userId: str, db: Session):
     return db.query(models.major_category).filter(models.major_category.userId == userId).first()
+
+# 주요 유형 추천 유저 평균
+def get_major_category_avg(userId: str, db: Session):
+    rec_rivals = db.query(models.rec_rival).filter(models.rec_rival.userId == userId).first().__dict__        
+    rec_rival_list = rec_rivals['rivalIds'].split(',')
+
+    rec_rival_major_category_list = db.query(models.major_category).filter(models.major_category.userId.in_(rec_rival_list)).all()
+    
+    res = major_category_avg()
+    for one in rec_rival_major_category_list:
+        res.userId += one.userId + ','
+        res.math += one.math
+        res.implementation += one.implementation
+        res.greedy += one.greedy
+        res.string += one.string
+        res.dataStructure += one.dataStructure
+        res.graph += one.graph
+        res.dp += one.dp
+        res.bruteforce += one.bruteforce
+
+    size = len(rec_rival_major_category_list)    
+    res.userId = res.userId[:-1]
+    res.math /= size
+    res.implementation /= size
+    res.greedy /= size
+    res.string /= size
+    res.dataStructure /= size
+    res.graph /= size
+    res.dp /= size
+    res.bruteforce /= size
+
+    return res
 
 # 기간별 문제 풀이 조회
 def get_period_problem(period: Period, userId: str, db: Session):

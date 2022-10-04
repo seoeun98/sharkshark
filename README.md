@@ -517,13 +517,13 @@
 
   -  Merge Commit
 
-    ```tex
+    
     Merge : #4 from sowl/branch_name
-    ```
+    
 
   ## 7-2. Git Branch
 
-    ```markdown
+    
     - master : deploy branch ===>>> release branch
     - dev : develop branch  ====>>> default branch
     - feat-fe-contents : frontend feature branch
@@ -536,7 +536,7 @@
 
     ex)`refactor-fe-contents` : frontend refactoring branch
     ex)`refactor-be-contents` : backend refactoring branch
-    ```
+    
     
   ## 7-3. Jira
 

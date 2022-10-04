@@ -508,7 +508,7 @@
 
 
 
-# 8. 👨‍👩‍👧‍👦 ![logo_dark](./images/README/logo_dark.png) 팀원
+# 8. 👨‍👩‍👧‍👦 ![logo_dark](./images/README/logo_dark.png) 팀원 소개
 ------------------------------------------------------
   
   ![PT_37](./images/README/PT_37.png)

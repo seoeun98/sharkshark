@@ -19,8 +19,8 @@ export const defaultAxios: AxiosInstance = axios.create({
 authAxios.interceptors.response.use(
   res => res,
   err => {
-    console.log('interceptor:' + err);
-    if ((err.code = 403)) refreshAPI();
+    console.log('interceptor:' + err.response.status);
+    if ((err.response.status = 403)) refreshAPI();
   },
 );
 
@@ -32,7 +32,7 @@ export const refreshAPI = async () => {
       {},
       {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('refresh_token') || '',
+          'refresh-token': localStorage.getItem('refresh_token') || '',
         },
       },
     )

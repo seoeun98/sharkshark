@@ -38,7 +38,7 @@ export const CodeTestPage = () => {
 
   return (
     <Box>
-      {tabIndex === 1 ? (
+      {tabIndex === 0 ? (
         <Center bgImage={bgImage} bgSize="cover" bgPos="center" h="35vh" textAlign="center">
           <VStack spacing="1vh">
             <Box fontSize="32px" pt="4vh" fontWeight={mainFW}>

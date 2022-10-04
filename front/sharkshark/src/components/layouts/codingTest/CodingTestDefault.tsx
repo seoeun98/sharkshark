@@ -20,7 +20,13 @@ import { CTproblem } from '../../../types/DataTypes';
 import { ColorText } from '../../common/ColorText';
 import { Paragraph } from '../../common/Paragraph';
 import { useDispatch } from 'react-redux';
-import { setCompStatus, setProblemNum, setCTPList, setTimer } from '../../../reducers/CTReducer';
+import {
+  setCompStatus,
+  setProblemNum,
+  setCTPList,
+  setTimer,
+  setSolvingStatus,
+} from '../../../reducers/CTReducer';
 
 export const CodingTestDefault = () => {
   const dispatch = useDispatch();
@@ -43,6 +49,7 @@ export const CodingTestDefault = () => {
 
   const fetchCTPList = async () => {
     setproblemList(await getCTproblemAPI());
+    dispatch(setSolvingStatus(''));
   };
 
   useEffect(() => {

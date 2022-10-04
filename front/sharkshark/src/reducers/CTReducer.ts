@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { solvedData } from '../types/DataTypes';
 
 const CTAPIReducer = createSlice({
   name: 'CTAPIReducer',
@@ -10,7 +11,9 @@ const CTAPIReducer = createSlice({
     solvingStatus: '',
     startime: '',
     solvedList: [],
+    sovledResultData: [],
     allsolved: false,
+
     analysisCompStatus: 0,
   },
   reducers: {
@@ -35,6 +38,9 @@ const CTAPIReducer = createSlice({
     setSolvedList(state, { payload: input }) {
       return { ...state, solvedList: input };
     },
+    setSovledResultData(state, { payload: input }) {
+      return { ...state, sovledResultData: input };
+    },
     setAllSolved(state, { payload: input }) {
       return { ...state, allsolved: input };
     },
@@ -52,6 +58,7 @@ export const {
   setSolvingStatus,
   setStarttime,
   setSolvedList,
+  setSovledResultData,
   setAllSolved,
   setAnalysisCompStatus,
 } = CTAPIReducer.actions;

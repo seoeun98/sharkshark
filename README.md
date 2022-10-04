@@ -474,7 +474,7 @@
     
   ## 6-1. ERD
 
-    ![erd](./images/README/erd.png)
+    ![ERD](./images/README/ERD.png)
 
 
   ## 6-2. Design System

@@ -67,7 +67,12 @@ def get_major_wrong(db: Session = Depends(get_db), user: str = Depends(jwtReposi
 
 @router.get("/levelavg")
 def get_level_avg(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
-    userId = JWTRepo.decode_token(user)
-    print(userId)
+    userId = JWTRepo.decode_token(user)    
     pb_list, lv_avg = dataRepository.get_level_avg(userId, db)
     return {"level_avg" : lv_avg, "list" : pb_list}
+
+@router.get("/pbperweek")
+def get_pb_per_week(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
+    userId = JWTRepo.decode_token(user)
+    result = dataRepository.get_pb_per_week(userId, db)
+    return result

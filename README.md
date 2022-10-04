@@ -42,7 +42,7 @@
 
   **Backend**
     
-    - Pyhton
+    - Python
       
     - Pycharm, Google Colab
     

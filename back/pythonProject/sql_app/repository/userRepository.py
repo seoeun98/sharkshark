@@ -108,3 +108,15 @@ def get_bjuser_by_id(id: str, db: Session):
     if db_bjuser:
         return db_bjuser
     else: return 0
+
+def delete_user_msg(id: str, db : Session):
+    db_msg = db.query(models.userMsg).filter(models.userMsg.userId == id).first()
+
+    if db_msg:
+        db.delete(db_msg)
+        db.commit()
+        return True
+
+    raise False
+    
+        

@@ -1,5 +1,3 @@
-import { ListFormat } from 'typescript';
-
 export type Problem = {
   no: number;
   title: string;
@@ -54,7 +52,7 @@ export type CTproblem = {
   level: number;
   avgTries: number;
   isSolvable: Boolean;
-  tags: string; // "implementation,arithmetic,math"
+  tags: string;
 };
 
 export type Markdown = {
@@ -72,7 +70,18 @@ export type Markdown = {
 
 export type solvedData = {
   solved: Boolean;
-  time_sort_list?: ListFormat;
+  probNo: number;
+  userInfo?: userSolvedData;
+  time_sort_list?: userSolvedData[];
+  memory_sort_list?: userSolvedData[];
+};
+
+export type userSolvedData = {
+  lang: String;
+  memory: number;
+  time: number;
+  timeStamp: String;
+  userId: String;
 };
 
 export type tagInfo = {

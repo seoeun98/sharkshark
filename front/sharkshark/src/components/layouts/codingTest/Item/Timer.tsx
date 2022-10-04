@@ -65,7 +65,7 @@ const Timer = () => {
       borderRadius="10px"
       position="relative"
     >
-      {CTstatus === '' ? (
+      {CTstatus !== 'start' ? (
         <Box m="-0.5" />
       ) : (
         <WaveContainer>

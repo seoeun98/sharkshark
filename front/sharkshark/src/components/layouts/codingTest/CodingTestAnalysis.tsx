@@ -1,228 +1,61 @@
-import { Box, Center, HStack, VStack } from '@chakra-ui/react';
-import React from 'react';
+import { Box, Flex, useColorModeValue } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
-import { isTemplateMiddle } from 'typescript';
 import { getUserID } from '../../../api/common';
-import { Paragraph } from '../../common/Paragraph';
-import ProblemDataChart from './Item/ProblemDataChart';
+import ApexCharts from 'react-apexcharts';
+import MemoryDataChart from './Item/MemoryDataChart';
+import { userSolvedData } from '../../../types/DataTypes';
+import TimeDataChart from './Item/TimeDataChart';
+import ProblemItemForAnalysis from './Item/ProblemItemForAnalysis';
 
 const CodingTestAnalysis = () => {
-  // 푼 문제 리스트
+  // 푼 문제 리스트 (문제 정보)
   const solvedList = useSelector((state: any) => state.CTReducer.solvedList);
-
-  let solvedListForTest = [
-    {
-      solved: '(풀이 유무 true/false)',
-      probNo: '1987',
-      userInfo: {
-        userId: 'arcde40',
-        memory: 14440,
-        time: 684,
-        lang: 'Java 11',
-        timeStamp: '2022-09-28 19:24:30',
-      },
-      time_sort_list: [
-        {
-          userId: 'arcde40',
-          memory: 14440,
-          time: 684,
-          lang: 'Java 11',
-          timeStamp: '2022-09-28 19:24:30',
-        },
-        {
-          userId: 'woonie155',
-          memory: 15196,
-          time: 828,
-          lang: 'Java 11',
-          timeStamp: '2022-09-23 21:29:33',
-        },
-        {
-          userId: 'dh54kim',
-          memory: 14584,
-          time: 856,
-          lang: 'Java 8 (OpenJDK)',
-          timeStamp: '2022-09-23 10:17:20',
-        },
-        {
-          userId: 'dudwls143',
-          memory: 15144,
-          time: 856,
-          lang: 'Java 11',
-          timeStamp: '2022-09-22 22:42:34',
-        },
-        {
-          userId: 'd_min3',
-          memory: 15356,
-          time: 896,
-          lang: 'Java 11',
-          timeStamp: '2022-09-23 00:04:37',
-        },
-      ],
-      memory_sort_list: [
-        {
-          userId: 'arcde40',
-          memory: 14440,
-          time: 684,
-          lang: 'Java 11',
-          timeStamp: '2022-09-28 19:24:30',
-        },
-        {
-          userId: 'woonie155',
-          memory: 15196,
-          time: 828,
-          lang: 'Java 11',
-          timeStamp: '2022-09-23 21:29:33',
-        },
-        {
-          userId: 'dh54kim',
-
-          memory: 14584,
-          time: 856,
-          lang: 'Java 8 (OpenJDK)',
-          timeStamp: '2022-09-23 10:17:20',
-        },
-        {
-          userId: 'dudwls143',
-
-          memory: 15144,
-          time: 856,
-          lang: 'Java 11',
-          timeStamp: '2022-09-22 22:42:34',
-        },
-        {
-          userId: 'd_min3',
-
-          memory: 15356,
-          time: 896,
-          lang: 'Java 11',
-          timeStamp: '2022-09-23 00:04:37',
-        },
-      ],
-    },
-    {
-      solved: '(풀이 유무 true/false)',
-      probNo: '1987',
-      userInfo: {
-        userId: 'arcde40',
-        memory: 14440,
-        time: 684,
-        lang: 'Java 11',
-        timeStamp: '2022-09-28 19:24:30',
-      },
-      time_sort_list: [
-        {
-          userId: 'arcde40',
-
-          memory: 14440,
-          time: 684,
-          lang: 'Java 11',
-          timeStamp: '2022-09-28 19:24:30',
-        },
-        {
-          userId: 'woonie155',
-
-          memory: 15196,
-          time: 828,
-          lang: 'Java 11',
-          timeStamp: '2022-09-23 21:29:33',
-        },
-        {
-          userId: 'dh54kim',
-
-          memory: 14584,
-          time: 856,
-          lang: 'Java 8 (OpenJDK)',
-          timeStamp: '2022-09-23 10:17:20',
-        },
-        {
-          userId: 'dudwls143',
-
-          memory: 15144,
-          time: 856,
-          lang: 'Java 11',
-          timeStamp: '2022-09-22 22:42:34',
-        },
-        {
-          userId: 'd_min3',
-
-          memory: 15356,
-          time: 896,
-          lang: 'Java 11',
-          timeStamp: '2022-09-23 00:04:37',
-        },
-      ],
-      memory_sort_list: [
-        {
-          userId: 'arcde40',
-
-          memory: 14440,
-          time: 684,
-          lang: 'Java 11',
-          timeStamp: '2022-09-28 19:24:30',
-        },
-        {
-          userId: 'woonie155',
-
-          memory: 15196,
-          time: 828,
-          lang: 'Java 11',
-          timeStamp: '2022-09-23 21:29:33',
-        },
-        {
-          userId: 'dh54kim',
-
-          memory: 14584,
-          time: 856,
-          lang: 'Java 8 (OpenJDK)',
-          timeStamp: '2022-09-23 10:17:20',
-        },
-        {
-          userId: 'dudwls143',
-          memory: 15144,
-          time: 856,
-          lang: 'Java 11',
-          timeStamp: '2022-09-22 22:42:34',
-        },
-        {
-          userId: 'd_min3',
-          memory: 15356,
-          time: 896,
-          lang: 'Java 11',
-          timeStamp: 'rgba(157, 236, 249, 0.6)',
-        },
-      ],
-    },
-  ];
+  // 문제 결과 데이터
+  const sovledResultData = useSelector((state: any) => state.CTReducer.sovledResultData);
+  console.log(solvedList);
+  console.log(sovledResultData);
+  const titlefw = useColorModeValue(700, 500);
+  const subtitlefw = useColorModeValue(500, 300);
+  const subtitleColor = useColorModeValue('neutral.700', 'neutral.50');
 
   return (
-    <Box ml="24vw">
-      <Paragraph
-        title="실력 점검"
-        description={
-          <>
+    <>
+      <Box mb="8vh" ml="24vw">
+        <Box mb="4vh">
+          <Box fontSize="24px" fontWeight={titlefw} mb="2vh">
+            실력 점검
+          </Box>
+          <Box fontSize="14px" mb="4vh" fontWeight={subtitlefw} color={subtitleColor}>
             {getUserID()} 님의 문제 풀이를 분석한 결과입니다.
             <br />
             분석 결과를 보고, 실력을 점검해보세요!
-          </>
-        }
-      >
-        <VStack ml="-12vw">
-          {solvedListForTest.map((item, index) => (
-            <VStack>
-              <Box>{item.probNo}</Box>
-              <HStack>
-                <Center>
-                  <ProblemDataChart problem={item.memory_sort_list} userInfo={item.userInfo} />
-                </Center>
-                <Center>
-                  <ProblemDataChart problem={item.time_sort_list} userInfo={item.userInfo} />
-                </Center>
-              </HStack>
-            </VStack>
-          ))}
-        </VStack>
-      </Paragraph>
-    </Box>
+          </Box>
+        </Box>
+      </Box>
+      <Box ml="26vw">
+        {sovledResultData.map(
+          (
+            item: {
+              userInfo: userSolvedData;
+              time_sort_list: userSolvedData[];
+              memory_sort_list: userSolvedData[];
+            },
+            index: string | number,
+          ) => (
+            <Box mb={16}>
+              <Box mb={12}>
+                <ProblemItemForAnalysis userInfo={item.userInfo} problem={solvedList[index]} />
+              </Box>
+
+              <Flex>
+                <MemoryDataChart problem={item.memory_sort_list} userInfo={item.userInfo} />
+                <TimeDataChart problem={item.time_sort_list} userInfo={item.userInfo} />
+              </Flex>
+            </Box>
+          ),
+        )}
+      </Box>
+    </>
   );
 };
 

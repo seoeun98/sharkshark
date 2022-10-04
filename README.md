@@ -18,4 +18,4 @@
 ------------------------------------------------------
 
 
-![Footer](./images/README/Footer.png.png)
+![Footer](./images/README/Footer.png)

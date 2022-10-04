@@ -494,54 +494,20 @@
 # 7. 협업
 ------------------------------------------------------
   
-  ## 7-1. Git Commit Convention
+  ## 7-1. Tools
 
-  ```markdown
-  - `Feat` : 새로운 기능을 추가할 경우
-  - `Fix` : 버그를 고친 경우
-  - `Docs` : 문서를 수정한 경우
-  - `Design` : CSS 등 사용자 UI 디자인 변경
-  - `Style` : 코드 포맷 변경, 세미 콜론 누락, 코드 수정이 없는 경우
-  - `Refac` : 프로덕션 코드 리팩토링 (코드 최적화)
-  - `Test` : 테스트 추가, 테스트 리팩토링(프로덕션 코드 변경 X)
-  - `Build` : 빌드 관련 파일 수정
-  - `Rename` : 파일 혹은 폴더명을 수정하거나 옮기는 작업만인 경우
-  - `Merge` : PR을 요청하는 경우
-  - `Perf` : 성능 개선
-  - `Chore` : 패키지 매니저 등 그 외 자잘한 수정
-  ```
+    - Git
 
-  - 제목 끝에 마침표 금지, 명령문, 현재 시제로 작성, 대문자 사용 금지
+    - Jira
 
-    ex) Feat : add login validation function
+    - Notion
 
-  -  Merge Commit
+    - Mattermost
 
-    
-    Merge : #4 from sharkshark/branch_name
-    
-
-  ## 7-2. Git Branch
-
-    
-    - master : deploy branch ===>>> release branch
-    - dev : develop branch  ====>>> default branch
-    - feat-fe-contents : frontend feature branch
-
-    ex) `feat-fe-loginView`
-    ex) `feat-be-contents` : backend feature branch
-
-    ex) `fix-fe-contents` : frontend fix branch
-    ex)`fix-be-contents` : backend fix branch
-
-    ex)`refactor-fe-contents` : frontend refactoring branch
-    ex)`refactor-be-contents` : backend refactoring branch
-    
-    
-  ## 7-3. Jira
-
-  ## 7-4. Notion
-
+    - Webex
+      
+      
+    ![PT_17](./images/README/PT_17.png)
 --------------------------
 
 

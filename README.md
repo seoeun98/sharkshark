@@ -21,6 +21,14 @@ Naming : 서비스의 상징인 상어와 문제를 샥샥(SharkShark) 푼다는
 알고리즘 실력 향상, 실전 연습, 학습 동기 부여 등 원활한 코딩 문제 학습을 지원하는 서비스
   
 ![PT_3](./images/README/PT_3.png)
+  
+![PT_4](./images/README/PT_4.png)
+  
+![PT_5](./images/README/PT_5.png)
+  
+![PT_6](./images/README/PT_6.png)
+  
+![PT_7](./images/README/PT_7.png)
 
 ------------------------------------------------------
 

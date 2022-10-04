@@ -39,6 +39,10 @@
     
     - React 18.2.0
 
+    - Node 16.17
+
+    - npm 8.15.0
+
     - ChakraUI 2.3.2
 
   **👨‍💻 Back-end**

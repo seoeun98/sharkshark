@@ -1,3 +1,4 @@
+![Footer__1_](./images/README/Footer__1_.png)
 [TOC]
 
 
@@ -7,8 +8,6 @@
 ------------------------------------------
 
 # 1. ![logo_dark](./images/README/logo_dark.png) 소개
-
-![Footer__1_](./images/README/Footer__1_.png)
 
 **원하는 문제만 샥샥(SharkShark) 풀고 싶은 당신을 위한 코딩 문제 추천 서비스**
   

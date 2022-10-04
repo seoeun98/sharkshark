@@ -44,7 +44,6 @@ export const TagChart = (props: { userTagInfo: any }) => {
     },
     tooltip: {
       shared: true,
-      intersect: true,
       theme: 'dark',
       y: {
         formatter: function (val: any) {

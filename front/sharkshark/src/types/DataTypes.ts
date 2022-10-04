@@ -1,3 +1,5 @@
+import { string } from 'prop-types';
+
 export type Problem = {
   no: number;
   title: string;
@@ -94,4 +96,20 @@ export type tagInfo = {
   graph: number;
   dp: number;
   bruteforce: number;
+};
+
+export type wrongInfo = {
+  no: number;
+  wrong_answer: number;
+  over_memory: number;
+  runtime_error: number;
+  over_time: number;
+  userId: string;
+  wrong_print: number;
+  over_print: number;
+  compile_error: number;
+};
+
+export type termSolving = {
+  string?: string;
 };

@@ -1,11 +1,15 @@
 import { Center, HStack, VStack, useColorModeValue, Box, Text, Flex } from '@chakra-ui/react';
-import { rival, tagInfo } from '../../../types/DataTypes';
+import { rival, tagInfo, termSolving, wrongInfo } from '../../../types/DataTypes';
 import { ColorText } from '../../common/ColorText';
 import { BasicInfoLayout } from '../recRival/common/BasicInfoLayout';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { TagChart } from './personal/tagChart';
-import { getTagDataAPI } from '../../../api/auth/dataAnalysis';
+import {
+  getSolveTermDataAPI,
+  getTagDataAPI,
+  getWrongTypeDataAPI,
+} from '../../../api/auth/dataAnalysis';
 
 const DataChartPage = () => {
   const userInfo = useSelector((state: any) => state.rivalAPIReducer.userInfo);
@@ -23,9 +27,31 @@ const DataChartPage = () => {
     bruteforce: 0,
   });
 
+  const [solveTermData, setSolveTermData] = useState<termSolving>({});
+  const [wrongTypeData, setrongTypeData] = useState<wrongInfo>({
+    no: 0,
+    wrong_answer: 0,
+    over_memory: 0,
+    runtime_error: 0,
+    over_time: 0,
+    userId: '',
+    wrong_print: 0,
+    over_print: 0,
+    compile_error: 0,
+  });
+
+  let today = new Date();
+  let year = today.getFullYear(); // 년도
+  let month = today.getMonth() + 1; // 월
+  let date = today.getDate(); // 날짜
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchData = async () => {
     setUserTagInfo(await getTagDataAPI(userInfo.userId));
+    setSolveTermData(
+      await getSolveTermDataAPI(`${year}-${month - 3}-${date}`, `${year}-${month}-${date}`),
+    );
+    setrongTypeData(await getWrongTypeDataAPI());
   };
 
   useEffect(() => {

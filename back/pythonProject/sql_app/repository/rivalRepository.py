@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from sql_app import models, schemas
+from sql_app.repository import userRepository
 
 def get_recommend_rivals_list(user: str, db: Session) :
     try:
@@ -63,3 +64,21 @@ def get_rival(rivalId, db: Session) :
 
     if db_rival: return db_rival
     else : return False
+
+def get_upper_users(user: str, db: Session):
+    user_no = userRepository.get_by_id(user, db).no
+    # 나보다 윗 등수 유저
+    upper_users = db.query(models.BJ_user).filter(models.BJ_user.no.in_(range(user_no - 8,user_no))).all()
+    
+    # 등록된 라이벌
+    rivals = db.query(models.rival).filter(models.rival.userId == user).all()    
+    rivals_ = ','.join([str(x.rivalId) for x in rivals]) 
+    rivals_list = rivals_.split(',')    
+
+    result_list = []    
+    for one in upper_users:
+        # 등록되지 않은 유저만 추천
+        if one.userId not in rivals_list:
+            result_list.append(one)
+
+    return result_list

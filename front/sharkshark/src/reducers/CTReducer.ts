@@ -9,7 +9,7 @@ const CTAPIReducer = createSlice({
     CTtimer: 0,
     solvingStatus: '',
     startime: '',
-    solvedNum: [],
+    solvedList: [],
     allsolved: false,
     analysisCompStatus: 0,
   },
@@ -32,8 +32,8 @@ const CTAPIReducer = createSlice({
     setStarttime(state, { payload: input }) {
       return { ...state, startime: input };
     },
-    setSolvedNum(state, { payload: input }) {
-      return { ...state, solvedNum: input };
+    setSolvedList(state, { payload: input }) {
+      return { ...state, solvedList: input };
     },
     setAllSolved(state, { payload: input }) {
       return { ...state, allsolved: input };
@@ -51,7 +51,7 @@ export const {
   setTimer,
   setSolvingStatus,
   setStarttime,
-  setSolvedNum,
+  setSolvedList,
   setAllSolved,
   setAnalysisCompStatus,
 } = CTAPIReducer.actions;

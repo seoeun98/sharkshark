@@ -18,7 +18,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CTproblem } from '../../../types/DataTypes';
 import ProblemItem from './Item/ProblemItem';
 // import Timer from './Item/Timer';
-import { setCompStatus, setSolvingStatus, setStarttime } from '../../../reducers/CTReducer';
+import {
+  setAllSolved,
+  setCompStatus,
+  setSolvingStatus,
+  setStarttime,
+} from '../../../reducers/CTReducer';
 import { ColorText } from '../../common/ColorText';
 import { Link } from 'react-router-dom';
 import Wave from 'react-wavify';
@@ -82,10 +87,12 @@ const CodingTestMain = () => {
 
   const closeCodeTest = async () => {
     onOpen();
+    // 테스트를 위해 임의로 다 맞았다 가정
+    dispatch(setAllSolved(true));
     if (allsolved === true) {
       dispatch(setSolvingStatus('end'));
-    } else if (solvedNum.length === 0) {
-    } else {
+      dispatch(setCompStatus(2));
+      onClose();
     }
   };
 
@@ -95,7 +102,7 @@ const CodingTestMain = () => {
     } else {
       window.location.href = '/home';
     }
-    dispatch(setSolvingStatus('close'));
+    dispatch(setSolvingStatus('end'));
     onClose();
   };
 

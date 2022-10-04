@@ -4,7 +4,7 @@ import { ColorText } from '../../../common/ColorText';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCTresultAPI } from '../../../../api/auth/codingTest';
 import { useState } from 'react';
-import { setAllSolved, setSolvedNum } from '../../../../reducers/CTReducer';
+import { setAllSolved, setSolvedList } from '../../../../reducers/CTReducer';
 
 const ProblemItem = (props: { problem: CTproblem; problemIndex: any }) => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const ProblemItem = (props: { problem: CTproblem; problemIndex: any }) => {
     if (CTsolvedData.solved === true) {
       setresolvingAlert(false);
       setProblemSolved(true);
-      dispatch(setSolvedNum(solvedNum.push(problem.no)));
+      dispatch(setSolvedList(solvedNum.push(problem)));
       if (solvedNum.length === problemNum) {
         dispatch(setAllSolved(true));
       }

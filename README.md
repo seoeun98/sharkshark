@@ -50,7 +50,7 @@
 
     - Fast API
 
-    ※ [설치 파일](https://lab.ssafy.com/s07-bigdata-recom-sub2/S07P22B205/-/blob/master/back/pythonProject/requirements.txt)
+    ※ [설치 파일](./back/pythonProject/requirements.txt)
     
   **Server**  
     

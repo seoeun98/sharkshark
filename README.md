@@ -511,8 +511,9 @@
 # 8. 👨‍👩‍👧‍👦 ![logo_dark](./images/README/logo_dark.png) 팀원
 ------------------------------------------------------
   
+  ![PT_37](./images/README/PT_37.png)
 
 --------------------------
 
-
+  
 ![Footer](./images/README/Footer.png)

@@ -2,15 +2,16 @@ import requests, copy
 from bs4 import BeautifulSoup
 
 class result:
-    def __init__(self, solved, time_sort_list: list, memory_sort_list: list):
+    def __init__(self, solved, probNo, userInfo, time_sort_list: list, memory_sort_list: list):
         self.solved = solved
+        self.probNo = probNo
+        self.userInfo = userInfo
         self.time_sort_list = time_sort_list
         self.memory_sort_list = memory_sort_list
 
 class user:
-    def __init__(self, userId, probNo, memory, time, lang, timeStamp):
+    def __init__(self, userId, memory, time, lang, timeStamp):
         self.userId = userId
-        self.probNo = probNo
         self.memory = memory
         self.time = time
         self.lang = lang
@@ -58,44 +59,50 @@ def get_mockRes(userId : str, probNo, start):
     list = get_status_crawling(userId, probNo, -1, start)
 
     # 문제를 풀었을 경우
-    if len(list) > 0:        
+    if len(list) > 0:   
+        is_solved = True     
+        # user(userId, memory, time, lang, timeStamp)
+        userInfo = user(list[0][0], list[0][2], list[0][3], list[0][4], list[0][5])
         lang = list[0][4]
-        langNum = -1
-        if "C++" in lang:
-            langNum = 1001
-        elif "Java" in lang:
-            langNum = 1002
-        elif "Python" in lang or "PyPy" in lang:
-            langNum = 1003
-        elif "C" in lang:
-            langNum = 1004
-        elif "Rust" in lang:
-            langNum = 1005
-
-        res_list = get_status_crawling('', probNo, langNum, '1900-01-01', 3)
-
-        res = []
-        for l in res_list:
-            # user(userId, probNo, memory, time, lang, timeStamp)
-            res.append(user(l[0], l[1], l[2], l[3], l[4], l[5]))
-
-        time_sort_list = res
-        memory_sort_list = copy.deepcopy(res)
-
-        # 코드 실행 속도 순 정렬
-        time_sort_list.sort(key=lambda x: (x.time, x.memory))
-        
-        # 메모리 크기 순 정렬
-        memory_sort_list.sort(key=lambda x: (x.memory, x.time))
-        
-
-        res2 = result(True, time_sort_list, memory_sort_list)
-        return res2
-
     # 문제를 못 풀었을 경우
     else:
-        res2 = result(False, [], [])
-        return res2
+        is_solved = False
+        # user(userId, memory, time, lang, timeStamp)
+        userInfo = user(userId, 0, 0, '', '')
+        lang = ''
+
+    langNum = -1
+    if "C++" in lang:
+        langNum = 1001
+    elif "Java" in lang:
+        langNum = 1002
+    elif "Python" in lang or "PyPy" in lang:
+        langNum = 1003
+    elif "C" in lang:
+        langNum = 1004
+    elif "Rust" in lang:
+        langNum = 1005
+
+    res_list = get_status_crawling('', probNo, langNum, '1900-01-01', 3)
+
+    res = []
+    for l in res_list:
+        # user(userId, memory, time, lang, timeStamp)
+        res.append(user(l[0], l[2], l[3], l[4], l[5]))
+
+    time_sort_list = res
+    memory_sort_list = copy.deepcopy(res)
+
+    # 코드 실행 속도 순 정렬
+    time_sort_list.sort(key=lambda x: (x.time, x.memory))
+    
+    # 메모리 크기 순 정렬
+    memory_sort_list.sort(key=lambda x: (x.memory, x.time))
+    
+
+    res2 = result(is_solved, probNo, userInfo, time_sort_list, memory_sort_list)
+    return res2
+
 
 # 문제 상세내용 크롤링
 def get_prob_detail(probNo : int):

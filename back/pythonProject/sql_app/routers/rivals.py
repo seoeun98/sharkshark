@@ -16,12 +16,11 @@ router = APIRouter(
 # 추천 사용자 목록을 불러온다
 @router.get("")
 def get_recommend_rival_list(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())):
-    userId = JWTRepo.decode_token(user)
-
+    userId = JWTRepo.decode_token(user)    
     if userId:
         result = rivalRepository.get_recommend_rivals_list(userId, db)
         if result is None:
-            raise HTTPException(status_code=401, detail="not on bj_user")
+            return rivalRepository.get_upper_users(userId, db)            
         return result
     raise HTTPException(status_code=401, detail="not authorized")
 

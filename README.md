@@ -518,7 +518,7 @@
   -  Merge Commit
 
     
-    Merge : #4 from sowl/branch_name
+    Merge : #4 from sharkshark/branch_name
     
 
   ## 7-2. Git Branch

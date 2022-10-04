@@ -6,8 +6,21 @@ import { getUserID } from '../../../api/common';
 import { rival } from '../../../types/DataTypes';
 import { ColorText } from '../../common/ColorText';
 import { Tier } from '../../common/Tier';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
 
 export const DataRoadPage = () => {
+  ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+
   const [myInfo, setMyInfo] = useState<rival>({
     tier: '0',
     userId: '',
@@ -15,10 +28,29 @@ export const DataRoadPage = () => {
     exp: 0,
   });
 
+  const [data, setData] = useState({
+    datasets: [{ label: '', data: '', borderColor: '', backgroundColor: '' }],
+  });
   const getUserInfo = async () => {
     setMyInfo(await getRivalInfoAPI(getUserID()));
     const RoadMapData = await getRoadMapDataAPI();
     console.log(RoadMapData);
+    setData({
+      datasets: [
+        {
+          label: myInfo.userId,
+          data: RoadMapData.user[0],
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        },
+        {
+          label: 'rivals',
+          data: RoadMapData.rivals[0],
+          borderColor: 'rgb(53, 162, 235)',
+          backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        },
+      ],
+    });
   };
 
   useEffect(() => {
@@ -58,7 +90,9 @@ export const DataRoadPage = () => {
           brightness="50%"
           zIndex={-1}
         />
-        <Box>ASS</Box>
+        <Box>
+          <Line data={data} color="white" />;
+        </Box>
       </Box>
     </>
   );

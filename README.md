@@ -479,7 +479,7 @@
 
   ## 6-2. Design System
 
-    ![image-20220819152908653](./images/README/image-20220819152908653.png)
+    ![DesignSystem](./images/README/DesignSystem.png)
 
 
   ## 6-3. Design

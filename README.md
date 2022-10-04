@@ -36,11 +36,13 @@
   
 ## 2-1. 환경 설정
     
-  **Frontend**
+  **Front-end**
     
-    - React
+    - React 18.2.0
 
-  **Backend**
+    - ChakraUI 2.3.2
+
+  **Back-end**
     
     - Python 3.9
       
@@ -50,20 +52,20 @@
 
     - Fast API
 
+    - MySQL
+
     ※ [설치 파일](./back/pythonProject/requirements.txt)
     
-  **Server**  
+  **CI/CD**  
     
     - AWS EC2
       
     - Jenkins
       
-    - Docker
+    - Docker 20.10.18
       
     - Docker-compose
       
-    
-  - AWS EC2
   
 ## 2-2. 서비스 아키텍처
   

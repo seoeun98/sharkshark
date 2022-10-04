@@ -42,9 +42,13 @@
 
   **Backend**
     
-    - Python
+    - Python 3.9
       
     - Pycharm, Google Colab
+
+    - npm 8.5.5
+
+    - Fast API
     
   **Server**  
     

@@ -6,13 +6,10 @@
 
 ------------------------------------------
 
-# 1. SharkShark 소개
+# 1. ![logo_dark](./images/README/logo_dark.png) 소개
 
-![Footer (1)](./images/README/Footer (1).png)
+![Footer__1_](./images/README/Footer__1_.png)
 
-
-
-![logo_dark](./images/README/logo_dark.png)
 
 
 

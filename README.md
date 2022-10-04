@@ -51,8 +51,6 @@
       
     - Pycharm, Google Colab
 
-    - npm 8.5.5
-
     - Fast API
 
     - MySQL

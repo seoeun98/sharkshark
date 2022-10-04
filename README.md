@@ -479,7 +479,7 @@
 
   ## 6-2. Design System
 
-    ![DesignSystem](./images/README/DesignSystem.png)
+  ![DesignSystem](./images/README/DesignSystem.png)
 
 
   ## 6-3. Design

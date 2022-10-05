@@ -1,4 +1,5 @@
 from requests import Session
+from datetime import datetime 
 
 from sql_app import models
 from copy import deepcopy
@@ -128,7 +129,9 @@ def get_period_problem_cnt(first_day: int, last_day: int, cnt_per_day: list):
             for test in cnt_per_day:
                 if int(test.__dict__['solvedDate'].strftime('%Y%m%d')) == i:
                     cnt += 1
-            list[i] = cnt
+            
+            date = str(i)
+            list[date[:4] + '-' + date[4:6] + '-' + date[6:8]] = cnt
     return list
 
 def get_recommend_users_major_cate_avg(list: list):

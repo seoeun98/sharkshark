@@ -29,13 +29,10 @@ export const getTagDataAPI = async (userId: string) => {
 };
 
 // 기간별 문제 풀이 조회
-export const getSolveTermDataAPI = async (startDate: string, endDate: string) => {
+export const getSolveTermDataAPI = async () => {
   let SolveTermData = {};
   await authAxios
-    .post('/data/history', {
-      startDate: startDate,
-      endDate: endDate,
-    })
+    .get('/data/history')
     .then(res => {
       SolveTermData = res.data;
     })
@@ -63,6 +60,7 @@ export const getWrongTypeDataAPI = async () => {
     .get('/data/wrong')
     .then(res => {
       wrongTypeData = res.data;
+      console.log(res.data);
     })
     .catch(err => {
       console.log(err);

@@ -1,10 +1,11 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import { VStack, Center, useColorModeValue, Box, DarkMode } from '@chakra-ui/react';
+import { Center, useColorModeValue, Box } from '@chakra-ui/react';
 import ApexCharts from 'react-apexcharts';
+import { useSelector } from 'react-redux';
 import { ColorText } from '../../../common/ColorText';
 
-export const TagChart = (props: { userTagInfo: any }) => {
-  const { userTagInfo } = props;
+export const TagChart = () => {
+  const userTagInfo = useSelector((state: any) => state.DataChartReducer.userTagInfo);
+
   const series = [
     {
       data: [
@@ -43,7 +44,7 @@ export const TagChart = (props: { userTagInfo: any }) => {
       strokeWidth: 2,
     },
     tooltip: {
-      shared: true,
+      shared: false,
       theme: 'dark',
       y: {
         formatter: function (val: any) {
@@ -78,7 +79,7 @@ export const TagChart = (props: { userTagInfo: any }) => {
   };
 
   return (
-    <VStack bg={useColorModeValue('neutral.0', 'neutral.500')} borderRadius="12px" w="600vw">
+    <>
       <Center
         pos="absolute"
         mt={-6}
@@ -95,6 +96,6 @@ export const TagChart = (props: { userTagInfo: any }) => {
       <Box py={6}>
         <ApexCharts type="radar" series={series} options={options} width="600" height="300" />
       </Box>
-    </VStack>
+    </>
   );
 };

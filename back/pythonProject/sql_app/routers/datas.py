@@ -1,5 +1,3 @@
-from typing import Optional
-
 
 from fastapi import APIRouter, Depends, HTTPException
 from requests import Session
@@ -7,7 +5,6 @@ from requests import Session
 from sql_app.database import get_db
 from sql_app.repository import dataRepository, jwtRepository
 from sql_app.repository.jwtRepository import JWTRepo
-from sql_app.schemas import Period
 
 router = APIRouter(
     prefix="/data",
@@ -45,10 +42,10 @@ def get_major_category(db: Session = Depends(get_db), user: str = Depends(jwtRep
     raise HTTPException(status_code=401, detail="no item")
 
 # 기간별 문제 풀이 조회
-@router.post("/history")
-def get_history(period: Period, db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())):
+@router.get("/history")
+def get_history(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())):
     userId = JWTRepo.decode_token(user)
-    result = dataRepository.get_period_problem(period, userId, db)
+    result = dataRepository.get_period_problem(userId, db)
 
     if result:
         return result
@@ -67,7 +64,12 @@ def get_major_wrong(db: Session = Depends(get_db), user: str = Depends(jwtReposi
 
 @router.get("/levelavg")
 def get_level_avg(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
-    userId = JWTRepo.decode_token(user)
-    print(userId)
+    userId = JWTRepo.decode_token(user)    
     pb_list, lv_avg = dataRepository.get_level_avg(userId, db)
     return {"level_avg" : lv_avg, "list" : pb_list}
+
+@router.get("/pbperweek")
+def get_pb_per_week(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
+    userId = JWTRepo.decode_token(user)
+    result = dataRepository.get_pb_per_week(userId, db)
+    return result

@@ -41,10 +41,6 @@ class Output(BaseModel) :
     msg: Optional[str] = None
     access_token: Optional[str] = None
 
-class Period(BaseModel) :
-    startDate: datetime.date
-    endDate: datetime.date
-
 class proCntPerDay(BaseModel):
     proCnt:int
     day: datetime.date

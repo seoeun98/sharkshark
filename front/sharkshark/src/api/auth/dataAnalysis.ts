@@ -58,7 +58,6 @@ export const getWrongTypeDataAPI = async () => {
     .get('/data/wrong')
     .then(res => {
       wrongTypeData = res.data;
-      console.log(res.data);
     })
     .catch(err => {
       console.log(err);

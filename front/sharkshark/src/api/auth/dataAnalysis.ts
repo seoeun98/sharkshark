@@ -25,3 +25,21 @@ export const getTagDataAPI = async (userId: string) => {
     });
   return userTagData;
 };
+
+// 로드맵 api
+export const getRoadMapDataAPI = async () => {
+  let RoadMapData = {
+    user: [],
+    rivals: [],
+  };
+  await authAxios
+    .get(`/data/tier`)
+    .then(res => {
+      RoadMapData = res.data;
+    })
+    .catch(err => {
+      console.log(err);
+      alert('getRoadMapDataAPI failed');
+    });
+  return RoadMapData;
+};

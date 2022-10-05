@@ -23,7 +23,8 @@ class major_category_avg:
 
 # 티어 상승 로드맵을 가져온다
 def get_roadMap(userId: str, db: Session):
-    user_list_a = db.query(models.solvedProblem).filter(models.solvedProblem.userId == userId).order_by(models.solvedProblem.solvedDate.desc()).all()
+    user_list_a = db.query(models.solvedProblem).filter(models.solvedProblem.userId == userId).\
+        order_by(models.solvedProblem.solvedDate.desc()).all()
     user_list = []
     result_list = []
     for one in user_list_a:
@@ -128,9 +129,10 @@ def get_major_category_avg(userId: str, db: Session):
 def get_period_problem(period: Period, userId: str, db: Session):
     list = {}
 
+    cnt_per_day = db.query(models.solvedProblem).filter(models.solvedProblem.userId == userId).all()
+
     for i in range(int(period.startDate.strftime('%Y%m%d')), int(period.endDate.strftime('%Y%m%d')) + 1):
-        if i % 100 <= 31 and i % 1000 != 0 :
-            cnt_per_day = db.query(models.solvedProblem).filter(models.solvedProblem.userId == userId).all()
+        if i % 100 <= 31 and i % 1000 != 0:
             cnt = 0
             for test in cnt_per_day:
                 if int(test.__dict__['solvedDate'].strftime('%Y%m%d')) == i:

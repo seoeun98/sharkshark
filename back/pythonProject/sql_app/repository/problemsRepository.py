@@ -39,6 +39,14 @@ def get_probs_by_category(id: str, db: Session):
 def get_probs_for_mock(id: str, db: Session):
     result_list = []
 
+    if id == 'webb':
+        prob1 = db.query(models.problem).filter(models.problem.no == 1000).first()
+        prob2 = db.query(models.problem).filter(models.problem.no == 1001).first()
+        result_list.append(prob1)
+        result_list.append(prob2)
+
+        return result_list
+
     probs_by_category = get_probs_by_category(id, db)
 
     if probs_by_category :

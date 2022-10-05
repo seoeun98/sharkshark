@@ -128,10 +128,10 @@ const CodingTestMain = () => {
       dispatch(setSolvingStatus('end'));
 
       // 테스트 위해 잠시 추가
-      dispatch(setCompStatus(2));
+      // dispatch(setCompStatus(2));
 
       // 테스트 위해 잠시 주석
-      // window.location.href = '/home';
+      window.location.href = '/home';
     }
     onClose();
   };

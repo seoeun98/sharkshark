@@ -27,9 +27,6 @@ export const getCTresultAPI = async (probNo: number, start: string) => {
     .post('/prob/mockres', { probNo: probNo, start: start })
     .then(res => {
       problemSolvingData = res.data;
-      console.log(start);
-      console.log(probNo);
-      console.log(res.data);
     })
     .catch(err => {
       console.log(err);

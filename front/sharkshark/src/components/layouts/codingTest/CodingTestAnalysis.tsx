@@ -1,7 +1,6 @@
 import { Box, Flex, useColorModeValue } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { getUserID } from '../../../api/common';
-import ApexCharts from 'react-apexcharts';
 import MemoryDataChart from './Item/MemoryDataChart';
 import { userSolvedData } from '../../../types/DataTypes';
 import TimeDataChart from './Item/TimeDataChart';

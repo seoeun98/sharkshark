@@ -8,7 +8,7 @@ export const LandingPageAfterLogin = () => {
       <Box h="120vh">
         {' '}
         <Text fontSize="3xl"> Title </Text>
-        LandingPage
+        LandingPageAfterLogin
       </Box>
 
       <Footer />

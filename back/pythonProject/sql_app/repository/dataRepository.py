@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime 
 import json
 import numpy as np
 
@@ -143,6 +143,7 @@ def get_period_problem(period: Period, userId: str, db: Session):
 def get_major_wrong(userId: str, db: Session):
     return db.query(models.wrongType).filter(models.wrongType.userId == userId).first()
 
+# 추천 유저들의 최근 푼 문제 레벨 평균
 def get_level_avg(userId: str, db: Session):
     # 라이벌 조회
     rec_rivals = db.query(models.rec_rival).filter(models.rec_rival.userId == userId).first().__dict__
@@ -165,3 +166,18 @@ def get_level_avg(userId: str, db: Session):
     lv_avg = np.mean(pb_lv_list)
 
     return pb_list, lv_avg
+
+# 추천 유저들의 최근 주간 평균 푼 문제 수
+def get_pb_per_week(userId: str, db: Session):
+    # 라이벌 조회
+    rec_rivals = db.query(models.rec_rival).filter(models.rec_rival.userId == userId).first().__dict__
+    rec_rival_list = rec_rivals['rivalIds'].split(',')
+
+    res_list = []
+    for one in rec_rival_list:
+        rival_probs = db.query(models.solvedProblem).filter(models.solvedProblem.userId == one).order_by(models.solvedProblem.solvedDate).all()
+        recent_date = datetime.strptime(str(rival_probs[-1].solvedDate), "%Y-%m-%d %H:%M:%S").date()
+        last_date = datetime.strptime(str(rival_probs[0].solvedDate), "%Y-%m-%d %H:%M:%S").date() 
+        res_list.append({"userId" : one, "pb_per_week" : 7 * len(rival_probs) / (abs((recent_date - last_date).days) + 1)})
+
+    return res_list

@@ -1,11 +1,10 @@
-from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Header, dependencies
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from sql_app.repository import rivalRepository, jwtRepository
+from sql_app.repository import rivalRepository, jwtRepository, problemsRepository
 from sql_app.repository.jwtRepository import JWTRepo
+from sql_app.service import crowling
 
-import sql_app.models
 from sql_app.database import get_db
 
 router = APIRouter(
@@ -16,14 +15,32 @@ router = APIRouter(
 # 추천 사용자 목록을 불러온다
 @router.get("")
 def get_recommend_rival_list(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())):
-    userId = JWTRepo.decode_token(user)
-
+    userId = JWTRepo.decode_token(user)    
     if userId:
         result = rivalRepository.get_recommend_rivals_list(userId, db)
         if result is None:
-            raise HTTPException(status_code=401, detail="not on bj_user")
+            return rivalRepository.get_upper_users(userId, db)            
         return result
     raise HTTPException(status_code=401, detail="not authorized")
+
+# 라이벌들이 최근에 푼 5문제
+@router.get("/recent")
+def get_rivals_recent_5_probs(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())):
+    userId = JWTRepo.decode_token(user)
+
+    rival_list = {}
+    rivals = rivalRepository.get_recommend_rivals_list(userId, db)
+
+    for rival in rivals:
+        rival_id = rival.__dict__['userId']
+
+        prob_list = crowling.get_status_crawling(rival_id, '')
+        result_rival = problemsRepository.get_recent_5_probs(prob_list[0:5], db)
+        rival_list[rival_id] = result_rival
+
+    if rival_list:
+        return rival_list
+    raise HTTPException(status_code=401, detail="no item")
 
 # 등록한 라이벌 목록을 조회한다
 @router.get("/list")

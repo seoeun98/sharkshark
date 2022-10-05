@@ -5,36 +5,24 @@ import { BasicInfoLayout } from '../recRival/common/BasicInfoLayout';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TagChart } from './personal/TagChart';
+import { PieChart } from './personal/PieChart';
 import {
   getSolveTermDataAPI,
   getTagDataAPI,
   getWrongTypeDataAPI,
 } from '../../../api/auth/dataAnalysis';
 import { getUserID } from '../../../api/common';
-import { setUserTagInfo } from '../../../reducers/DataChartReducer';
+import {
+  setSolvedTermInfo,
+  setUserTagInfo,
+  setWrongTypeInfo,
+} from '../../../reducers/DataChartReducer';
+import { HeatmapChart } from './personal/HeatmapChart';
 
 const DataChartPage = () => {
   const userInfo = useSelector((state: any) => state.rivalAPIReducer.userInfo);
   const [value, setValue] = useState('0vh');
   const dispatch = useDispatch();
-
-  // const [solveTermData, setSolveTermData] = useState<termSolving>({});
-  // const [wrongTypeData, setrongTypeData] = useState<wrongInfo>({
-  //   no: 0,
-  //   wrong_answer: 0,
-  //   over_memory: 0,
-  //   runtime_error: 0,
-  //   over_time: 0,
-  //   userId: '',
-  //   wrong_print: 0,
-  //   over_print: 0,
-  //   compile_error: 0,
-  // });
-
-  let today = new Date();
-  let year = today.getFullYear(); // 년도
-  let month = today.getMonth() + 1; // 월
-  let date = today.getDate(); // 날짜
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchData = async () => {
@@ -44,10 +32,8 @@ const DataChartPage = () => {
     setValue(value + 'vh');
     let userTagInfo = await getTagDataAPI(getUserID());
     dispatch(setUserTagInfo(userTagInfo));
-    // setSolveTermData(
-    //   await getSolveTermDataAPI(`${year}-${month - 3}-${date}`, `${year}-${month}-${date}`),
-    // );
-    // setrongTypeData(await getWrongTypeDataAPI());
+    // dispatch(setSolvedTermInfo(await getSolveTermDataAPI()));
+    dispatch(setWrongTypeInfo(await getWrongTypeDataAPI()));
   };
 
   useEffect(() => {
@@ -111,7 +97,7 @@ const DataChartPage = () => {
       <HStack spacing={4}>
         {/* 사소한 유저 정보와 레이팅 세부사항 */}
         <VStack
-          spacing={4}
+          spacing={8}
           bg={useColorModeValue('neutral.0', 'neutral.500')}
           borderRadius="12px"
           px={4}
@@ -119,13 +105,7 @@ const DataChartPage = () => {
         >
           <HStack spacing={4}>
             {/* solvedCount */}
-            <Center
-              bg={useColorModeValue('white', 'black')}
-              borderRadius="10px"
-              py="2vh"
-              px="2vw"
-              w="8vw"
-            >
+            <Center bg={useColorModeValue('white', 'black')} borderRadius="10px" py="2vh" w="8vw">
               <VStack spacing={1}>
                 <Text
                   fontSize="16px"
@@ -254,6 +234,10 @@ const DataChartPage = () => {
         <VStack bg={useColorModeValue('neutral.0', 'neutral.500')} borderRadius="12px" w="30vw">
           <TagChart />
         </VStack>
+      </HStack>
+      <HStack>
+        <PieChart />
+        <HeatmapChart />
       </HStack>
     </VStack>
   );

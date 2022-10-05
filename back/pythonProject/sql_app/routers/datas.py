@@ -34,6 +34,16 @@ def get_major_category(id, db: Session = Depends(get_db), user: str = Depends(jw
         return result
     raise HTTPException(status_code=401, detail="no item")
 
+# 주요 유형 조회
+@router.get("/categoryavg")
+def get_major_category(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
+    userId = JWTRepo.decode_token(user)
+    result = dataRepository.get_major_category_avg(userId, db)    
+
+    if result:
+        return result
+    raise HTTPException(status_code=401, detail="no item")
+
 # 기간별 문제 풀이 조회
 @router.post("/history")
 def get_history(period: Period, db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())):
@@ -54,3 +64,10 @@ def get_major_wrong(db: Session = Depends(get_db), user: str = Depends(jwtReposi
     if result:
         return result
     raise HTTPException(status_code=401, detail="no item")
+
+@router.get("/levelavg")
+def get_level_avg(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
+    userId = JWTRepo.decode_token(user)
+    print(userId)
+    pb_list, lv_avg = dataRepository.get_level_avg(userId, db)
+    return {"level_avg" : lv_avg, "list" : pb_list}

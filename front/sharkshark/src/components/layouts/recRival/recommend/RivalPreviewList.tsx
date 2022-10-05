@@ -16,7 +16,7 @@ const RivalPreviewList = () => {
 
   useEffect(() => {
     fetchRivalList();
-  }, [fetchRivalList]);
+  }, []);
 
   const rivalList = useSelector((state: any) => state.rivalAPIReducer.rivalList);
 

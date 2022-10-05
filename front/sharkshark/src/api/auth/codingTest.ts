@@ -21,11 +21,11 @@ export const getCTproblemAPI = async () => {
 export const getCTresultAPI = async (probNo: number, start: string) => {
   let problemSolvingData: solvedData = {
     solved: false,
+    probNo: 0,
   };
   await authAxios
     .post('/prob/mockres', { probNo: probNo, start: start })
     .then(res => {
-      console.log(res.data);
       problemSolvingData = res.data;
     })
     .catch(err => {

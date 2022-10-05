@@ -39,7 +39,7 @@ def get_probs_by_category(id: str, db: Session):
 def get_probs_for_mock(id: str, db: Session):
     result_list = []
 
-    if id == 'vcv0174':
+    if id == 'webb':
         prob1 = db.query(models.problem).filter(models.problem.no == 1000).first()
         prob2 = db.query(models.problem).filter(models.problem.no == 1001).first()
         prob3 = db.query(models.problem).filter(models.problem.no == 1002).first()
@@ -50,7 +50,6 @@ def get_probs_for_mock(id: str, db: Session):
         result_list.append(prob3)
         result_list.append(prob4)
         result_list.append(prob5)
-
 
         return result_list
 

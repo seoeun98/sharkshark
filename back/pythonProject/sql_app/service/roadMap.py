@@ -60,3 +60,7 @@ def tag_prob_cnt(list: list, db: Session):
 
     result_list.append(deepcopy(tags_cnt))
     return result_list
+
+
+def count_prob_tags(list: list, db: Session):
+    return None;

@@ -74,7 +74,7 @@ const CodingTestMain = () => {
 
   const startCodeTEST = () => {
     dispatch(setSolvingStatus('start'));
-    dispatch(setStarttime(`${year}-${month}-${date} ${hhours}:${mminutes}-${sseconds}`));
+    dispatch(setStarttime(`${year}-${month}-${date} ${hhours}:${mminutes}:${sseconds}`));
   };
 
   const { isOpen, onClose, onOpen } = useDisclosure();

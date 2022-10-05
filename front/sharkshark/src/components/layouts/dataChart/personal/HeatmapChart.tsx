@@ -1,6 +1,5 @@
 import { VStack, useColorModeValue, Box } from '@chakra-ui/react';
 import React from 'react';
-import ApexCharts from 'react-apexcharts';
 import { useSelector } from 'react-redux';
 import { ColorText } from '../../../common/ColorText';
 
@@ -60,9 +59,7 @@ export const HeatmapChart = () => {
       >
         <ColorText>기간별 푼 문제</ColorText>
       </Box>
-      <Box py={6}>
-        <ApexCharts type="heatmap" width="600" height="300" />
-      </Box>
+      <Box py={6}>{/* <ApexCharts type="heatmap" width="600" height="300" /> */}</Box>
     </VStack>
   );
 };

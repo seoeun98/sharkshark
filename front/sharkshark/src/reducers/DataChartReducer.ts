@@ -14,13 +14,21 @@ const DataChartReducer = createSlice({
       dp: 0,
       bruteforce: 0,
     },
+    wrongTypeInfo: {},
+    solvedTermInfo: {},
   },
   reducers: {
     setUserTagInfo(state, { payload: input }) {
       return { ...state, userTagInfo: input };
     },
+    setWrongTypeInfo(state, { payload: input }) {
+      return { ...state, wrongTypeInfo: input };
+    },
+    setSolvedTermInfo(state, { payload: input }) {
+      return { ...state, solvedTermInfo: input };
+    },
   },
 });
 
-export const { setUserTagInfo } = DataChartReducer.actions;
+export const { setUserTagInfo, setWrongTypeInfo, setSolvedTermInfo } = DataChartReducer.actions;
 export default DataChartReducer.reducer;

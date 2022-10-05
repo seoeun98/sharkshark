@@ -78,7 +78,7 @@ export const TagChart = (props: { userTagInfo: any }) => {
   };
 
   return (
-    <VStack bg={useColorModeValue('neutral.0', 'neutral.500')} borderRadius="12px">
+    <VStack bg={useColorModeValue('neutral.0', 'neutral.500')} borderRadius="12px" w="600vw">
       <Center
         pos="absolute"
         mt={-6}

@@ -1,7 +1,6 @@
 import { Box, Divider, useColorModeValue } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { getRivalAPI } from '../../../../api/auth/rival';
-import { rival } from '../../../../types/DataTypes';
 import { RivalPreviewCard } from '../common/RivalPreviewCard';
 import NonRival from '../../NonRival';
 import { useDispatch, useSelector } from 'react-redux';

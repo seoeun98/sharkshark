@@ -2,48 +2,12 @@ import { VStack, useColorModeValue, Box } from '@chakra-ui/react';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { ColorText } from '../../../common/ColorText';
+import ApexCharts from 'react-apexcharts';
 
 export const HeatmapChart = () => {
   const solvedTermInfo = useSelector((state: any) => state.DataChartReducer.solvedTermInfo);
   console.log(solvedTermInfo);
-  // const series = [
-  //   {
-  //     data: [],
-  //   },
-  // ];
-  // // 알고리즘 유형 별
-  // let options = {
-  //   dataLabels: {
-  //     enabled: true,
-  //   },
-  //   plotOptions: {
-  //     radar: {
-  //       size: 140,
-  //       polygons: {
-  //         strokeColors: 'rgba(130, 240, 255, 0.2)',
-  //         fill: {
-  //           colors: ['rgba(153, 123, 237, 0.2)', 'rgba(130, 240, 255, 0.2)'],
-  //         },
-  //       },
-  //     },
-  //   },
-  //   colors: ['#0BC5EA'],
-  //   markers: {
-  //     size: 4,
-  //     colors: ['#0BC5EA'],
-  //     strokeColor: '#0BC5EA',
-  //     strokeWidth: 2,
-  //   },
-  //   tooltip: {
-  //     shared: true,
-  //     theme: 'dark',
-  //     y: {
-  //       formatter: function (val: any) {
-  //         return val;
-  //       },
-  //     },
-  //   },
-  // };
+
   return (
     <VStack bg={useColorModeValue('neutral.0', 'neutral.500')} borderRadius="12px">
       <Box

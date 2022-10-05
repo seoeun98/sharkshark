@@ -1,5 +1,3 @@
-import { useDispatch } from 'react-redux';
-import { setUserTagInfo } from '../../reducers/DataChartReducer';
 import { tagInfo, wrongInfo } from '../../types/DataTypes';
 import { authAxios } from '../common';
 
@@ -82,7 +80,51 @@ export const getRoadMapDataAPI = async () => {
     })
     .catch(err => {
       console.log(err);
-      alert('getRoadMapDataAPI failed');
     });
   return RoadMapData;
+};
+
+// 평균 문제 수
+export const getAverageProblemAPI = async () => {
+  let AverageProblemList: never[] = [];
+  await authAxios
+    .get('data/pbperweek')
+    .then(res => {
+      AverageProblemList = res.data;
+      console.log(AverageProblemList);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  return AverageProblemList;
+};
+
+// 최근 라이벌 해결 문제 평균 난이도 / 문제 목록
+export const getLevelAvgAPI = async () => {
+  let levelAvg: never[] = [];
+  await authAxios
+    .get('/data/levelavg')
+    .then(res => {
+      levelAvg = res.data;
+      console.log(levelAvg);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  return levelAvg;
+};
+
+// 평균 레벨
+export const getCategoryAvgAPI = async () => {
+  let categoryAvg: never[] = [];
+  await authAxios
+    .get('/data/categoryavg')
+    .then(res => {
+      categoryAvg = res.data;
+      console.log(categoryAvg);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  return categoryAvg;
 };

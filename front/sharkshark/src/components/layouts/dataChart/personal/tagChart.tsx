@@ -1,5 +1,5 @@
 import { Center, useColorModeValue, Box } from '@chakra-ui/react';
-import ApexCharts from 'react-apexcharts';
+import ReactApexCharts from 'react-apexcharts';
 import { useSelector } from 'react-redux';
 import { ColorText } from '../../../common/ColorText';
 
@@ -94,7 +94,7 @@ export const TagChart = () => {
         <ColorText>알고리즘 유형별 분석</ColorText>
       </Center>
       <Box py={6}>
-        <ApexCharts type="radar" series={series} options={options} width="600" height="300" />
+        <ReactApexCharts type="radar" series={series} options={options} width="600" height="300" />
       </Box>
     </>
   );

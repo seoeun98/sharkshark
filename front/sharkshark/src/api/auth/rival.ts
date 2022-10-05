@@ -64,6 +64,7 @@ export const getRivalInfoAPI = async (id: string) => {
     tier: '0',
     userId: '',
     userClass: 0,
+    exp: 0,
   };
   await authAxios
     .get(`/rival/${id}`)

@@ -13,7 +13,11 @@ import {
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
 import { createRivalAPI, deleteRivalAPI } from '../../../../api/auth/rival';
-import { setClickedRivalId, setCompStatus } from '../../../../reducers/rivalAPIReducer';
+import {
+  setClickedRivalId,
+  setCompStatus,
+  setRivalInfo,
+} from '../../../../reducers/rivalAPIReducer';
 import { rival } from '../../../../types/DataTypes';
 import { ColorText } from '../../../common/ColorText';
 import { BasicInfoLayout } from './BasicInfoLayout';
@@ -30,6 +34,7 @@ export const RivalBasicCard = (props: { RivalInfo: rival; Rectype: string }) => 
   }
   const analysis = () => {
     dispatch(setClickedRivalId(RivalInfo.userId));
+    dispatch(setRivalInfo(RivalInfo));
     dispatch(setCompStatus('RivalCompare'));
   };
   return (

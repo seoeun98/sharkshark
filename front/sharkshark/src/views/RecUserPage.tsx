@@ -14,7 +14,7 @@ import { SetStateAction, useState } from 'react';
 import RivalRecMain from '../components/layouts/recRival/recommend/RivalRecMain';
 import RivalCompareChart from '../components/layouts/dataChart/rival/RivalCompareChart';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCompStatus } from '../reducers/rivalAPIReducer';
+import { setCompStatus, setGoHome } from '../reducers/rivalAPIReducer';
 
 export const RecUserPage = () => {
   const dispatch = useDispatch();
@@ -23,8 +23,12 @@ export const RecUserPage = () => {
   const [tabIndex3, setTabIndex3] = useState(0);
   let mb = '10vh';
   const compStatus = useSelector((state: any) => state.rivalAPIReducer.compStatus);
+  const goHome = useSelector((state: any) => state.rivalAPIReducer.goHome);
+  const registed = useSelector((state: any) => state.rivalAPIReducer.registed);
 
   const handleTabsChange = (index: SetStateAction<number>) => {
+    setTabIndex2(0);
+    setTabIndex3(0);
     setTabIndex(index);
   };
 
@@ -44,6 +48,15 @@ export const RecUserPage = () => {
     dispatch(setCompStatus(''));
   }
 
+  if (goHome === true && tabIndex3 === 1 && tabIndex === 1) {
+    setTabIndex3(0);
+    dispatch(setGoHome(false));
+  }
+
+  if (goHome === true && tabIndex2 === 1 && tabIndex === 0) {
+    setTabIndex2(0);
+    dispatch(setGoHome(false));
+  }
   if (compStatus === 'RivalAccount' && tabIndex === 0) {
     setTabIndex(1);
     setTabIndex3(0);
@@ -93,7 +106,7 @@ export const RecUserPage = () => {
                     <RivalRecMain />
                   </TabPanel>
                   <TabPanel>
-                    <RivalCompareChart />
+                    <RivalCompareChart Rectype={registed} />
                   </TabPanel>
                 </TabPanels>
               </Tabs>
@@ -105,7 +118,7 @@ export const RecUserPage = () => {
                     <RivalListDefault />
                   </TabPanel>
                   <TabPanel>
-                    <RivalCompareChart />
+                    <RivalCompareChart Rectype="" />
                   </TabPanel>
                 </TabPanels>
               </Tabs>

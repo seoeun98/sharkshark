@@ -144,8 +144,8 @@ def delete_by_id(request: schemas.User, db: Session = Depends(get_db)):
     return userRepository.delete_user(request, db)
 
 # github authorizationCode로 github access token 발급
-@router.post("/github/{id}", status_code=200)
-def get_github_access_token(request: schemas.authorizationCode, id: str, db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())):
+@router.post("/github", status_code=200)
+def get_github_access_token(request: schemas.authorizationCode, db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())):
     user_id = JWTRepo.decode_token(user)
     # github token post 요청
     client_id = '9539ff1ae93c2ccb932b'

@@ -74,7 +74,39 @@ const CodingTestMain = () => {
 
   const startCodeTEST = () => {
     dispatch(setSolvingStatus('start'));
-    dispatch(setStarttime(`${year}-${month}-${date} ${hhours}:${mminutes}:${sseconds}`));
+    let m_month = '';
+    let m_date = '';
+    let m_hour = '';
+    let m_minutes = '';
+    let m_seconds = '';
+    // 형식 변환
+    if (month < 10) {
+      m_month = `0${month}`;
+    } else {
+      m_month = `${month}`;
+    }
+    if (date < 10) {
+      m_date = `0${date}`;
+    } else {
+      m_date = `${date}`;
+    }
+    if (hhours < 10) {
+      m_hour = `0${hhours}`;
+    } else {
+      m_hour = `${hhours}`;
+    }
+    if (mminutes < 10) {
+      m_minutes = `0${mminutes}`;
+    } else {
+      m_minutes = `${mminutes}`;
+    }
+    if (sseconds < 10) {
+      m_seconds = `0${sseconds}`;
+    } else {
+      m_seconds = `${sseconds}`;
+    }
+
+    dispatch(setStarttime(`${year}-${m_month}-${m_date} ${m_hour}:${m_minutes}:${m_seconds}`));
   };
 
   const { isOpen, onClose, onOpen } = useDisclosure();

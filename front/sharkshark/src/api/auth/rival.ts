@@ -11,7 +11,7 @@ export const getRecUserAPI = async () => {
     })
     .catch(err => {
       console.log(err);
-      alert('라이벌 추천 목록 조회 실패');
+      // alert('라이벌 추천 목록 조회 실패');
     });
   return rivalRecList;
 };
@@ -26,7 +26,7 @@ export const getRivalAPI = async () => {
     })
     .catch(err => {
       console.log(err);
-      alert('등록된 라이벌 목록 조회 실패');
+      // alert('등록된 라이벌 목록 조회 실패');
     });
   return rivalList;
 };
@@ -73,7 +73,7 @@ export const getRivalInfoAPI = async (id: string) => {
     })
     .catch(err => {
       console.log(err);
-      alert('라이벌 정보 조회 실패');
+      // alert('라이벌 정보 조회 실패');
     });
   return rivalInfo;
 };

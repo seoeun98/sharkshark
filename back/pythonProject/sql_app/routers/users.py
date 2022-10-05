@@ -75,6 +75,8 @@ def confirm_message(id, db: Session = Depends(get_db)):
 # 전체 유저 조회
 @router.get("", dependencies=[Depends(jwtRepository.JWTBearer())])
 def get_all_user(db: Session = Depends(get_db)):
+
+
     return db.query(sql_app.models.User).all()
 
 # 로그인
@@ -126,9 +128,15 @@ def update_pw_by_id(request: schemas.User, db: Session = Depends(get_db)):
     user = userRepository.get_by_id(id, db)
     if user:
         user.pw = request.pw
-        return userRepository.update_user(user, db)
-    else:
-        raise HTTPException(status_code=401, detail="not registered")
+        # 인증 메시지 제거
+        if userRepository.delete_user_msg(id, db):
+            # 유저 비밀번호 업데이트
+            if userRepository.update_user(id, user, db):    
+                return True
+        else:
+            raise HTTPException(status_code=401, detail="msg already used")                
+
+    raise HTTPException(status_code=401, detail="not registered")
 
 # 회원 탈퇴
 @router.delete("", dependencies=[Depends(jwtRepository.JWTBearer())])
@@ -136,8 +144,9 @@ def delete_by_id(request: schemas.User, db: Session = Depends(get_db)):
     return userRepository.delete_user(request, db)
 
 # github authorizationCode로 github access token 발급
-@router.post("/github/{id}", status_code=200, dependencies=[Depends(jwtRepository.JWTBearer())])
-def get_github_access_token(request: schemas.authorizationCode, id: str, db: Session = Depends(get_db)):
+@router.post("/github/{id}", status_code=200)
+def get_github_access_token(request: schemas.authorizationCode, id: str, db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())):
+    user_id = JWTRepo.decode_token(user)
     # github token post 요청
     client_id = '9539ff1ae93c2ccb932b'
     client_secret = '76ec7c09e6681a619b287b7d311f2753782ecb16'    
@@ -145,14 +154,14 @@ def get_github_access_token(request: schemas.authorizationCode, id: str, db: Ses
     # 요청 상태 코드 확인
     if res.status_code == 200:
         github_access_token = res.text.split("&")[0].split("=")[1]
-        if 'error' in github_access_token:
+        if 'error' in github_access_token or 'bad_verification_code' in github_access_token:
             raise HTTPException(status_code=401, detail="code already used")
-        user = userRepository.get_by_id(id, db)
+        user = userRepository.get_by_id(user_id, db)
         if user:
             update_user = sql_app.models.User()
             update_user.id = user.id
             update_user.token = github_access_token        
-            userRepository.update_user(update_user, db)
+            userRepository.update_user(user_id, update_user, db)
 
             return {"github_access_token": github_access_token}
     raise HTTPException(status_code=401, detail="github connection error")

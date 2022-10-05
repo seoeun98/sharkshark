@@ -20,7 +20,6 @@ import ProblemItem from './Item/ProblemItem';
 // import Timer from './Item/Timer';
 import { setCompStatus, setSolvingStatus, setStarttime } from '../../../reducers/CTReducer';
 import { ColorText } from '../../common/ColorText';
-import { Link } from 'react-router-dom';
 import Wave from 'react-wavify';
 import styled from '@emotion/styled';
 
@@ -38,7 +37,7 @@ const CodingTestMain = () => {
   const CTPList = useSelector((state: any) => state.CTReducer.CTPList);
   const CTstatus = useSelector((state: any) => state.CTReducer.solvingStatus);
   const allsolved = useSelector((state: any) => state.CTReducer.allsolved);
-  const solvedNum = useSelector((state: any) => state.CTReducer.solvedNum);
+  const solvedList = useSelector((state: any) => state.CTReducer.solvedList);
   const CTtimer = useSelector((state: any) => state.CTReducer.CTtimer);
   const compStatus = useSelector((state: any) => state.CTReducer.compStatus);
 
@@ -84,18 +83,24 @@ const CodingTestMain = () => {
     onOpen();
     if (allsolved === true) {
       dispatch(setSolvingStatus('end'));
-    } else if (solvedNum.length === 0) {
-    } else {
+      dispatch(setCompStatus(2));
+      onClose();
     }
   };
 
   const goNext = async () => {
-    if (solvedNum.length > 0) {
+    if (solvedList.length > 0) {
+      dispatch(setSolvingStatus('end'));
       dispatch(setCompStatus(2));
     } else {
-      window.location.href = '/home';
+      dispatch(setSolvingStatus('end'));
+
+      // 테스트 위해 잠시 추가
+      dispatch(setCompStatus(2));
+
+      // 테스트 위해 잠시 주석
+      // window.location.href = '/home';
     }
-    dispatch(setSolvingStatus('close'));
     onClose();
   };
 
@@ -132,7 +137,7 @@ const CodingTestMain = () => {
       setMinutes(minute);
       setSeconds(0);
     }
-  }, [CTstatus, CTtimer, hours, minutes, remainTime, seconds]);
+  }, [CTstatus, CTtimer, hour, hours, minute, minutes, remainTime, seconds]);
 
   if (CTstatus === 'start' && hours === 0 && minutes === 0 && seconds === 0) {
     dispatch(setSolvingStatus('end'));

@@ -32,7 +32,7 @@ const DataChartPage = () => {
     setValue(value + 'vh');
     let userTagInfo = await getTagDataAPI(getUserID());
     dispatch(setUserTagInfo(userTagInfo));
-    dispatch(setSolvedTermInfo(await getSolveTermDataAPI()));
+    // dispatch(setSolvedTermInfo(await getSolveTermDataAPI()));
     dispatch(setWrongTypeInfo(await getWrongTypeDataAPI()));
   };
 

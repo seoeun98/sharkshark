@@ -6,21 +6,10 @@ import { getUserID } from '../../../api/common';
 import { rival } from '../../../types/DataTypes';
 import { ColorText } from '../../common/ColorText';
 import { Tier } from '../../common/Tier';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import ApexChart, { ApexOptions } from 'apexcharts';
+import ReactApexChart from 'react-apexcharts';
 
 export const DataRoadPage = () => {
-  ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
   const [myInfo, setMyInfo] = useState<rival>({
     tier: '0',
     userId: '',
@@ -31,31 +20,56 @@ export const DataRoadPage = () => {
   const [data, setData] = useState({
     datasets: [{ label: '', data: '', borderColor: '', backgroundColor: '' }],
   });
+
   const getUserInfo = async () => {
     setMyInfo(await getRivalInfoAPI(getUserID()));
     const RoadMapData = await getRoadMapDataAPI();
     console.log(RoadMapData);
-    setData({
-      datasets: [
-        {
-          label: myInfo.userId,
-          data: RoadMapData.user[0],
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        },
-        {
-          label: 'rivals',
-          data: RoadMapData.rivals[0],
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgba(53, 162, 235, 0.5)',
-        },
-      ],
-    });
   };
 
   useEffect(() => {
     getUserInfo();
   }, []);
+
+  const options: ApexOptions = {
+    chart: {
+      zoom: {
+        enabled: false,
+      },
+      toolbar: {
+        show: false,
+      },
+      foreColor: '#FFFFFF',
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    stroke: {
+      curve: 'smooth',
+    },
+    xaxis: {
+      categories: ['1', '2', '3', '4', '6', '6'],
+    },
+    yaxis: {
+      show: false,
+    },
+    tooltip: {
+      theme: 'dark',
+    },
+    fill: {
+      colors: ['#1A73E8', '#23FF8A'],
+      type: ['gradient', 'gradient'],
+      gradient: {
+        shade: 'light',
+        gradientToColors: ['#31D7FF', '#8EFFEA'],
+        shadeIntensity: 0.5,
+        type: 'horizontal',
+        opacityFrom: 1,
+        opacityTo: 1,
+        stops: [0, 100, 100],
+      },
+    },
+  };
 
   return (
     <>
@@ -91,7 +105,20 @@ export const DataRoadPage = () => {
           zIndex={-1}
         />
         <Box>
-          <Line data={data} color="white" />;
+          <ReactApexChart
+            type="line"
+            options={options}
+            series={[
+              {
+                name: myInfo.userId,
+                data: [10, 41, 35, 51, 49, 62],
+              },
+              {
+                name: 'Rivals',
+                data: [10, 123, 35, 51, 12, 33],
+              },
+            ]}
+          />
         </Box>
       </Box>
     </>

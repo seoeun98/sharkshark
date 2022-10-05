@@ -45,7 +45,7 @@ export const updateUserInfoAPI = (
 export const githubTokenAPI = async (id: string, code: string) => {
   let token = '';
   await authAxios
-    .post(`/user/github/${id}`, { authorizationCode: code })
+    .post(`/user/github`, { authorizationCode: code })
     .then(res => {
       console.log(res);
       token = res.data.github_access_token;

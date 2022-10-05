@@ -1,7 +1,9 @@
+import { useDispatch } from 'react-redux';
+import { setUserTagInfo } from '../../reducers/DataChartReducer';
 import { tagInfo, wrongInfo } from '../../types/DataTypes';
 import { authAxios } from '../common';
 
-// 추천 사용자 목록 조회
+// 알고리즘 유형별 조회
 export const getTagDataAPI = async (userId: string) => {
   let userTagData: tagInfo = {
     userId: '',

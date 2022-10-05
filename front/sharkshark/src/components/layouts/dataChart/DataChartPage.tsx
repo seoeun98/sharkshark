@@ -3,42 +3,33 @@ import { rival, tagInfo, termSolving, wrongInfo } from '../../../types/DataTypes
 import { ColorText } from '../../common/ColorText';
 import { BasicInfoLayout } from '../recRival/common/BasicInfoLayout';
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { TagChart } from './personal/tagChart';
+import { useDispatch, useSelector } from 'react-redux';
+import { TagChart } from './personal/TagChart';
 import {
   getSolveTermDataAPI,
   getTagDataAPI,
   getWrongTypeDataAPI,
 } from '../../../api/auth/dataAnalysis';
+import { getUserID } from '../../../api/common';
+import { setUserTagInfo } from '../../../reducers/DataChartReducer';
 
 const DataChartPage = () => {
   const userInfo = useSelector((state: any) => state.rivalAPIReducer.userInfo);
   const [value, setValue] = useState('0vh');
+  const dispatch = useDispatch();
 
-  const [userTagInfo, setUserTagInfo] = useState<tagInfo>({
-    userId: userInfo.userId,
-    math: 0,
-    implementation: 0,
-    greedy: 0,
-    string: 0,
-    dataStructure: 0,
-    graph: 0,
-    dp: 0,
-    bruteforce: 0,
-  });
-
-  const [solveTermData, setSolveTermData] = useState<termSolving>({});
-  const [wrongTypeData, setrongTypeData] = useState<wrongInfo>({
-    no: 0,
-    wrong_answer: 0,
-    over_memory: 0,
-    runtime_error: 0,
-    over_time: 0,
-    userId: '',
-    wrong_print: 0,
-    over_print: 0,
-    compile_error: 0,
-  });
+  // const [solveTermData, setSolveTermData] = useState<termSolving>({});
+  // const [wrongTypeData, setrongTypeData] = useState<wrongInfo>({
+  //   no: 0,
+  //   wrong_answer: 0,
+  //   over_memory: 0,
+  //   runtime_error: 0,
+  //   over_time: 0,
+  //   userId: '',
+  //   wrong_print: 0,
+  //   over_print: 0,
+  //   compile_error: 0,
+  // });
 
   let today = new Date();
   let year = today.getFullYear(); // 년도
@@ -47,20 +38,21 @@ const DataChartPage = () => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchData = async () => {
-    setUserTagInfo(await getTagDataAPI(userInfo.userId));
-    setSolveTermData(
-      await getSolveTermDataAPI(`${year}-${month - 3}-${date}`, `${year}-${month}-${date}`),
-    );
-    setrongTypeData(await getWrongTypeDataAPI());
-  };
-
-  useEffect(() => {
-    fetchData();
     let width = 17;
     let percent = userInfo.exp / (userInfo.exp + 20000);
     let value = String(percent * width);
     setValue(value + 'vh');
-  }, [fetchData, userInfo.exp]);
+    let userTagInfo = await getTagDataAPI(getUserID());
+    dispatch(setUserTagInfo(userTagInfo));
+    // setSolveTermData(
+    //   await getSolveTermDataAPI(`${year}-${month - 3}-${date}`, `${year}-${month}-${date}`),
+    // );
+    // setrongTypeData(await getWrongTypeDataAPI());
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <VStack spacing={16}>
@@ -259,7 +251,9 @@ const DataChartPage = () => {
             </Center>
           </VStack>
         </VStack>
-        <TagChart userTagInfo={userTagInfo} />
+        <VStack bg={useColorModeValue('neutral.0', 'neutral.500')} borderRadius="12px" w="30vw">
+          <TagChart />
+        </VStack>
       </HStack>
     </VStack>
   );

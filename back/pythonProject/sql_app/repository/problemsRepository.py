@@ -1,5 +1,4 @@
-from typing import List
-
+from sql_app.repository import dataRepository
 from sqlalchemy.orm import Session
 from sql_app import models, schemas
 import random

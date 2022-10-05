@@ -1,5 +1,7 @@
 from datetime import datetime 
 import json
+from typing import List
+
 import numpy as np
 
 from requests import Session
@@ -21,10 +23,13 @@ class major_category_avg:
         self.bruteforce = bruteforce
         pass
 
+def get_probs_order_by_recent_solved(id: str, db: Session):
+    return db.query(models.solvedProblem).filter(models.solvedProblem.userId == id)\
+        .order_by(models.solvedProblem.solvedDate.desc()).all()
+
 # 티어 상승 로드맵을 가져온다
 def get_roadMap(userId: str, db: Session):
-    user_list_a = db.query(models.solvedProblem).filter(models.solvedProblem.userId == userId).\
-        order_by(models.solvedProblem.solvedDate.desc()).all()
+    user_list_a = get_probs_order_by_recent_solved(userId, db)
     user_list = []
     result_list = []
     for one in user_list_a:
@@ -40,11 +45,10 @@ def get_roadMap(userId: str, db: Session):
     rival_list = []
     first_aver = []
     first_tags = []
-    # rivals = rivalRepository.get_recommend_rivals_list(userId, db).__dict__['rivalIds'].split(',')
     rivals = rivalRepository.get_recommend_rivals_list(userId, db)
 
     for rival in rivals:
-        rival_probs = db.query(models.solvedProblem).filter(models.solvedProblem.userId == rival.userId).order_by(models.solvedProblem.solvedDate.desc()).all()
+        rival_probs = get_probs_order_by_recent_solved(rival.userId, db)
         rival_prob_list = []
 
         for one in rival_probs:

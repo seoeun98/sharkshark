@@ -7,7 +7,6 @@ import numpy as np
 from requests import Session
 from sql_app.repository import rivalRepository
 from sql_app import models
-from sql_app.schemas import Period
 from sql_app.service import roadMap
 
 class major_category_avg:
@@ -130,13 +129,31 @@ def get_major_category_avg(userId: str, db: Session):
     return res
 
 # 기간별 문제 풀이 조회
-def get_period_problem(period: Period, userId: str, db: Session):
+def get_period_problem(userId: str, db: Session):
     list = {}
 
-    cnt_per_day = db.query(models.solvedProblem).filter(models.solvedProblem.userId == userId).all()
+    cnt_per_day = db.query(models.solvedProblem).filter(models.solvedProblem.userId == userId)\
+        .order_by(models.solvedProblem.solvedDate.desc()).all()
 
-    for i in range(int(period.startDate.strftime('%Y%m%d')), int(period.endDate.strftime('%Y%m%d')) + 1):
-        if i % 100 <= 31 and i % 1000 != 0:
+    first_day = int(cnt_per_day[0].__dict__['solvedDate'].strftime('%Y%m%d'))
+    last_day = int(cnt_per_day[-1].__dict__['solvedDate'].strftime('%Y%m%d'))
+
+    day = 31
+    for i in range(last_day, first_day + 1):
+        if (i % 100 == 1 or i == last_day) and i % 10000 <= 1231:
+            month = i
+            for k in range(0, 2):
+                month = month // 10
+            month = month % 100
+
+            if month == 2:
+                day = 29
+            elif month in (4, 6, 9, 11):
+                day = 30
+            else :
+                day = 31
+
+        if i % 100 <= day and i % 1000 != 0 and i % 10000 <= 1231 and i % 10000 >= 101 and i % 100 != 0:
             cnt = 0
             for test in cnt_per_day:
                 if int(test.__dict__['solvedDate'].strftime('%Y%m%d')) == i:

@@ -8,7 +8,7 @@ import sql_app.models
 from sql_app import schemas
 from sql_app.database import get_db
 
-from sql_app.repository import problemsRepository, jwtRepository
+from sql_app.repository import problemsRepository, jwtRepository, rivalRepository, dataRepository
 from sql_app.repository.jwtRepository import JWTRepo
 from sql_app.service import crowling
 
@@ -46,10 +46,24 @@ def get_probs_for_mock(db: Session = Depends(get_db), user: str = Depends(jwtRep
 
 @router.get("/recent")
 def get_recent_5_probs(db: Session = Depends(get_db), user: str = Depends(jwtRepository.JWTBearer())) :
-    userId = JWTRepo.decode_token(user)    
-    prob_list = crowling.get_status_crawling(userId, '')       
-    result = problemsRepository.get_recent_5_probs(prob_list[0:5], db)
+    result = []
 
+    userId = JWTRepo.decode_token(user)
+    prob_list = crowling.get_status_crawling(userId, '')       
+    result_user = problemsRepository.get_recent_5_probs(prob_list[0:5], db)
+    result.append(result_user)
+
+    rival_list = {}
+    rivals = rivalRepository.get_recommend_rivals_list(userId, db)
+
+    for rival in rivals:
+        rival_id = rival.__dict__['userId']
+
+        prob_list = crowling.get_status_crawling(rival_id, '')
+        result_rival = problemsRepository.get_recent_5_probs(prob_list[0:5], db)
+        rival_list[rival_id] = result_rival
+
+    result.append(rival_list)
     if result:
         return result
     raise HTTPException(status_code=401, detail="no item")

@@ -3,7 +3,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from sql_app import models
 from sql_app.database import engine
-from sql_app.routers import users, rivals, problems, datas, document
+from sql_app.routers import users, rivals, problems, datas
 
 app = FastAPI()
 
@@ -25,4 +25,3 @@ app.include_router(users.router)
 app.include_router(rivals.router)
 app.include_router(problems.router)
 app.include_router(datas.router)
-app.include_router(document.router)

@@ -1,14 +1,10 @@
-import { useColorModeValue, Box, HStack, Flex, Tag, Center } from '@chakra-ui/react';
+import { useColorModeValue, Box, Flex, Tag, Center } from '@chakra-ui/react';
 import { CTproblem } from '../../../../types/DataTypes';
 import { ColorText } from '../../../common/ColorText';
-import { useSelector } from 'react-redux';
-import { useState } from 'react';
 import { Tier } from '../../../common/Tier';
 
 const ProblemItemForAnalysis = (props: { problem: CTproblem; userInfo: any }) => {
-  const { problem, userInfo } = props;
-  const CTstatus = useSelector((state: any) => state.CTReducer.solvingStatus);
-  const bg = useColorModeValue('white', 'neutral.800');
+  const { problem } = props;
   const tagcolor = useColorModeValue('neutral.0', 'neutral.900');
 
   return (

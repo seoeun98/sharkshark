@@ -50,10 +50,10 @@ const ProblemItem = (props: { problem: CTproblem; problemIndex: any }) => {
       setresolvingAlert(true);
 
       // 임시로 해둠
-      dispatch(setSolvedList([...solvedList, problem]));
-      dispatch(setSovledResultData([...sovledResultData, CTsolvedData]));
-      console.log(solvedList);
-      console.log(sovledResultData);
+      // dispatch(setSolvedList([...solvedList, problem]));
+      // dispatch(setSovledResultData([...sovledResultData, CTsolvedData]));
+      // console.log(solvedList);
+      // console.log(sovledResultData);
     }
   };
 

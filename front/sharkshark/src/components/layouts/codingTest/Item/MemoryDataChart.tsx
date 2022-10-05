@@ -12,7 +12,6 @@ const MemoryDataChart = (props: { problem: userSolvedData[]; userInfo: userSolve
   let memoryData = [];
 
   for (let problemData of problem) {
-    let problem = {};
     memoryData.push(problemData.memory);
   }
   let userMemory = userInfo.memory;

@@ -1,5 +1,4 @@
 import { Center, HStack, VStack, useColorModeValue, Box, Text, Flex } from '@chakra-ui/react';
-import { rival, tagInfo, termSolving, wrongInfo } from '../../../types/DataTypes';
 import { ColorText } from '../../common/ColorText';
 import { BasicInfoLayout } from '../recRival/common/BasicInfoLayout';
 import { useState, useEffect } from 'react';
@@ -32,7 +31,7 @@ const DataChartPage = () => {
     setValue(value + 'vh');
     let userTagInfo = await getTagDataAPI(getUserID());
     dispatch(setUserTagInfo(userTagInfo));
-    // dispatch(setSolvedTermInfo(await getSolveTermDataAPI()));
+    dispatch(setSolvedTermInfo(await getSolveTermDataAPI()));
     dispatch(setWrongTypeInfo(await getWrongTypeDataAPI()));
   };
 

@@ -69,4 +69,21 @@ export const getWrongTypeDataAPI = async () => {
       // alert('태그별 데이터 가져오기 실패');
     });
   return wrongTypeData;
+
+// 로드맵 api
+export const getRoadMapDataAPI = async () => {
+  let RoadMapData = {
+    user: [],
+    rivals: [],
+  };
+  await authAxios
+    .get(`/data/tier`)
+    .then(res => {
+      RoadMapData = res.data;
+    })
+    .catch(err => {
+      console.log(err);
+      alert('getRoadMapDataAPI failed');
+    });
+  return RoadMapData;
 };

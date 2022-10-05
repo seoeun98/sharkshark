@@ -1,6 +1,4 @@
-from datetime import datetime 
-import json
-from typing import List
+from datetime import datetime
 
 import numpy as np
 
@@ -8,19 +6,6 @@ from requests import Session
 from sql_app.repository import rivalRepository
 from sql_app import models
 from sql_app.service import roadMap
-
-class major_category_avg:
-    def __init__(self, userId="", math=0, implementation=0, greedy=0, string=0, dataStructure=0, graph=0, dp=0, bruteforce=0):
-        self.userId = userId
-        self.math = math
-        self.implementation = implementation
-        self.greedy = greedy
-        self.string = string
-        self.dataStructure = dataStructure
-        self.graph = graph
-        self.dp = dp
-        self.bruteforce = bruteforce
-        pass
 
 def get_probs_order_by_recent_solved(id: str, db: Session):
     return db.query(models.solvedProblem).filter(models.solvedProblem.userId == id)\
@@ -59,29 +44,8 @@ def get_roadMap(userId: str, db: Session):
         first_aver.append(rival_aver_list)
         first_tags.append(rival_tags_cnt)
 
-    second_aver = [0, 0, 0, 0, 0]
-    for first in first_aver:
-        while len(first) < 5:
-            first.append(0)
-
-        for i in range(0, 5):
-            second_aver[i] += first[i]/6
-        for i in range(0, 5):
-            second_aver[i] = round(second_aver[i], 1)
-    second_tags = {"math":0, "implementation":0, "greedy":0, "string":0, "dataStructure":0, "graph":0, "dp":0, "bruteforce":0 }
-
-
-    for list in first_tags:
-        first = list.pop()
-
-        second_tags['math'] += round(first['math']/6)
-        second_tags['implementation'] += round(first['implementation']/6)
-        second_tags['greedy'] += round(first['greedy']/6)
-        second_tags['string'] += round(first['string']/6)
-        second_tags['dataStructure'] += round(first['dataStructure']/6)
-        second_tags['graph'] += round(first['graph']/6)
-        second_tags['dp'] += round(first['dp']/6)
-        second_tags['bruteforce'] += round(first['bruteforce']/6)
+    second_aver = roadMap.get_probs_aver(first_aver)
+    second_tags = roadMap.get_probs_tag(first_tags)
 
     rival_list.append(second_aver)
     rival_list.append(second_tags)
@@ -102,65 +66,17 @@ def get_major_category_avg(userId: str, db: Session):
     rec_rival_list = rec_rivals['rivalIds'].split(',')
 
     rec_rival_major_category_list = db.query(models.major_category).filter(models.major_category.userId.in_(rec_rival_list)).all()
-    
-    res = major_category_avg()
-    for one in rec_rival_major_category_list:
-        res.userId += one.userId + ','
-        res.math += one.math
-        res.implementation += one.implementation
-        res.greedy += one.greedy
-        res.string += one.string
-        res.dataStructure += one.dataStructure
-        res.graph += one.graph
-        res.dp += one.dp
-        res.bruteforce += one.bruteforce
 
-    size = len(rec_rival_major_category_list)    
-    res.userId = res.userId[:-1]
-    res.math /= size
-    res.implementation /= size
-    res.greedy /= size
-    res.string /= size
-    res.dataStructure /= size
-    res.graph /= size
-    res.dp /= size
-    res.bruteforce /= size
-
-    return res
+    return roadMap.get_recommend_users_major_cate_avg(rec_rival_major_category_list)
 
 # 기간별 문제 풀이 조회
 def get_period_problem(userId: str, db: Session):
-    list = {}
+    cnt_per_day = get_probs_order_by_recent_solved(userId, db)
 
-    cnt_per_day = db.query(models.solvedProblem).filter(models.solvedProblem.userId == userId)\
-        .order_by(models.solvedProblem.solvedDate.desc()).all()
+    last_day = int(cnt_per_day[0].__dict__['solvedDate'].strftime('%Y%m%d'))
+    first_day = int(cnt_per_day[-1].__dict__['solvedDate'].strftime('%Y%m%d'))
 
-    first_day = int(cnt_per_day[0].__dict__['solvedDate'].strftime('%Y%m%d'))
-    last_day = int(cnt_per_day[-1].__dict__['solvedDate'].strftime('%Y%m%d'))
-
-    day = 31
-    for i in range(last_day, first_day + 1):
-        if (i % 100 == 1 or i == last_day) and i % 10000 <= 1231:
-            month = i
-            for k in range(0, 2):
-                month = month // 10
-            month = month % 100
-
-            if month == 2:
-                day = 29
-            elif month in (4, 6, 9, 11):
-                day = 30
-            else :
-                day = 31
-
-        if i % 100 <= day and i % 1000 != 0 and i % 10000 <= 1231 and i % 10000 >= 101 and i % 100 != 0:
-            cnt = 0
-            for test in cnt_per_day:
-                if int(test.__dict__['solvedDate'].strftime('%Y%m%d')) == i:
-                    cnt += 1
-            list[i] = cnt
-
-    return list;
+    return roadMap.get_period_problem_cnt(first_day, last_day, cnt_per_day)
 
 # 주요 오답 유형 조회
 def get_major_wrong(userId: str, db: Session):

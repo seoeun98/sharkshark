@@ -8,17 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setRivalList } from '../../../../reducers/rivalAPIReducer';
 
 export const RivalList = () => {
-  const dispatch = useDispatch();
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fetchRivalList = async () => {
-    dispatch(setRivalList(await getRivalAPI()));
-  };
-
-  useEffect(() => {
-    fetchRivalList();
-  }, [fetchRivalList]);
-
   const rivalList = useSelector((state: any) => state.rivalAPIReducer.rivalList);
 
   return (

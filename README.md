@@ -504,7 +504,8 @@
 
 
 
-  ![ERD](./images/README/ERD.png)
+  ![PT_8](./images/README/PT_8.png)
+  ![PT_9](./images/README/PT_9.png)
 
 --------------------------
 

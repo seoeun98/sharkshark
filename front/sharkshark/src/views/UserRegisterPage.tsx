@@ -45,6 +45,7 @@ export const UserRegisterPage = () => {
   const [password, setPassword] = useState('');
   const [checkMsg, setCheckMsg] = useState('');
   const [pwCheck, setPwCheck] = useState('');
+  const [solvedAcCheck, setSolvedAcCheck] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { hasCopied, onCopy } = useClipboard(profileMsg);
@@ -71,9 +72,15 @@ export const UserRegisterPage = () => {
         alert('이미 가입된 유저입니다. 로그인을 진행해주세요.');
         setIdAlert('이미 가입된 유저입니다. 로그인을 진행해주세요');
         return;
+      } else if (msg.detail === 'not solved.ac user') {
+        setSolvedAcCheck(true);
+        onOpen();
+        setIdAlert('solved.ac 유저가 아닙니다. 다음 업데이트 주기를 기다려주세요:)');
+        return;
       }
       setPMsgStatus(true);
       setProfileMsg(msg.msg);
+      setSolvedAcCheck(false);
       onOpen();
     }
   };
@@ -314,55 +321,82 @@ export const UserRegisterPage = () => {
           <ModalContent bg={modalBg}>
             <ModalCloseButton />
             <ModalBody textAlign="center" margin="32px" p={12}>
-              <Center>
-                <Image src={sharkjoonImage} w="350px" mb="32px" />
-              </Center>
-              <Box fontSize="16px" fontWeight="700">
-                <Badge p={1} fontSize="16px" borderRadius="4px" color="white" variant="subtle">
-                  <ColorText>{id}</ColorText>
-                </Badge>
-                {'  '}
-                님, {'  '}
-                {pMsgStatus ? '반가워요!' : '연동을 다시 진행해주세요 :('}
-              </Box>
-
-              {pMsgStatus ? (
-                <Box fontSize="14px" my="10px" fontWeight="500">
-                  BAEKJOON 사이트에 접속해,
-                  <br /> 상태 메시지 끝에 다음 문자를 입력한 후
-                  <br /> 확인 버튼을 눌러주세요.
-                </Box>
+              {solvedAcCheck ? (
+                <>
+                  {' '}
+                  <Center>
+                    <Image src={sharkjoonImage} w="350px" mb="32px" />
+                  </Center>
+                  <Box fontSize="16px" fontWeight="700">
+                    <Badge p={1} fontSize="16px" borderRadius="4px" color="white" variant="subtle">
+                      <ColorText>{id}</ColorText>
+                    </Badge>
+                    {'  '}
+                    님, {'  '}
+                  </Box>
+                  <Box fontSize="14px" my="10px" fontWeight="500" mb={8}>
+                    저희 SharkShark 서비스는 solved.ac의 데이터를 기반으로 작동되고 있습니다.
+                    <br /> 데이터 업데이트 주기는 2주일이며,
+                    <br /> solved.ac와의 연동을 진행하시면, 다음 업데이트 주기부터는 이용 가능합니다
+                    :&#41;
+                  </Box>
+                  <Button size="cmd" onClick={() => onClose()}>
+                    확인
+                  </Button>
+                </>
               ) : (
-                <Box fontSize="14px" my="10px" fontWeight="500">
-                  상태 메시지 문자가 일치하지 않습니다.
-                  <br /> BAEKJOON 사이트에 접속해,
-                  <br /> 상태 메시지 끝에 다음 문자를 입력하고 확인 버튼을 눌러주세요.
-                </Box>
+                <>
+                  <Center>
+                    <Image src={sharkjoonImage} w="350px" mb="32px" />
+                  </Center>
+                  <Box fontSize="16px" fontWeight="700">
+                    <Badge p={1} fontSize="16px" borderRadius="4px" color="white" variant="subtle">
+                      <ColorText>{id}</ColorText>
+                    </Badge>
+                    {'  '}
+                    님, {'  '}
+                    {pMsgStatus ? '반가워요!' : '연동을 다시 진행해주세요 :('}
+                  </Box>
+
+                  {pMsgStatus ? (
+                    <Box fontSize="14px" my="10px" fontWeight="500">
+                      BAEKJOON 사이트에 접속해,
+                      <br /> 상태 메시지 끝에 다음 문자를 입력한 후
+                      <br /> 확인 버튼을 눌러주세요.
+                    </Box>
+                  ) : (
+                    <Box fontSize="14px" my="10px" fontWeight="500">
+                      상태 메시지 문자가 일치하지 않습니다.
+                      <br /> BAEKJOON 사이트에 접속해,
+                      <br /> 상태 메시지 끝에 다음 문자를 입력하고 확인 버튼을 눌러주세요.
+                    </Box>
+                  )}
+
+                  <Box fontSize="12px" my="12px" fontWeight="300">
+                    설정 방법 : 백준 사이트 접속 &gt; 로그인 &gt; 상단바 설정 &gt; 정보 수정 &#45;
+                    상태 메시지 &nbsp; &nbsp;
+                    <Button
+                      variant="secondary"
+                      borderRadius="4px"
+                      size="xs"
+                      onClick={() => window.open(modifyUser, '_blank')}
+                    >
+                      바로 가기
+                    </Button>
+                  </Box>
+
+                  <Box fontWeight="700" fontSize="18px" mb="32px">
+                    {profileMsg}{' '}
+                    <Button mx={2} variant="secondary" size="xs" onClick={onCopy}>
+                      {hasCopied ? '복사됨!' : '복사'}
+                    </Button>
+                  </Box>
+
+                  <Button size="cmd" onClick={checkProfileMsg}>
+                    확인
+                  </Button>
+                </>
               )}
-
-              <Box fontSize="12px" my="12px" fontWeight="300">
-                설정 방법 : 백준 사이트 접속 &gt; 로그인 &gt; 상단바 설정 &gt; 정보 수정 &#45; 상태
-                메시지 &nbsp; &nbsp;
-                <Button
-                  variant="secondary"
-                  borderRadius="4px"
-                  size="xs"
-                  onClick={() => window.open(modifyUser, '_blank')}
-                >
-                  바로 가기
-                </Button>
-              </Box>
-
-              <Box fontWeight="700" fontSize="18px" mb="32px">
-                {profileMsg}{' '}
-                <Button mx={2} variant="secondary" size="xs" onClick={onCopy}>
-                  {hasCopied ? '복사됨!' : '복사'}
-                </Button>
-              </Box>
-
-              <Button size="cmd" onClick={checkProfileMsg}>
-                확인
-              </Button>
             </ModalBody>
           </ModalContent>
         </Modal>

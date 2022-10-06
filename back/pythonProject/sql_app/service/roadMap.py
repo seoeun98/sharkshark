@@ -26,7 +26,7 @@ def divide(list: list):
     divide_num = 9
     length = len(list)
 
-    if length % 9 == 0:
+    if length % 10 == 0:
         divide_num = 10
 
     for one in list:

@@ -68,38 +68,38 @@ const SolvedLevel = () => {
           >
             <Center>문제 목록</Center>{' '}
           </Box>
-          <Box
-            w="26vw"
-            ml="1vw"
-            mr="6vw"
-            h="40vh"
-            overflow="auto"
-            css={{
-              '&::-webkit-scrollbar': {
-                width: '12px',
-              },
-              '&::-webkit-scrollbar-track': {
-                background: useColorModeValue('#CBCDD6', '#18181A'),
-                borderRadius: '12px',
-              },
-              '&::-webkit-scrollbar-thumb': {
-                background: 'linear-gradient(0deg, #997BED 0%, #4AE2DE 100%)',
-                borderRadius: '12px',
-              },
-            }}
-          >
-            {averagLevel.list ? (
-              averagLevel.list.map((item: simpleProblem, index: number) => (
-                <Box mb="8px" mr="8px" key={index}>
-                  <SolvedCard problem={item} />
-                </Box>
-              ))
-            ) : (
-              <Center bg={bgcolor} borderRadius="12px" p="32px">
-                ~ 목록이 없습니다 ~
-              </Center>
-            )}
-          </Box>
+          <VStack>
+            <Box
+              w="26vw"
+              h="360px"
+              overflow="auto"
+              css={{
+                '&::-webkit-scrollbar': {
+                  width: '12px',
+                },
+                '&::-webkit-scrollbar-track': {
+                  background: useColorModeValue('#CBCDD6', '#18181A'),
+                  borderRadius: '12px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: 'linear-gradient(0deg, #997BED 0%, #4AE2DE 100%)',
+                  borderRadius: '12px',
+                },
+              }}
+            >
+              {averagLevel.list ? (
+                averagLevel.list.map((item: simpleProblem, index: number) => (
+                  <Box mb="8px" mr="8px" key={index}>
+                    <SolvedCard problem={item} />
+                  </Box>
+                ))
+              ) : (
+                <Center bg={bgcolor} borderRadius="12px" p="32px">
+                  ~ 목록이 없습니다 ~
+                </Center>
+              )}
+            </Box>
+          </VStack>
         </VStack>
       </VStack>
     </>

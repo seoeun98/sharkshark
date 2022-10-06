@@ -179,9 +179,9 @@ const RivalCompareChart = (props: { Rectype: string }) => {
         <Center bg={bgCondition} py={2} px={8} borderRadius="8px" fontWeight="500" fontSize="18px">
           <ColorText>태그 분포 비교 분석</ColorText>
         </Center>
-        <Box w="40vw">
-          <ApexCharts type="radar" series={series} options={options} width="800" height="400" />
-        </Box>
+        <VStack w="40vw">
+          <ApexCharts type="radar" series={series} options={options} width="600" height="400" />
+        </VStack>
         <Box h="8vh" />
         <HStack spacing={12}>
           <Button

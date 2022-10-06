@@ -32,20 +32,14 @@ import { setUserInfo } from '../../../reducers/rivalAPIReducer';
 
 const DataChartPage = () => {
   const userInfo = useSelector((state: any) => state.rivalAPIReducer.userInfo);
-  const [value, setValue] = useState('0vh');
   const dispatch = useDispatch();
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchData = async () => {
     dispatch(setUserInfo(await getRivalInfoAPI(getUserID())));
-    let width = 17;
-    let percent = userInfo.exp / (userInfo.exp + 20000);
-    let value = String(percent * width);
-    setValue(value + 'vh');
 
     let userTagInfo = await getTagDataAPI(getUserID());
     dispatch(setUserTagInfo(userTagInfo));
@@ -53,6 +47,10 @@ const DataChartPage = () => {
     dispatch(setWrongTypeInfo(await getWrongTypeDataAPI()));
     setLoading(false);
   };
+
+  let width = 17;
+  let percent = userInfo.exp / (userInfo.exp + 20000);
+  let value = String(percent * width) + 'vh';
 
   const [loading, setLoading] = useState(true);
 

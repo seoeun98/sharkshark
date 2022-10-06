@@ -19,29 +19,14 @@ class major_category_avg:
 
 def divide(list: list):
     result_list = []
-    divide_list = []
-    i = 0
-    cnt = 0
+    divider = len(list) // 10
 
-    divide_num = 9
-    length = len(list)
+    start = 0
+    for i in range(10):
+        result_list.append(list[start:start + divider])
+        start += divider
 
-    if length % 10 == 0:
-        divide_num = 10
-
-    for one in list:
-        divide_list.append(one)
-        i += 1
-        cnt += 1
-
-        if len(result_list) > 9:
-            result_list[9] = deepcopy(divide_list)
-
-        if i == len(list)//divide_num:
-            i = 0
-            result_list.append(deepcopy(divide_list))
-            divide_list.clear()
-
+    result_list[9] += list[start:]
     return result_list
 
 def get_aver_rank(list: list, db: Session):

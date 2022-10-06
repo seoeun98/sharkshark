@@ -216,7 +216,7 @@ const CodingTestMain = () => {
         {/* 타이머 */}
         <VStack
           w="32vw"
-          h="16vh"
+          h="150px"
           bg={bgcolor}
           bgGradient={CTstatus === '' ? 'linear(to-r, #1B3E44, #2C2947)' : ''}
           borderRadius="10px"

@@ -153,13 +153,22 @@ def get_recommend_users_major_cate_avg(list: list):
 
     size = len(list)
     res.userId = res.userId[:-1]
-    res.math /= size
-    res.implementation /= size
-    res.greedy /= size
-    res.string /= size
-    res.dataStructure /= size
-    res.graph /= size
-    res.dp /= size
-    res.bruteforce /= size
 
+    math = res.math / size
+    implementation = res.implementation / size
+    greedy = res.greedy / size
+    string = res.string / size
+    dataStructure = res.dataStructure / size
+    graph = res.graph / size
+    dp = res.dp / size
+    bruteforce = res.bruteforce / size
+
+    res.math = round(math, 1)
+    res.implementation = round(implementation, 1)
+    res.greedy = round(greedy, 1)
+    res.string = round(string, 1)
+    res.dataStructure = round(dataStructure, 1)
+    res.graph = round(graph, 1)
+    res.dp = round(dp, 1)
+    res.bruteforce = round(bruteforce, 1)
     return res

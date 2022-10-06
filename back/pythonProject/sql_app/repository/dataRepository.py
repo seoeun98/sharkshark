@@ -19,8 +19,9 @@ def get_roadMap(userId: str, db: Session):
     result_list = []
     for one in user_list_a:
         result_list.append(one.__dict__)
-
     user_divided_list = roadMap.divide(result_list)
+
+    print(user_divided_list)
     user_aver_list = roadMap.get_aver_rank(user_divided_list, db)
     user_tags_cnt = roadMap.tag_prob_cnt(user_divided_list, db)
 
@@ -103,7 +104,7 @@ def get_level_avg(userId: str, db: Session):
     for one in pb_list:
         pb_lv_list.append(one.level)    
 
-    lv_avg = round(np.mean(pb_lv_list), 2)
+    lv_avg = round(np.mean(pb_lv_list), 1)
 
     return pb_list, lv_avg
 

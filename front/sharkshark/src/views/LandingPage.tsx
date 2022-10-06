@@ -80,7 +80,7 @@ export const LandingPage = () => {
                   fontSize="18px"
                   fontWeight={useColorModeValue(800, 700)}
                 >
-                  <Link to="login">시작하기</Link>
+                  <Link to="/login">시작하기</Link>
                 </Button>
               </VStack>
             </Center>
@@ -145,7 +145,7 @@ export const LandingPage = () => {
             </Center>
             <Center h="650px" w="64vw">
               <Flex justifyContent="space-between" w="100%">
-                <Image src="/assets/landing/rival_Rec.svg" h="450px" data-aos="fade-right" />
+                <Image src="/assets/landing/rival_rec.svg" h="450px" data-aos="fade-right" />
                 <Box data-aos="fade-left">
                   <Box fontSize="40px" pt="4vh" fontWeight={useColorModeValue(800, 700)} mb={24}>
                     지피지기(知彼知己)면 <br />
@@ -235,7 +235,9 @@ export const LandingPage = () => {
               </Box>
 
               <Button variant="secondary" h="60px" fontSize="18px">
-                <ColorText>지금 바로 시작하기</ColorText>
+                <ColorText>
+                  <Link to="/login">지금 바로 시작하기</Link>
+                </ColorText>
               </Button>
             </VStack>
           </Center>

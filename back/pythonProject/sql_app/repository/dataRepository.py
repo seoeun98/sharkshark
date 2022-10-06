@@ -103,7 +103,7 @@ def get_level_avg(userId: str, db: Session):
     for one in pb_list:
         pb_lv_list.append(one.level)    
 
-    lv_avg = np.mean(pb_lv_list)
+    lv_avg = round(np.mean(pb_lv_list), 1)
 
     return pb_list, lv_avg
 

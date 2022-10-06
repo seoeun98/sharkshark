@@ -10,6 +10,7 @@ import {
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserID } from '../api/common';
+import { ColorText } from '../components/common/ColorText';
 import CodingTestAnalysis from '../components/layouts/codingTest/CodingTestAnalysis';
 import { CodingTestDefault } from '../components/layouts/codingTest/CodingTestDefault';
 import CodingTestMain from '../components/layouts/codingTest/CodingTestMain';
@@ -45,7 +46,8 @@ export const CodeTestPage = () => {
               나만의 실전 연습, 모의 코딩 테스트
             </Box>
             <Box fontSize="16px" fontWeight={subFW}>
-              {getUserID()} 님의 실력을 분석해 모의 코딩 테스트를 준비했습니다.
+              <ColorText>{getUserID()}</ColorText> 님의 실력을 분석해 모의 코딩 테스트를
+              준비했습니다.
               <br />
               실제 코딩 테스트처럼 연습해보고, 실력을 점검해보세요!
             </Box>

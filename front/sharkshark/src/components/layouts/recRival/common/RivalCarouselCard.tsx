@@ -10,11 +10,12 @@ import {
   Spacer,
   Flex,
 } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createRivalAPI, getRivalAPI } from '../../../../api/auth/rival';
 import {
   setClickedRivalId,
   setCompStatus,
+  setRecRivalList,
   setRivalInfo,
   setRivalList,
 } from '../../../../reducers/rivalAPIReducer';
@@ -25,6 +26,8 @@ import { BasicInfoLayout } from './BasicInfoLayout';
 export const RivalCarouselCard = (props: { RivalInfo: rival; active: boolean }) => {
   const dispatch = useDispatch();
   const { RivalInfo, active } = props;
+  const rivalList = useSelector((state: any) => state.rivalAPIReducer.rivalList);
+  const rivalRecList = useSelector((state: any) => state.rivalAPIReducer.rivalRecList);
 
   let children = {};
   if (active) {
@@ -185,6 +188,14 @@ export const RivalCarouselCard = (props: { RivalInfo: rival; active: boolean }) 
             onClick={async () => {
               createRivalAPI(RivalInfo.userId);
               dispatch(setRivalList(await getRivalAPI()));
+              dispatch(setRivalList([...rivalList, RivalInfo]));
+              let rivalRecNewList: any[] = [];
+              for (let rival of rivalRecList) {
+                if (rival !== RivalInfo) {
+                  rivalRecNewList = [...rivalRecNewList, rival];
+                }
+              }
+              dispatch(setRecRivalList(rivalRecNewList));
             }}
           >
             라이벌 등록

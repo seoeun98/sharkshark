@@ -1,5 +1,8 @@
 import requests, copy
+from datetime import datetime
 from bs4 import BeautifulSoup
+
+format = '%Y-%m-%d %H:%M:%S'
 
 class result:
     def __init__(self, solved, probNo, userInfo, time_sort_list: list, memory_sort_list: list):
@@ -26,6 +29,14 @@ class detail:
         self.in_list = in_list
         self.out_list = out_list
         pass
+
+
+class solvedProblem:
+      def __init__(self, userId, probNo, solvedDate):
+          self.userId = userId
+          self.probNo = probNo
+          self.solvedDate = datetime.strptime(solvedDate, format)
+          pass
 
 # 채점현황 크롤링
 def get_status_crawling(userId : str, probNo, langNum=-1, start='1900-01-01', page=1) -> list:
@@ -166,3 +177,27 @@ def is_in_solvedac(userId : str):
         return False
     else:        
         return True
+
+# 최근 푼 문제 목록
+def lately_solved_problem_seq_crawling(username : str) -> list:
+    url = f'https://www.acmicpc.net/status?problem_id=&user_id={username}&language_id=-1&result_id=4'
+    headers = {'User-Agent': "Mediapartners-Google"}
+
+    lately_solved_problems = []
+
+    for page in range(1, 4):      
+      response = requests.request("GET", url, headers=headers)
+      soup = BeautifulSoup(response.text, 'html.parser')
+      problems = soup.find_all('tr')
+
+      for i in range(1, len(problems)):
+          try:
+              lately_solved_problems.append(solvedProblem(username, problems[i].select_one('td:nth-of-type(3) > a').text, problems[i].select_one('td:nth-of-type(9) > a')['title']))
+          except:
+              return lately_solved_problems
+      try:
+          url = 'https://www.acmicpc.net' + soup.find('a', {'id':'next_page'})['href']
+      except: 
+          return lately_solved_problems      
+
+    return lately_solved_problems

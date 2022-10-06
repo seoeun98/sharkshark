@@ -8,6 +8,7 @@ import {
   Tag,
   Textarea,
   useColorModeValue,
+  VStack,
 } from '@chakra-ui/react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -223,11 +224,15 @@ export const BlogPosting = () => {
           <Box w="full" ml="16px">
             <Input
               mx="8px"
-              placeholder="코드 입력"
+              placeholder="디렉토리명 입력"
               w="full"
               value={filename}
               onChange={e => setFilename(e.target.value)}
             />
+            <Box />
+            <Box ml="16px" mt="8px" fontSize="12px" fontWeight="500" color="warning.0">
+              형식 : &#91; directory 명 &#93; &#47; &nbsp; &#40; 예시 : sharkshark/ &#41;
+            </Box>
           </Box>
         </Flex>
       </Paragraph>

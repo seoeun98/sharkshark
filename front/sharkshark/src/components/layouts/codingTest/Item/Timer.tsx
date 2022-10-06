@@ -59,7 +59,7 @@ const Timer = () => {
   return (
     <VStack
       w="32vw"
-      h="20vh"
+      h="150px"
       bg={useColorModeValue('neutral.25', 'neutral.500')}
       bgGradient={CTstatus === '' ? 'linear(to-r, #1B3E44, #2C2947)' : ''}
       borderRadius="10px"

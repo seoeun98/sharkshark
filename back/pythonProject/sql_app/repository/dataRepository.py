@@ -97,8 +97,8 @@ def get_level_avg(userId: str, db: Session):
         pb_no_list.append(one.probNo)
 
     pb_no_set = set(pb_no_list)
-
-    pb_list = db.query(models.problem.no, models.problem.title, models.problem.level).filter(models.problem.no.in_(pb_no_set)).all()
+    
+    pb_list = db.query(models.problem.no, models.problem.title, models.problem.level).filter(models.problem.no.in_(pb_no_set)).limit(10).all()
     
     pb_lv_list = []
     for one in pb_list:

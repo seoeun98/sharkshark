@@ -15,6 +15,7 @@ import RivalRecMain from '../components/layouts/recRival/recommend/RivalRecMain'
 import RivalCompareChart from '../components/layouts/dataChart/rival/RivalCompareChart';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCompStatus, setGoHome } from '../reducers/rivalAPIReducer';
+import { ColorText } from '../components/common/ColorText';
 
 export const RecUserPage = () => {
   const dispatch = useDispatch();
@@ -80,9 +81,11 @@ export const RecUserPage = () => {
             지피지기(知彼知己)면 백전불태(百戰不殆)
           </Box>
           <Center fontSize="16px" fontWeight={useColorModeValue(500, 200)} textAlign="center">
-            {getUserID()} 님과 비슷한 실력을 가진 라이벌을 추천해 드립니다.
-            <br />
-            실력 공유를 통해 함께 성장해보세요.
+            <Box p="0" m="0">
+              <ColorText>{getUserID()}</ColorText> 님과 비슷한 실력을 가진 라이벌을 추천해 드립니다.
+              <br />
+              실력 공유를 통해 함께 성장해보세요.
+            </Box>
           </Center>
         </VStack>
       </Center>

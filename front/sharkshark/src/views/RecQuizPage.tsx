@@ -8,6 +8,7 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
+import { ColorText } from '../components/common/ColorText';
 import { Sidebar } from '../components/common/Sidebar';
 import { QuizMenuDefault } from '../components/layouts/recquiz/QuizMenuDefault';
 import { QuizMenuRival } from '../components/layouts/recquiz/QuizMenuRival';
@@ -34,14 +35,8 @@ export const RecQuizPage = () => {
           <Box fontSize="16px" fontWeight={useColorModeValue(500, 200)}>
             BOJ 문제 풀이 이력과 유저 정보를 바탕으로 <br />
             알고리즘 풀이 실력 향상을 위한 문제를{' '}
-            <Text
-              bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
-              bgClip="text"
-              fontSize="18px"
-              fontWeight={useColorModeValue(800, 700)}
-              display="inline"
-            >
-              샥샥
+            <Text fontSize="18px" display="inline">
+              <ColorText>샥샥</ColorText>
             </Text>{' '}
             모아 봤어요.
           </Box>
@@ -51,7 +46,7 @@ export const RecQuizPage = () => {
       {/* main body */}
       <Box>
         <Tabs variant="unstyled" orientation="vertical" mx="10vw" my="6vh" isLazy>
-          <Sidebar first="전체" second="사용자 기반 추천 문제" third="유형별 추천 문제" />
+          <Sidebar first="실력별 추천" second="풀이 유형별 추천" third="주요 알고리즘 문제" />
 
           <TabPanels ml="5vw">
             <TabPanel>

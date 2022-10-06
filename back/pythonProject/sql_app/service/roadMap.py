@@ -159,4 +159,13 @@ def get_recommend_users_major_cate_avg(list: list):
     res.dp /= size
     res.bruteforce /= size
 
+    res.math = round(res.math, 2)
+    res.implementation = round(res.implementation, 2)
+    res.greedy = round(res.greedy, 2)
+    res.string = round(res.string, 2)
+    res.dataStructure = round(res.dataStructure, 2)
+    res.graph = round(res.graph, 2)
+    res.dp = round(res.dp, 2)
+    res.bruteforce = round(res.bruteforce, 2)
+
     return res

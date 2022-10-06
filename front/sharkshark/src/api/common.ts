@@ -20,7 +20,7 @@ authAxios.interceptors.response.use(
   res => res,
   err => {
     console.log('interceptor:' + err.response.status);
-    if ((err.response.status = 403)) refreshAPI();
+    if (err.response.status === 403) refreshAPI();
   },
 );
 

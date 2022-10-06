@@ -237,7 +237,7 @@ export const BlogPosting = () => {
         </Flex>
       </Paragraph>
       <Center>
-        <Button onClick={uploadPost}>테스트 포스팅</Button>
+        <Button onClick={uploadPost}>깃허브 업로드</Button>
       </Center>
     </>
   );

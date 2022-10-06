@@ -21,7 +21,6 @@ def get_roadMap(userId: str, db: Session):
         result_list.append(one.__dict__)
     user_divided_list = roadMap.divide(result_list)
 
-    print(user_divided_list)
     user_aver_list = roadMap.get_aver_rank(user_divided_list, db)
     user_tags_cnt = roadMap.tag_prob_cnt(user_divided_list, db)
 

@@ -205,7 +205,7 @@ const RivalCompareChart = (props: { Rectype: string }) => {
               borderRadius="36px"
               boxShadow="base"
               onClick={() => {
-                createRivalAPI(userInfo.userId);
+                createRivalAPI(rivalTagInfo.userId);
                 setRegisted2('');
               }}
             >
@@ -219,7 +219,7 @@ const RivalCompareChart = (props: { Rectype: string }) => {
               borderRadius="36px"
               boxShadow="base"
               onClick={() => {
-                deleteRivalAPI(userInfo.userId);
+                deleteRivalAPI(rivalTagInfo.userId);
                 setRegisted2('nonRegistered');
                 dispatch(setRegisted('nonRegistered'));
               }}

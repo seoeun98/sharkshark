@@ -196,7 +196,7 @@ const DataChartPage = () => {
             <Box
               w="20vw"
               h="188px"
-              borderRadius="10px"
+              borderRadius="12px"
               boxShadow="base"
               bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
             >

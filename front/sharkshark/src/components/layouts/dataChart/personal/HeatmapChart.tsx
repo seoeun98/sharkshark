@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ColorText } from '../../../common/ColorText';
 import ApexCharts from 'react-apexcharts';
+import { ApexOptions } from 'apexcharts';
 
 export const HeatmapChart = () => {
   const solvedTermInfo = useSelector((state: any) => state.DataChartReducer.solvedTermInfo);
@@ -46,8 +47,16 @@ export const HeatmapChart = () => {
     series[index].data.push(values[i]);
   }
 
-  let options = {
-    colors: ['#008FFB'],
+  let options: ApexOptions = {
+    chart: {
+      zoom: {
+        enabled: false,
+      },
+      toolbar: {
+        show: false,
+      },
+      foreColor: '#ADB5BD',
+    },
     legend: {
       labels: {
         colors: ['#ADB5BD'],
@@ -62,10 +71,25 @@ export const HeatmapChart = () => {
         },
       },
     },
+    grid: {
+      show: false,
+    },
+    xaxis: {
+      labels: {
+        show: false,
+      },
+    },
+    stroke: {
+      show: true,
+      colors: [useColorModeValue('#F5F5F5', '#292835')],
+    },
+    dataLabels: {
+      enabled: false,
+    },
     plotOptions: {
       heatmap: {
         shadeIntensity: 0.5,
-        radius: 0,
+        radius: 5,
         useFillColorAsStroke: false,
         colorScale: {
           ranges: [
@@ -74,12 +98,14 @@ export const HeatmapChart = () => {
               to: 1,
               name: '1문제 이하',
               color: '#C4F1F9',
+              foreColor: undefined,
             },
             {
               from: 2,
               to: 3,
               name: '2,3 문제',
               color: '#76E4F7',
+              foreColor: undefined,
             },
             {
               from: 4,
@@ -96,12 +122,6 @@ export const HeatmapChart = () => {
           ],
         },
       },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      width: 2,
     },
   };
 
@@ -122,7 +142,7 @@ export const HeatmapChart = () => {
         <ColorText>기간별 푼 문제</ColorText>
       </Box>
       <Box py={8}>
-        <ApexCharts type="heatmap" width="600" height="260" series={series} options={options} />
+        <ApexCharts type="heatmap" width="600" height="240" series={series} options={options} />
       </Box>
     </VStack>
   );

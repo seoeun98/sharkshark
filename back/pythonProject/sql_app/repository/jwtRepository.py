@@ -12,8 +12,8 @@ from sql_app import models
 
 ACCESS_KEY = "access"
 REFRESH_KEY = "refresh"
-ACCESS_EXPIRES = timedelta(hours=1)
-REFRESH_EXPIRES = timedelta(days=14)
+ACCESS_EXPIRES = timedelta(seconds=2)
+REFRESH_EXPIRES = timedelta(seconds=10)
 
 ALGORITHM = "HS256"
 

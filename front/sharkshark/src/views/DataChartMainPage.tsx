@@ -26,7 +26,6 @@ export const DataChartMainPage = () => {
   };
 
   useEffect(() => {
-    console.log(analysisCompStatus);
     if (analysisCompStatus === 2) {
       setTabIndex(2);
     }
@@ -68,7 +67,7 @@ export const DataChartMainPage = () => {
           onChange={handleTabsChange}
           isLazy={true}
         >
-          <Sidebar first="알고리즘 실력 분석" second="티어 로드맵" third="라이벌 분석" />
+          <Sidebar first="알고리즘 실력 분석" second="티어 로드맵" third="유사 사용자 분석" />
           <TabPanels ml="4vw" bg="" mb="10vh">
             <TabPanel>
               <DataChartPage />

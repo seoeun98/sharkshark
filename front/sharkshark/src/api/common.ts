@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
+import { Markdown } from '../types/DataTypes';
 
-// const SERVER_ADDRESS = 'http://j7b205.p.ssafy.io/api';
-const SERVER_ADDRESS = 'http://127.0.0.1:8000';
+const SERVER_ADDRESS = '/api';
 
 export const authAxios: AxiosInstance = axios.create({
   baseURL: `${SERVER_ADDRESS}`,
@@ -16,6 +16,38 @@ export const defaultAxios: AxiosInstance = axios.create({
   baseURL: `${SERVER_ADDRESS}`,
 });
 
+authAxios.interceptors.response.use(
+  res => res,
+  err => {
+    console.log('interceptor:' + err.response.status);
+    if ((err.response.status = 403)) refreshAPI();
+  },
+);
+
+// 토큰 재발급
+export const refreshAPI = async () => {
+  await axios
+    .post(
+      `${SERVER_ADDRESS}/user/auth`,
+      {},
+      {
+        headers: {
+          'refresh-token': localStorage.getItem('refresh_token') || '',
+        },
+      },
+    )
+    .then(res => {
+      localStorage.setItem('access_token', res.data.access_token);
+      alert('인증 갱신 완료.');
+      window.location.href = '/';
+      localStorage.setItem('isLogin', 'true');
+    })
+    .catch(err => {
+      console.log(err);
+      alert('인증 갱신에 실패했습니다! 로그아웃 후 다시 로그인해주세요.');
+    });
+};
+
 //=================================
 
 // token에서 유저 정보 파싱하기
@@ -26,6 +58,39 @@ export const getUserID = () => {
   const decoded = JSON.parse(atob(token.split('.')[1]));
   return decoded.id;
 };
+
+export const logout = () => {
+  localStorage.removeItem('access_token');
+  window.location.href = '/login';
+};
+
+export const buildMarkDown = (md: Markdown) => {
+  const content =
+    `<img src="https://j7b205.p.ssafy.io/assets/header/markdown_header.png" />\n\n` +
+    `# ` +
+    (md.tier
+      ? `<img src="https://static.solved.ac/tier_small/${md.tier}.svg" alt="tier" height="32px" />`
+      : '') +
+    ` ${md.title} - ${md.no} \n\n` +
+    `## 문제\n\n` +
+    `> https://www.acmicpc.net/problem/${md.no}\n\n` +
+    (md.tags ? `### 분류\n\n` + `${md.tags}\n\n` : '') +
+    (md.problem_description ? `### 문제 설명\n\n` + `${md.problem_description}\n\n` : '') +
+    `#### 입력\n\n` +
+    `${md.input_description}\n\n` +
+    `#### 출력\n\n` +
+    `${md.output_description}\n\n` +
+    `#### 예제\n\n` +
+    `${md.example}\n\n` +
+    `####\n\n` +
+    `## 풀이 코드\n\n` +
+    `\`\`\`${md.lang}\n` +
+    `${md.code}\n\n` +
+    `\`\`\`\n`;
+
+  return content;
+};
+//===============================
 
 // github: repo 이미지 url 가져오기
 export const githubRepoImage = async (repo: string, token: string) => {

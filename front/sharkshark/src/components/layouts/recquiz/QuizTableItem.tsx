@@ -67,7 +67,7 @@ export const QuizTableItem = (props: { problem: Problem }) => {
               borderRadius="10px"
               p="8px"
             >
-              해결 {problem.acceptedUserCnt}
+              ✅ 해결 {problem.acceptedUserCnt}
             </Box>
 
             {/* average tries */}
@@ -77,7 +77,18 @@ export const QuizTableItem = (props: { problem: Problem }) => {
               borderRadius="10px"
               p="8px"
             >
-              평균시도 {problem.avgTries}
+              ✏ 평균시도 {problem.avgTries}
+            </Box>
+
+            {/* 백준 링크 */}
+            <Box
+              mx="8px"
+              bg={useColorModeValue('neutral.25', 'neutral.500')}
+              borderRadius="10px"
+              p="8px"
+              onClick={() => window.open(`https://www.acmicpc.net/problem/${problem.no}`, '_blank')}
+            >
+              📖 BOJ 이동
             </Box>
 
             <Spacer />

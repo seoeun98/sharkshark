@@ -1,4 +1,4 @@
-import { Problem, UserInfo } from '../types/DataTypes';
+import { Problem, ProblemDetail, UserInfo } from '../types/DataTypes';
 import { authAxios } from './common';
 
 // 계정 정보 조회
@@ -23,9 +23,15 @@ export const getUserInfoAPI = async (id: string) => {
 };
 
 // 계정 정보 업데이트
-export const updateUserInfoAPI = (id: string, password: string, git: string, dir: string) => {
+export const updateUserInfoAPI = (
+  id: string,
+  password: string,
+  token: string,
+  git: string,
+  dir: string,
+) => {
   authAxios
-    .put(`/user/${id}`, { id: id, password: password, git: git, dir: dir })
+    .put(`/user`, { id: id, pw: password, token: token, git: git, dir: dir })
     .then(res => {
       console.log(res);
     })
@@ -39,7 +45,7 @@ export const updateUserInfoAPI = (id: string, password: string, git: string, dir
 export const githubTokenAPI = async (id: string, code: string) => {
   let token = '';
   await authAxios
-    .post(`/user/github/${id}`, { authorizationCode: code })
+    .post(`/user/github`, { authorizationCode: code })
     .then(res => {
       console.log(res);
       token = res.data.github_access_token;
@@ -123,7 +129,7 @@ export const probsRecentAPI = async () => {
   await authAxios
     .get('/prob/recent')
     .then(res => {
-      console.log(res);
+      //console.log(res);
       list = res.data;
     })
     .catch(err => {
@@ -131,4 +137,27 @@ export const probsRecentAPI = async () => {
       alert('probsRecentAPI failed');
     });
   return list;
+};
+
+// 블로그 포스팅용 문제 상세
+export const probsDetailAPI = async (probNo: number) => {
+  let detail: ProblemDetail = {
+    probNo: 0,
+    problem_description: '',
+    input_description: '',
+    output_description: '',
+    in_list: [],
+    out_list: [],
+  };
+  await authAxios
+    .get(`/prob/detail/${probNo}`)
+    .then(res => {
+      console.log(res);
+      detail = res.data;
+    })
+    .catch(err => {
+      console.log(err);
+      alert('probsDetailAPI failed');
+    });
+  return detail;
 };

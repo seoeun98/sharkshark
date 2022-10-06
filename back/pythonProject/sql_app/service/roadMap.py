@@ -31,11 +31,14 @@ def divide(list: list):
         if len(result_list) > 9:
             result_list[9] = deepcopy(divide_list)
 
-        if i == round(len(list)/10):
+        if i == len(list)//10:
             i = 0
             result_list.append(deepcopy(divide_list))
             divide_list.clear()
 
+    if len(result_list) != 10:
+        while len(result_list) < 10:
+            result_list.append([0])
     return result_list
 
 def get_aver_rank(list: list, db: Session):

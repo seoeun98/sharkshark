@@ -4,7 +4,7 @@ import { ColorText } from '../../../common/ColorText';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCTresultAPI } from '../../../../api/auth/codingTest';
 import { useState } from 'react';
-import { setAllSolved, setSolvedNum } from '../../../../reducers/CTReducer';
+import { setAllSolved, setSolvedList, setSovledResultData } from '../../../../reducers/CTReducer';
 
 const ProblemItem = (props: { problem: CTproblem; problemIndex: any }) => {
   const dispatch = useDispatch();
@@ -12,32 +12,48 @@ const ProblemItem = (props: { problem: CTproblem; problemIndex: any }) => {
   const CTstatus = useSelector((state: any) => state.CTReducer.solvingStatus);
   const startime = useSelector((state: any) => state.CTReducer.startime);
   const problemNum = useSelector((state: any) => state.CTReducer.problemNum);
-  const solvedNum = useSelector((state: any) => state.CTReducer.solvedNum);
+  const solvedList = useSelector((state: any) => state.CTReducer.solvedList);
+  const sovledResultData = useSelector((state: any) => state.CTReducer.sovledResultData);
   const bg = useColorModeValue('white', 'neutral.800');
   const bgGradient = useColorModeValue(
     'linear(to-r, #A6CEE0, #9D97C7)',
     'linear(to-r, #395A69, #49446C)',
   );
+
   const [problemSovled, setProblemSolved] = useState(false);
   const [resolvingAlert, setresolvingAlert] = useState(false);
 
   // eslint-disable-next-line no-unused-vars
   let CTsolvedData: solvedData = {
     solved: false,
+    probNo: 0,
   };
 
   const submitCheck = async () => {
     CTsolvedData = await getCTresultAPI(problem.no, startime);
+
+    // 풀었을 때
     if (CTsolvedData.solved === true) {
       setresolvingAlert(false);
       setProblemSolved(true);
-      dispatch(setSolvedNum(solvedNum.push(problem.no)));
-      if (solvedNum.length === problemNum) {
+
+      dispatch(setSolvedList([...solvedList, problem]));
+      dispatch(setSovledResultData([...sovledResultData, CTsolvedData]));
+
+      // 문제 다 풀었을 때
+      if (solvedList.length === problemNum) {
         dispatch(setAllSolved(true));
       }
     } else {
+      // 못 풀었을 때
       setProblemSolved(false);
       setresolvingAlert(true);
+
+      // 임시로 해둠
+      // dispatch(setSolvedList([...solvedList, problem]));
+      // dispatch(setSovledResultData([...sovledResultData, CTsolvedData]));
+      // console.log(solvedList);
+      // console.log(sovledResultData);
     }
   };
 

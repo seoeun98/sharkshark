@@ -17,10 +17,10 @@ class getUser(BaseModel):
         orm_mode = True
 
 class updateUser(BaseModel):
-    pw: str
-    git:str
-    token: str
-    dir:str
+    pw: Optional[str] = None
+    git: Optional[str] = None
+    token: Optional[str] = None
+    dir: Optional[str] = None
 
 
 class Rival(BaseModel):
@@ -40,10 +40,6 @@ class Problem(BaseModel):
 class Output(BaseModel) :
     msg: Optional[str] = None
     access_token: Optional[str] = None
-
-class Period(BaseModel) :
-    startDate: datetime.date
-    endDate: datetime.date
 
 class proCntPerDay(BaseModel):
     proCnt:int

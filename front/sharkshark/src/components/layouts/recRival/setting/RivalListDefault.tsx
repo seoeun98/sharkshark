@@ -25,11 +25,11 @@ export const RivalListDefault = () => {
           <ColorText>{getUserID()}</ColorText>
           <Box>님의 라이벌 목록</Box>
         </HStack>
-        <Button variant="secondary" size="csm" borderRadius="10px" onClick={movePage}>
+        {/* <Button variant="secondary" size="csm" borderRadius="10px" onClick={movePage}>
           <Link to="/data/chart">
-            <ColorText>라이벌 실력 분석 통계</ColorText>
+            <ColorText>유사 사용자 분석 통계</ColorText>
           </Link>
-        </Button>
+        </Button> */}
       </HStack>
 
       <Box fontSize="14px" mb="6vh" fontWeight={subtitlefw} color={subtitleColor}>

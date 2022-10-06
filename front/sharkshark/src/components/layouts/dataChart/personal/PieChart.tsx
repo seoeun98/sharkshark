@@ -5,7 +5,6 @@ import { ColorText } from '../../../common/ColorText';
 
 export const PieChart = () => {
   const wrongTypeInfo = useSelector((state: any) => state.DataChartReducer.wrongTypeInfo);
-  console.log(wrongTypeInfo);
   const series = [
     wrongTypeInfo.wrong_answer,
     wrongTypeInfo.over_memory,
@@ -25,30 +24,23 @@ export const PieChart = () => {
     '컴파일 에러',
   ];
   let options = {
+    labels: labels,
     fill: {
       type: 'gradient',
+      opacity: 0.5,
+      strokeColor: '#0BC5EA',
+      strokeWidth: 0,
     },
-    plotOptions: {
-      title: {
-        text: '이벤트별 통계',
-        align: 'center',
+    legend: {
+      labels: {
+        colors: ['#ADB5BD'],
       },
+    },
+
+    plotOptions: {
       pie: {
         donut: {
-          labels: {
-            show: true,
-            total: {
-              showAlways: false,
-              show: false,
-              fontSize: '12px',
-              color: 'red',
-            },
-            value: {
-              fontSize: '22px',
-              show: true,
-              color: '#9DECF9',
-            },
-          },
+          labels: {},
         },
       },
       tooltip: {
@@ -63,12 +55,13 @@ export const PieChart = () => {
         pos="absolute"
         mt={-6}
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        bg={useColorModeValue('nuetral.0', 'black')}
+        bg={useColorModeValue('white', 'black')}
         py={2}
         px={8}
         borderRadius="8px"
         fontWeight="500"
         fontSize="18px"
+        boxShadow="base"
       >
         <ColorText>주요 오답 유형</ColorText>
       </Center>
@@ -78,7 +71,7 @@ export const PieChart = () => {
           series={series}
           labels={labels}
           options={options}
-          width="600"
+          width="500"
           height="300"
         />
       </Box>

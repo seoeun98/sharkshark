@@ -6,11 +6,12 @@ import math
 from requests import Session
 from sql_app.repository import rivalRepository
 from sql_app import models
-from sql_app.service import roadMap
+from sql_app.service import roadMap, crowling
 
-def get_probs_order_by_recent_solved(id: str, db: Session):
-    return db.query(models.solvedProblem).filter(models.solvedProblem.userId == id)\
-        .order_by(models.solvedProblem.solvedDate.desc()).all()
+def get_probs_order_by_recent_solved(id: str, db: Session):    
+    # return db.query(models.solvedProblem).filter(models.solvedProblem.userId == id)\
+    #     .order_by(models.solvedProblem.solvedDate.desc()).all()
+    return crowling.lately_solved_problem_seq_crawling(id)
 
 # 티어 상승 로드맵을 가져온다
 def get_roadMap(userId: str, db: Session):
@@ -73,7 +74,7 @@ def get_major_category_avg(userId: str, db: Session):
 # 기간별 문제 풀이 조회
 def get_period_problem(userId: str, db: Session):
     cnt_per_day = get_probs_order_by_recent_solved(userId, db)
-
+    
     last_day = int(cnt_per_day[0].__dict__['solvedDate'].strftime('%Y%m%d'))
     first_day = int(cnt_per_day[-1].__dict__['solvedDate'].strftime('%Y%m%d'))
 
@@ -89,7 +90,10 @@ def get_level_avg(userId: str, db: Session):
     rec_rivals = db.query(models.rec_rival).filter(models.rec_rival.userId == userId).first().__dict__
     rec_rival_list = rec_rivals['rivalIds'].split(',')
 
-    solved_pb_list = db.query(models.solvedProblem).filter(models.solvedProblem.userId.in_(rec_rival_list)).all()
+    # solved_pb_list = db.query(models.solvedProblem).filter(models.solvedProblem.userId.in_(rec_rival_list)).all()
+    solved_pb_list = []
+    for one in rec_rival_list:
+        solved_pb_list += crowling.lately_solved_problem_seq_crawling(one)
 
     pb_no_list = []
     for one in solved_pb_list:
@@ -97,7 +101,7 @@ def get_level_avg(userId: str, db: Session):
 
     pb_no_set = set(pb_no_list)
     
-    pb_list = db.query(models.problem.no, models.problem.title, models.problem.level).filter(models.problem.no.in_(pb_no_set)).limit(10).all()
+    pb_list = db.query(models.problem.no, models.problem.title, models.problem.level).filter(models.problem.no.in_(pb_no_set)).all()
     
     pb_lv_list = []
     for one in pb_list:
@@ -115,7 +119,8 @@ def get_pb_per_week(userId: str, db: Session):
 
     res_list = []
     for one in rec_rival_list:
-        rival_probs = db.query(models.solvedProblem).filter(models.solvedProblem.userId == one).order_by(models.solvedProblem.solvedDate).all()
+        # rival_probs = db.query(models.solvedProblem).filter(models.solvedProblem.userId == one).order_by(models.solvedProblem.solvedDate).all()
+        rival_probs = crowling.lately_solved_problem_seq_crawling(one)
         recent_date = datetime.strptime(str(rival_probs[-1].solvedDate), "%Y-%m-%d %H:%M:%S").date()
         last_date = datetime.strptime(str(rival_probs[0].solvedDate), "%Y-%m-%d %H:%M:%S").date() 
         res_list.append({"userId" : one, "pb_per_week" : round(7 * len(rival_probs) / (abs((recent_date - last_date).days) + 1), 2)})

@@ -28,7 +28,10 @@ def divide(list: list):
         i += 1
         cnt += 1
 
-        if i == round(len(list)/4) or cnt == len(list):
+        if len(result_list) > 9:
+            result_list[9] = deepcopy(divide_list)
+
+        if i == round(len(list)/10):
             i = 0
             result_list.append(deepcopy(divide_list))
             divide_list.clear()
@@ -77,14 +80,14 @@ def tag_prob_cnt(list: list, db: Session):
 
 
 def get_probs_aver(first_aver: list):
-    second_aver = [0, 0, 0, 0, 0]
+    second_aver = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     for first in first_aver:
-        while len(first) < 5:
+        while len(first) < 10:
             first.append(0)
 
-        for i in range(0, 5):
+        for i in range(0, 10):
             second_aver[i] += first[i] / 6
-        for i in range(0, 5):
+        for i in range(0, 10):
             second_aver[i] = round(second_aver[i], 1)
 
     return second_aver;

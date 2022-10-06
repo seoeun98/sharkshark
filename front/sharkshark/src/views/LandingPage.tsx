@@ -49,7 +49,8 @@ export const LandingPage = () => {
               <Image
                 src="/assets/landing/background_circle2.svg"
                 pos="absolute"
-                top={150}
+                top={220}
+                w={1200}
                 right={0}
               />
               <VStack spacing={32}>
@@ -91,12 +92,11 @@ export const LandingPage = () => {
             </Center>
             <Center
               m={0}
-              data-aos="fade-up"
               h="300px"
               w="100%"
               bgGradient="linear(to-r, primary.purple0,primary.cyan50)"
             >
-              <VStack fontSize="18px" color="white">
+              <VStack fontSize="18px" color="white" data-aos="fade-up">
                 <Center>
                   코딩테스트를 막힘없이{' '}
                   <Text fontWeight="700" fontSize="20px" color="#E2EAFF">

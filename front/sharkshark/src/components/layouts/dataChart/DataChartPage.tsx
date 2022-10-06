@@ -17,27 +17,31 @@ import {
   setWrongTypeInfo,
 } from '../../../reducers/DataChartReducer';
 import { HeatmapChart } from './personal/HeatmapChart';
+import { getRivalInfoAPI } from '../../../api/auth/rival';
+import { setUserInfo } from '../../../reducers/rivalAPIReducer';
 
 const DataChartPage = () => {
   const userInfo = useSelector((state: any) => state.rivalAPIReducer.userInfo);
   const [value, setValue] = useState('0vh');
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchData = async () => {
+    dispatch(setUserInfo(await getRivalInfoAPI(getUserID())));
     let width = 17;
     let percent = userInfo.exp / (userInfo.exp + 20000);
     let value = String(percent * width);
     setValue(value + 'vh');
+
     let userTagInfo = await getTagDataAPI(getUserID());
     dispatch(setUserTagInfo(userTagInfo));
     dispatch(setSolvedTermInfo(await getSolveTermDataAPI()));
     dispatch(setWrongTypeInfo(await getWrongTypeDataAPI()));
   };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <VStack spacing={16}>
@@ -46,7 +50,7 @@ const DataChartPage = () => {
         <Center
           borderRadius="10px"
           py="6vh"
-          w="60vw"
+          w="64vw"
           bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
           boxShadow="inset 0 5px 5px rgba(0,0,0,.3)"
         >
@@ -58,7 +62,13 @@ const DataChartPage = () => {
           />
         </Center>
         {/* EXP */}
-        <Center w="40vw" h="12vh" bg={useColorModeValue('neutral.0', 'black')} borderRadius="10px">
+        <Center
+          boxShadow="base"
+          w="40vw"
+          h="12vh"
+          bg={useColorModeValue('neutral.0', 'black')}
+          borderRadius="10px"
+        >
           <Flex flexDirection="column">
             <Flex justifyContent="space-between" px="2" mb={4}>
               <Text
@@ -93,25 +103,26 @@ const DataChartPage = () => {
           </Flex>
         </Center>
       </VStack>
-      <HStack spacing={4}>
+
+      <Center>
         {/* 사소한 유저 정보와 레이팅 세부사항 */}
-        <VStack
-          spacing={8}
-          bg={useColorModeValue('neutral.0', 'neutral.500')}
-          borderRadius="12px"
-          px={4}
-          py={16}
-        >
+        <VStack spacing={6} h="320px" mr={8}>
           <HStack spacing={4}>
             {/* solvedCount */}
-            <Center bg={useColorModeValue('white', 'black')} borderRadius="10px" py="2vh" w="8vw">
+            <Center
+              bg={useColorModeValue('neutral.0', 'black')}
+              borderRadius="10px"
+              py="2vh"
+              w="6vw"
+              boxShadow="base"
+            >
               <VStack spacing={1}>
                 <Text
                   fontSize="16px"
                   fontWeight="600"
                   color={useColorModeValue('neutral.700', 'neutral.50')}
                 >
-                  해결한 문제
+                  해결 문제
                 </Text>
                 <Box fontSize="20px" fontWeight="800">
                   <ColorText>{userInfo.solvedCount}</ColorText>
@@ -121,12 +132,13 @@ const DataChartPage = () => {
 
             {/* rank*/}
             <Center
+              boxShadow="base"
               mx="8px"
-              bg={useColorModeValue('white', 'black')}
+              bg={useColorModeValue('neutral.0', 'black')}
               borderRadius="10px"
               py="2vh"
               px="2vw"
-              w="8vw"
+              w="6vw"
             >
               <VStack spacing={1}>
                 <Text
@@ -143,13 +155,14 @@ const DataChartPage = () => {
               </VStack>
             </Center>
 
-            {/* 레이팅 */}
+            {/* rating */}
             <Center
-              bg={useColorModeValue('white', 'black')}
+              boxShadow="base"
+              bg={useColorModeValue('neutral.0', 'black')}
               borderRadius="10px"
               py="2vh"
-              px="2vw"
-              w="8vw"
+              px="1vw"
+              w="6vw"
             >
               <VStack spacing={1}>
                 <Text
@@ -172,7 +185,7 @@ const DataChartPage = () => {
             <Box
               bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
               py={1}
-              px={4}
+              px={6}
               borderRadius="6px"
               pos="absolute"
               color="white"
@@ -180,63 +193,94 @@ const DataChartPage = () => {
             >
               <Center>RATING</Center>{' '}
             </Box>
-            <Center
-              mx="8px"
-              bg={useColorModeValue('white', 'black')}
+            <Box
+              w="20vw"
+              h="188px"
               borderRadius="10px"
-              p="8px"
-              w="26vw"
-              h="14vh"
-              pt={8}
+              boxShadow="base"
+              bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
             >
-              <HStack spacing={16}>
-                <VStack spacing={1}>
-                  <Text
-                    fontSize="16px"
-                    fontWeight="600"
-                    color={useColorModeValue('neutral.700', 'neutral.50')}
-                  >
-                    문제 난이도 합
-                  </Text>
-                  <Box fontSize="20px" fontWeight="800">
-                    <ColorText>{userInfo.ratingByProblemsSum}</ColorText>
-                  </Box>
-                </VStack>
-                <VStack spacing={1}>
-                  <Text
-                    fontSize="16px"
-                    fontWeight="600"
-                    color={useColorModeValue('neutral.700', 'neutral.50')}
-                  >
-                    클래스
-                  </Text>
-                  <Box fontSize="20px" fontWeight="800">
-                    <ColorText>{userInfo.ratingByClass}</ColorText>
-                  </Box>
-                </VStack>
-                <VStack spacing={1}>
-                  <Text
-                    fontSize="16px"
-                    fontWeight="600"
-                    color={useColorModeValue('neutral.700', 'neutral.50')}
-                  >
-                    해결 문제 수
-                  </Text>
-                  <Box fontSize="20px" fontWeight="800">
-                    <ColorText>{userInfo.ratingBySolvedCount}</ColorText>
-                  </Box>
-                </VStack>
-              </HStack>
-            </Center>
+              <Center
+                bg={useColorModeValue('neutral.0', 'black')}
+                borderRadius="10px"
+                p="12px"
+                w="20vw"
+                h="136px"
+                pt={8}
+              >
+                <HStack spacing={12}>
+                  <VStack spacing={1}>
+                    <Text
+                      fontSize="16px"
+                      fontWeight="600"
+                      color={useColorModeValue('neutral.700', 'neutral.50')}
+                    >
+                      문제 난이도 합
+                    </Text>
+                    <Box fontSize="20px" fontWeight="800">
+                      <ColorText>{userInfo.ratingByProblemsSum}</ColorText>
+                    </Box>
+                  </VStack>
+                  <VStack spacing={1}>
+                    <Text
+                      fontSize="16px"
+                      fontWeight="600"
+                      color={useColorModeValue('neutral.700', 'neutral.50')}
+                    >
+                      클래스
+                    </Text>
+                    <Box fontSize="20px" fontWeight="800">
+                      <ColorText>{userInfo.ratingByClass}</ColorText>
+                    </Box>
+                  </VStack>
+                  <VStack spacing={1}>
+                    <Text
+                      fontSize="16px"
+                      fontWeight="600"
+                      color={useColorModeValue('neutral.700', 'neutral.50')}
+                    >
+                      해결 문제 수
+                    </Text>
+                    <Box fontSize="20px" fontWeight="800">
+                      <ColorText>{userInfo.ratingBySolvedCount}</ColorText>
+                    </Box>
+                  </VStack>
+                </HStack>
+              </Center>
+            </Box>
           </VStack>
         </VStack>
-        <VStack bg={useColorModeValue('neutral.0', 'neutral.500')} borderRadius="12px" w="30vw">
+        {/* 기간 별 푼 문제 */}
+        <VStack
+          bg={useColorModeValue('neutral.0', 'neutral.500')}
+          borderRadius="12px"
+          w="40vw"
+          h="320px"
+          boxShadow="base"
+        >
+          <HeatmapChart />
+        </VStack>
+      </Center>
+      <HStack spacing={8}>
+        <VStack
+          boxShadow="base"
+          bg={useColorModeValue('neutral.0', 'neutral.500')}
+          borderRadius="12px"
+          w="30vw"
+          h="380px"
+        >
+          <PieChart />
+        </VStack>
+        {/* 알고리즘 유형별 분석 */}
+        <VStack
+          boxShadow="base"
+          bg={useColorModeValue('neutral.0', 'neutral.500')}
+          borderRadius="12px"
+          w="30vw"
+          h="380px"
+        >
           <TagChart />
         </VStack>
-      </HStack>
-      <HStack>
-        <PieChart />
-        <HeatmapChart />
       </HStack>
     </VStack>
   );

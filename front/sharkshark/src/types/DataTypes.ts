@@ -1,5 +1,3 @@
-import { string } from 'prop-types';
-
 export type Problem = {
   no: number;
   title: string;
@@ -112,4 +110,15 @@ export type wrongInfo = {
 
 export type termSolving = {
   string?: string;
+};
+
+export type simpleProblem = {
+  no: number;
+  title: string;
+  level: number;
+};
+
+export type userPerProblem = {
+  userId: string;
+  pb_per_week: number;
 };

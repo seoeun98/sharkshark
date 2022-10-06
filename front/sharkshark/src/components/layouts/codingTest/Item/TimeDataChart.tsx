@@ -96,7 +96,7 @@ const TimeDataChart = (props: { problem: userSolvedData[]; userInfo: userSolvedD
         fontWeight="500"
         fontSize="18px"
       >
-        <ColorText>메모리 비교 분석</ColorText>
+        <ColorText>실행 시간 비교 분석</ColorText>
       </Center>
       <ApexCharts type="bar" series={series} options={options} width="500" height="300" />
     </VStack>

@@ -70,9 +70,8 @@ def check_message(id: str, msg: str, db : Session) :
     return -1
 
 
-
-def update_user(user: schemas.updateUser, db: Session):
-    db_user = db.query(models.User).filter(models.User.id == user.id)
+def update_user(user_id: str, user: schemas.updateUser, db: Session):
+    db_user = db.query(models.User).filter(models.User.id == user_id)
 
     if db_user.first():
         if user.pw:
@@ -102,3 +101,22 @@ def get_all_user(db: Session):
     if not db_users:
         return None
     else: return db_users
+
+def get_bjuser_by_id(id: str, db: Session):
+    db_bjuser = db.query(models.BJ_user).filter(models.BJ_user.userId == id).first()
+
+    if db_bjuser:
+        return db_bjuser
+    else: return 0
+
+def delete_user_msg(id: str, db : Session):
+    db_msg = db.query(models.userMsg).filter(models.userMsg.userId == id).first()
+
+    if db_msg:
+        db.delete(db_msg)
+        db.commit()
+        return True
+
+    raise False
+    
+        

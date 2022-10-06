@@ -11,13 +11,13 @@ import { QuizTableItem } from './QuizTableItem';
 export const QuizMenuTag = () => {
   const Tags = [
     '수학 math',
-    '구현 impl',
+    '구현 implementation',
     '그리디 greedy',
     '문자열 string',
-    '자료구조 ds',
-    '그래프 graph',
+    '자료구조 data_structures',
+    '그래프 graphs',
     '동적프로그래밍 dp',
-    '브루트포스 bruteforce',
+    '브루트포스 bruteforcing',
   ];
 
   const [active, setActive] = useState(0);

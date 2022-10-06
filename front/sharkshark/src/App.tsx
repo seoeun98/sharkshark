@@ -4,16 +4,17 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { LandingPage } from './views/LandingPage';
 import { RecQuizPage } from './views/RecQuizPage';
 import { RecUserPage } from './views/RecUserPage';
-import { DataChartPage } from './views/DataChartPage';
+import { DataChartMainPage } from './views/DataChartMainPage';
 import { Layout } from './views/Layout';
 import { CodeTestPage } from './views/CodeTestPage';
 import { BloggingPage } from './views/BloggingPage';
-import { DataRivalPage } from './views/DataRivalPage';
-import { DataRoadPage } from './views/DataRoadPage';
 import { UserLoginPage } from './views/UserLoginPage';
 import { UserRegisterPage } from './views/UserRegisterPage';
-import { SettingPage } from './views/SettingPage';
+import { ResetPasswordPage } from './views/ResetPasswordPage';
+import { ModifyPasswordPage } from './views/ModifyPasswordPage';
 import customTheme from './theme/index';
+import { getUserID } from './api/common';
+import { LandingPageAfterLogin } from './views/LandingPageAfterLogin';
 
 export const App = () => (
   <ChakraProvider theme={customTheme}>
@@ -24,13 +25,12 @@ export const App = () => (
         <Route path="recommend/user" element={<RecUserPage />} />
         <Route path="codingtest" element={<CodeTestPage />} />
         <Route path="blogging" element={<BloggingPage />} />
-        <Route path="data/chart" element={<DataChartPage />} />
-        <Route path="data/road" element={<DataRoadPage />} />
-        <Route path="data/rival" element={<DataRivalPage />} />
-        <Route path="setting" element={<SettingPage />} />
+        <Route path="data/chart" element={<DataChartMainPage />} />
+        <Route path="setting" element={<ModifyPasswordPage />} />
         <Route index element={<Navigate to="home" replace />} />
       </Route>
       <Route path="login" element={<UserLoginPage />} />
+      <Route path="password-reset" element={<ResetPasswordPage />} />
       <Route path="register" element={<UserRegisterPage />} />
     </Routes>
   </ChakraProvider>

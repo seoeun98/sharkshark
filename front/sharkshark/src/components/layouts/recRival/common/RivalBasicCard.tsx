@@ -11,12 +11,14 @@ import {
   Spacer,
   Flex,
 } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createRivalAPI, deleteRivalAPI } from '../../../../api/auth/rival';
 import {
   setClickedRivalId,
   setCompStatus,
+  setRecRivalList,
   setRivalInfo,
+  setRivalList,
 } from '../../../../reducers/rivalAPIReducer';
 import { rival } from '../../../../types/DataTypes';
 import { ColorText } from '../../../common/ColorText';
@@ -26,6 +28,8 @@ export const RivalBasicCard = (props: { RivalInfo: rival; Rectype: string }) => 
   const dispatch = useDispatch();
   const { RivalInfo, Rectype } = props;
   const { isOpen, onToggle } = useDisclosure();
+  const rivalList = useSelector((state: any) => state.rivalAPIReducer.rivalList);
+  const rivalRecList = useSelector((state: any) => state.rivalAPIReducer.rivalRecList);
   let children = {};
   if (isOpen) {
     children = { bgGradient: 'linear(to-r, primary.cyan50, primary.purple0)' };
@@ -182,7 +186,17 @@ export const RivalBasicCard = (props: { RivalInfo: rival; Rectype: string }) => 
               bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
               bgClip="text"
               boxShadow="base"
-              onClick={() => createRivalAPI(RivalInfo.userId)}
+              onClick={() => {
+                createRivalAPI(RivalInfo.userId);
+                dispatch(setRivalList([...rivalList, RivalInfo]));
+                let rivalRecNewList: any[] = [];
+                for (let rival of rivalRecList) {
+                  if (rival !== RivalInfo) {
+                    rivalRecNewList = [...rivalRecNewList, rival];
+                  }
+                }
+                dispatch(setRecRivalList(rivalRecNewList));
+              }}
             >
               라이벌 등록
             </Button>
@@ -198,7 +212,17 @@ export const RivalBasicCard = (props: { RivalInfo: rival; Rectype: string }) => 
               bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
               bgClip="text"
               boxShadow="base"
-              onClick={() => deleteRivalAPI(RivalInfo.userId)}
+              onClick={() => {
+                deleteRivalAPI(RivalInfo.userId);
+                let rivalNewList: any[] = [];
+                for (let rival of rivalList) {
+                  if (rival !== RivalInfo) {
+                    rivalNewList = [...rivalNewList, rival];
+                  }
+                }
+                dispatch(setRivalList(rivalNewList));
+                dispatch(setRecRivalList([...rivalRecList, RivalInfo]));
+              }}
             >
               라이벌 해지
             </Button>

@@ -10,12 +10,14 @@ import {
   HStack,
   Button,
 } from '@chakra-ui/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createRivalAPI } from '../../../../api/auth/rival';
 import {
   setClickedRivalId,
   setCompStatus,
+  setRecRivalList,
   setRivalInfo,
+  setRivalList,
 } from '../../../../reducers/rivalAPIReducer';
 import { rival } from '../../../../types/DataTypes';
 import { ColorText } from '../../../common/ColorText';
@@ -26,6 +28,8 @@ export const RivalLongCard = (props: { RivalInfo: rival }) => {
   const { RivalInfo } = props;
   const { isOpen, onToggle } = useDisclosure();
   const bgcolor = useColorModeValue('neutral.25', 'neutral.500');
+  const rivalList = useSelector((state: any) => state.rivalAPIReducer.rivalList);
+  const rivalRecList = useSelector((state: any) => state.rivalAPIReducer.rivalRecList);
 
   return (
     <Box
@@ -60,7 +64,17 @@ export const RivalLongCard = (props: { RivalInfo: rival }) => {
               bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
               bgClip="text"
               boxShadow="base"
-              onClick={() => createRivalAPI(RivalInfo.userId)}
+              onClick={() => {
+                createRivalAPI(RivalInfo.userId);
+                dispatch(setRivalList([...rivalList, RivalInfo]));
+                let rivalRecNewList: any[] = [];
+                for (let rival of rivalRecList) {
+                  if (rival !== RivalInfo) {
+                    rivalRecNewList = [...rivalRecNewList, rival];
+                  }
+                }
+                dispatch(setRecRivalList(rivalRecNewList));
+              }}
             >
               라이벌 등록
             </Button>

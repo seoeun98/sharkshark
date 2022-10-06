@@ -11,11 +11,12 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
-import { createRivalAPI } from '../../../../api/auth/rival';
+import { createRivalAPI, getRivalAPI } from '../../../../api/auth/rival';
 import {
   setClickedRivalId,
   setCompStatus,
   setRivalInfo,
+  setRivalList,
 } from '../../../../reducers/rivalAPIReducer';
 import { rival } from '../../../../types/DataTypes';
 import { ColorText } from '../../../common/ColorText';
@@ -181,7 +182,10 @@ export const RivalCarouselCard = (props: { RivalInfo: rival; active: boolean }) 
             bgGradient="linear(to-r, primary.cyan50, primary.purple0)"
             bgClip="text"
             boxShadow="base"
-            onClick={() => createRivalAPI(RivalInfo.userId)}
+            onClick={async () => {
+              createRivalAPI(RivalInfo.userId);
+              dispatch(setRivalList(await getRivalAPI()));
+            }}
           >
             라이벌 등록
           </Button>

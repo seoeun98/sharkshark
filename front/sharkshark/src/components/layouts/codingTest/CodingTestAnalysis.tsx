@@ -1,4 +1,4 @@
-import { Box, Flex, useColorModeValue } from '@chakra-ui/react';
+import { Box, Center, Flex, useColorModeValue } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { getUserID } from '../../../api/common';
 import MemoryDataChart from './Item/MemoryDataChart';
@@ -11,8 +11,6 @@ const CodingTestAnalysis = () => {
   const solvedList = useSelector((state: any) => state.CTReducer.solvedList);
   // 문제 결과 데이터
   const sovledResultData = useSelector((state: any) => state.CTReducer.sovledResultData);
-  console.log(solvedList);
-  console.log(sovledResultData);
   const titlefw = useColorModeValue(700, 500);
   const subtitlefw = useColorModeValue(500, 300);
   const subtitleColor = useColorModeValue('neutral.700', 'neutral.50');
@@ -45,11 +43,12 @@ const CodingTestAnalysis = () => {
               <Box mb={12}>
                 <ProblemItemForAnalysis userInfo={item.userInfo} problem={solvedList[index]} />
               </Box>
-
-              <Flex w="50vw">
-                <MemoryDataChart problem={item.memory_sort_list} userInfo={item.userInfo} />
-                <TimeDataChart problem={item.time_sort_list} userInfo={item.userInfo} />
-              </Flex>
+              <Center>
+                <Flex w="50vw">
+                  <MemoryDataChart problem={item.memory_sort_list} userInfo={item.userInfo} />
+                  <TimeDataChart problem={item.time_sort_list} userInfo={item.userInfo} />
+                </Flex>
+              </Center>
             </Box>
           ),
         )}

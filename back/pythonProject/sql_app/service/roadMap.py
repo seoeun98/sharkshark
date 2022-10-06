@@ -1,4 +1,5 @@
 from requests import Session
+from datetime import datetime 
 
 from sql_app import models
 from copy import deepcopy
@@ -27,7 +28,10 @@ def divide(list: list):
         i += 1
         cnt += 1
 
-        if i == round(len(list)/4) or cnt == len(list):
+        if len(result_list) > 9:
+            result_list[9] = deepcopy(divide_list)
+
+        if i == round(len(list)/10):
             i = 0
             result_list.append(deepcopy(divide_list))
             divide_list.clear()
@@ -76,14 +80,14 @@ def tag_prob_cnt(list: list, db: Session):
 
 
 def get_probs_aver(first_aver: list):
-    second_aver = [0, 0, 0, 0, 0]
+    second_aver = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     for first in first_aver:
-        while len(first) < 5:
+        while len(first) < 10:
             first.append(0)
 
-        for i in range(0, 5):
+        for i in range(0, 10):
             second_aver[i] += first[i] / 6
-        for i in range(0, 5):
+        for i in range(0, 10):
             second_aver[i] = round(second_aver[i], 1)
 
     return second_aver;
@@ -128,7 +132,9 @@ def get_period_problem_cnt(first_day: int, last_day: int, cnt_per_day: list):
             for test in cnt_per_day:
                 if int(test.__dict__['solvedDate'].strftime('%Y%m%d')) == i:
                     cnt += 1
-            list[i] = cnt
+            
+            date = str(i)
+            list[date[:4] + '-' + date[4:6] + '-' + date[6:8]] = cnt
     return list
 
 def get_recommend_users_major_cate_avg(list: list):
@@ -147,13 +153,22 @@ def get_recommend_users_major_cate_avg(list: list):
 
     size = len(list)
     res.userId = res.userId[:-1]
-    res.math /= size
-    res.implementation /= size
-    res.greedy /= size
-    res.string /= size
-    res.dataStructure /= size
-    res.graph /= size
-    res.dp /= size
-    res.bruteforce /= size
 
+    math = res.math / size
+    implementation = res.implementation / size
+    greedy = res.greedy / size
+    string = res.string / size
+    dataStructure = res.dataStructure / size
+    graph = res.graph / size
+    dp = res.dp / size
+    bruteforce = res.bruteforce / size
+
+    res.math = round(math, 1)
+    res.implementation = round(implementation, 1)
+    res.greedy = round(greedy, 1)
+    res.string = round(string, 1)
+    res.dataStructure = round(dataStructure, 1)
+    res.graph = round(graph, 1)
+    res.dp = round(dp, 1)
+    res.bruteforce = round(bruteforce, 1)
     return res

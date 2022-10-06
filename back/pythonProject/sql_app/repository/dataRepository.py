@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import numpy as np
+import math
 
 from requests import Session
 from sql_app.repository import rivalRepository
@@ -18,8 +19,9 @@ def get_roadMap(userId: str, db: Session):
     result_list = []
     for one in user_list_a:
         result_list.append(one.__dict__)
-
     user_divided_list = roadMap.divide(result_list)
+
+    print(user_divided_list)
     user_aver_list = roadMap.get_aver_rank(user_divided_list, db)
     user_tags_cnt = roadMap.tag_prob_cnt(user_divided_list, db)
 
@@ -95,14 +97,14 @@ def get_level_avg(userId: str, db: Session):
         pb_no_list.append(one.probNo)
 
     pb_no_set = set(pb_no_list)
-
-    pb_list = db.query(models.problem.no, models.problem.title, models.problem.level).filter(models.problem.no.in_(pb_no_set)).all()
+    
+    pb_list = db.query(models.problem.no, models.problem.title, models.problem.level).filter(models.problem.no.in_(pb_no_set)).limit(10).all()
     
     pb_lv_list = []
     for one in pb_list:
         pb_lv_list.append(one.level)    
 
-    lv_avg = np.mean(pb_lv_list)
+    lv_avg = round(np.mean(pb_lv_list), 1)
 
     return pb_list, lv_avg
 
@@ -117,6 +119,6 @@ def get_pb_per_week(userId: str, db: Session):
         rival_probs = db.query(models.solvedProblem).filter(models.solvedProblem.userId == one).order_by(models.solvedProblem.solvedDate).all()
         recent_date = datetime.strptime(str(rival_probs[-1].solvedDate), "%Y-%m-%d %H:%M:%S").date()
         last_date = datetime.strptime(str(rival_probs[0].solvedDate), "%Y-%m-%d %H:%M:%S").date() 
-        res_list.append({"userId" : one, "pb_per_week" : 7 * len(rival_probs) / (abs((recent_date - last_date).days) + 1)})
+        res_list.append({"userId" : one, "pb_per_week" : round(7 * len(rival_probs) / (abs((recent_date - last_date).days) + 1), 2)})
 
     return res_list

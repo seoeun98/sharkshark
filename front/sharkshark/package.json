@@ -16,6 +16,7 @@
     "@types/react": "^18.0.19",
     "@types/react-dom": "^18.0.6",
     "@types/uuid": "^8.3.4",
+    "aos": "^2.3.4",
     "apexcharts": "^3.35.5",
     "axios": "^0.27.2",
     "chart.js": "^3.9.1",
@@ -77,6 +78,7 @@
     "@storybook/preset-create-react-app": "^4.1.2",
     "@storybook/react": "^6.5.12",
     "@storybook/testing-library": "^0.0.13",
+    "@types/aos": "^3.0.4",
     "babel-plugin-named-exports-order": "^0.0.2",
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
@@ -85,5 +87,5 @@
     "prop-types": "^15.8.1",
     "webpack": "^5.74.0"
   },
-  "proxy": "https://j7b205.p.ssafy.io"
+  "proxy": "https://j7b205.p.ssafy.io/"
 }

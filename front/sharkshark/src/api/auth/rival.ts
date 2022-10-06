@@ -1,4 +1,4 @@
-import { rival } from '../../types/DataTypes';
+import { Problem, rival } from '../../types/DataTypes';
 import { authAxios } from '../common';
 
 // 추천 사용자 목록 조회
@@ -56,6 +56,19 @@ export const deleteRivalAPI = (id: string) => {
       console.log(err);
       alert('라이벌 삭제 실패');
     });
+};
+// 라이벌들의 최근 5문제
+export const getRivalRecentAPI = async () => {
+  let rivalRecent: Problem[] = [];
+  await authAxios
+    .get(`/rival/recent`)
+    .then(res => {
+      rivalRecent = res.data;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  return rivalRecent;
 };
 
 // 라이벌 정보 조회

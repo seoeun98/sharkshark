@@ -1,5 +1,5 @@
-import { Center, useColorModeValue, VStack } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { Center, Spinner, useColorModeValue, VStack } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   getAverageProblemAPI,
@@ -26,39 +26,48 @@ export const DataRivalPage = () => {
     dispatch(setAveragLevel(await getAverageProblemAPI()));
     dispatch(setWrongTypeInfo(await getLevelAvgAPI()));
     dispatch(setAveragCategory(await getCategoryAvgAPI()));
+    setLoading(false);
   };
+
+  const [loading, setLoading] = useState(true);
+
   return (
-    <VStack spacing={20}>
-      <Center>
-        <VStack
-          boxShadow="base"
-          bg={useColorModeValue('neutral.0', 'neutral.500')}
-          borderRadius="12px"
-          w="30vw"
-          h="600px"
-          mr={8}
-        >
-          <SolvedLevel />
-        </VStack>
-        <VStack
-          boxShadow="base"
-          bg={useColorModeValue('neutral.0', 'neutral.500')}
-          borderRadius="12px"
-          w="30vw"
-          h="600px"
-        >
-          <SovledNum />
-        </VStack>
+    <>
+      <Center w="60vw">
+        <Spinner display={loading ? '' : 'none'} boxSize="64px" thickness="4px" />
       </Center>
-      <VStack
-        boxShadow="base"
-        bg={useColorModeValue('neutral.0', 'neutral.500')}
-        borderRadius="12px"
-        w="60vw"
-        h="500px"
-      >
-        <AvgTag />
+      <VStack spacing={20} display={loading ? 'none' : ''}>
+        <Center>
+          <VStack
+            boxShadow="base"
+            bg={useColorModeValue('neutral.0', 'neutral.500')}
+            borderRadius="12px"
+            w="30vw"
+            h="600px"
+            mr={8}
+          >
+            <SolvedLevel />
+          </VStack>
+          <VStack
+            boxShadow="base"
+            bg={useColorModeValue('neutral.0', 'neutral.500')}
+            borderRadius="12px"
+            w="30vw"
+            h="600px"
+          >
+            <SovledNum />
+          </VStack>
+        </Center>
+        <VStack
+          boxShadow="base"
+          bg={useColorModeValue('neutral.0', 'neutral.500')}
+          borderRadius="12px"
+          w="60vw"
+          h="500px"
+        >
+          <AvgTag />
+        </VStack>
       </VStack>
-    </VStack>
+    </>
   );
 };

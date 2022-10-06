@@ -20,11 +20,7 @@ export const App = () => (
   <ChakraProvider theme={customTheme}>
     <Routes>
       <Route path="/*" element={<Layout />}>
-        {getUserID() !== '' ? (
-          <Route path="home" element={<LandingPageAfterLogin />} />
-        ) : (
-          <Route path="home" element={<LandingPage />} />
-        )}
+        <Route path="home" element={<LandingPage />} />
         <Route path="recommend/quiz" element={<RecQuizPage />} />
         <Route path="recommend/user" element={<RecUserPage />} />
         <Route path="codingtest" element={<CodeTestPage />} />

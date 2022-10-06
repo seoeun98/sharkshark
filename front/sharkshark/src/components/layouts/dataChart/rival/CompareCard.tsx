@@ -18,7 +18,7 @@ const CompareCard = (props: { userInfo: rival }) => {
   return (
     <Box
       w="24vw"
-      h="56vh"
+      h="560px"
       borderRadius="10px"
       bg={useColorModeValue('neutral.0', 'black')}
       boxShadow="base"
@@ -155,7 +155,7 @@ const CompareCard = (props: { userInfo: rival }) => {
             borderRadius="10px"
             p="8px"
             w="20vw"
-            h="12vh"
+            h="120px"
             pt={8}
           >
             <HStack spacing={12}>

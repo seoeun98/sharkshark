@@ -1,22 +1,21 @@
-from typing import List
-
+from sql_app.repository import dataRepository
 from sqlalchemy.orm import Session
 from sql_app import models, schemas
 import random
 
-def probs_filter(id: str, prob_list: List , db: Session):
-    db_user_probs_list = db.query(models.solvedProblem).filter(models.solvedProblem.userId == id).all()
-    result_list = []
-
-    for prob_one in prob_list:
-        if not prob_one in db_user_probs_list:
-            result_list.append(prob_one)
-
-    return result_list
+# def probs_filter(id: str, prob_list: List , db: Session):
+#     db_user_probs_list = db.query(models.solvedProblem).filter(models.solvedProblem.userId == id).all()
+#     result_list = []
+#
+#     for prob_one in prob_list:
+#         if not prob_one in db_user_probs_list:
+#             result_list.append(prob_one)
+#
+#     return result_list
 
 def get_probs_by_rival(id: str, db: Session):
     prob_list = db.query(models.rec_problems).filter(models.rec_problems.userId == id).first().problems.split(',')
-    prob_list = probs_filter(id, prob_list, db)
+    # prob_list = probs_filter(id, prob_list, db)
     result_list = []
 
     if prob_list:
@@ -28,7 +27,7 @@ def get_probs_by_rival(id: str, db: Session):
 
 def get_probs_by_category(id: str, db: Session):
     prob_list = db.query(models.rec_problems_tag).filter(models.rec_problems_tag.userId == id).first().problems.split(',')
-    prob_list = probs_filter(id, prob_list, db)
+    # prob_list = probs_filter(id, prob_list, db)
     result_list = []
 
     for prob_no in prob_list:
@@ -39,6 +38,20 @@ def get_probs_by_category(id: str, db: Session):
 
 def get_probs_for_mock(id: str, db: Session):
     result_list = []
+
+    if id == 'webb':
+        prob1 = db.query(models.problem).filter(models.problem.no == 1000).first()
+        prob2 = db.query(models.problem).filter(models.problem.no == 1001).first()
+        prob3 = db.query(models.problem).filter(models.problem.no == 1002).first()
+        prob4 = db.query(models.problem).filter(models.problem.no == 1003).first()
+        prob5 = db.query(models.problem).filter(models.problem.no == 1004).first()
+        result_list.append(prob1)
+        result_list.append(prob2)
+        result_list.append(prob3)
+        result_list.append(prob4)
+        result_list.append(prob5)
+
+        return result_list
 
     probs_by_category = get_probs_by_category(id, db)
 

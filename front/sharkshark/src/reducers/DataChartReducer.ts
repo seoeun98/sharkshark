@@ -16,6 +16,9 @@ const DataChartReducer = createSlice({
     },
     wrongTypeInfo: {},
     solvedTermInfo: {},
+    averageProblem: [],
+    averageLevel: {},
+    averageCategory: {},
   },
   reducers: {
     setUserTagInfo(state, { payload: input }) {
@@ -27,8 +30,24 @@ const DataChartReducer = createSlice({
     setSolvedTermInfo(state, { payload: input }) {
       return { ...state, solvedTermInfo: input };
     },
+    setAverageProblem(state, { payload: input }) {
+      return { ...state, averageProblem: input };
+    },
+    setAveragLevel(state, { payload: input }) {
+      return { ...state, averageLevel: input };
+    },
+    setAveragCategory(state, { payload: input }) {
+      return { ...state, averageCategory: input };
+    },
   },
 });
 
-export const { setUserTagInfo, setWrongTypeInfo, setSolvedTermInfo } = DataChartReducer.actions;
+export const {
+  setUserTagInfo,
+  setWrongTypeInfo,
+  setSolvedTermInfo,
+  setAverageProblem,
+  setAveragLevel,
+  setAveragCategory,
+} = DataChartReducer.actions;
 export default DataChartReducer.reducer;

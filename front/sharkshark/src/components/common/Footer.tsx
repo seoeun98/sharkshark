@@ -46,8 +46,11 @@ const Footer = () => {
             bg={useColorModeValue('black', 'white')}
             _hover={{ w: '40px', h: '40px', boxShadow: 'dark-xl' }}
           >
-            <Image src="/assets/footer/gitlab.svg" w="24px" />
+            <Link href="https://lab.ssafy.com/s07-bigdata-recom-sub2/S07P22B205">
+              <Image src="/assets/footer/gitlab.svg" w="24px" />
+            </Link>
           </Center>
+
           <Center
             w="36px"
             h="36px"

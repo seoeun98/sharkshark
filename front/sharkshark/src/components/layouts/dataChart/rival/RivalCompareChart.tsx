@@ -15,20 +15,10 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { getTagDataAPI } from '../../../../api/auth/dataAnalysis';
 import { tagInfo } from '../../../../types/DataTypes';
-import {
-  Chart as ChartJS,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Radar } from 'react-chartjs-2';
+import ApexCharts from 'react-apexcharts';
 import { ColorText } from '../../../common/ColorText';
 import { setGoHome, setRegisted } from '../../../../reducers/rivalAPIReducer';
-
-ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
+import { getUserID } from '../../../../api/common';
 
 const RivalCompareChart = (props: { Rectype: string }) => {
   const { Rectype } = props;
@@ -79,62 +69,96 @@ const RivalCompareChart = (props: { Rectype: string }) => {
     fetchData();
   }, []);
 
-  const data = {
-    labels: [
-      '수학 math',
-      '구현 implementation',
-      '그리디 greedy',
-      '문자열 string',
-      '자료구조 data_structures',
-      '그래프 graphs',
-      '동적프로그래밍 dp',
-      '브루트포스 bruteforcing',
-    ],
-    datasets: [
-      {
-        label: 'User',
-        data: [
-          userTagInfo.math,
-          userTagInfo.implementation,
-          userTagInfo.greedy,
-          userTagInfo.string,
-          userTagInfo.dataStructure,
-          userTagInfo.graph,
-          userTagInfo.dp,
-          userTagInfo.bruteforce,
-        ],
-        fill: true,
-        backgroundColor: 'rgba(157, 236, 249, 0.6)',
-        borderColor: '#9DECF9',
-        pointBackgroundColor: '#9DECF9',
-        pointBorderColor: '#fff',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: '#9DECF9',
-        borderWidth: 1,
+  const series = [
+    {
+      name: '유사 사용자',
+      data: [
+        rivalTagInfo.math,
+        rivalTagInfo.implementation,
+        rivalTagInfo.greedy,
+        rivalTagInfo.string,
+        rivalTagInfo.dataStructure,
+        rivalTagInfo.graph,
+        rivalTagInfo.dp,
+        rivalTagInfo.bruteforce,
+      ],
+    },
+    {
+      name: getUserID(),
+      data: [
+        userTagInfo.math,
+        userTagInfo.implementation,
+        userTagInfo.greedy,
+        userTagInfo.string,
+        userTagInfo.dataStructure,
+        userTagInfo.graph,
+        userTagInfo.dp,
+        userTagInfo.bruteforce,
+      ],
+    },
+  ];
+  // 알고리즘 유형 별
+  let options = {
+    dataLabels: {
+      enabled: true,
+    },
+    legend: {
+      labels: {
+        colors: ['#ADB5BD'],
       },
-      {
-        label: 'Rival',
-        data: [
-          rivalTagInfo.math,
-          rivalTagInfo.implementation,
-          rivalTagInfo.greedy,
-          rivalTagInfo.string,
-          rivalTagInfo.dataStructure,
-          rivalTagInfo.graph,
-          rivalTagInfo.dp,
-          rivalTagInfo.bruteforce,
-        ],
-        fill: true,
-        backgroundColor: 'rgba(153, 123, 237, 0.6)',
-        borderColor: '#997BED',
-        pointBackgroundColor: '#997BED',
-        pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgb(54, 162, 235)',
-        borderWidth: 1,
+    },
+    plotOptions: {
+      radar: {
+        size: 140,
+        polygons: {
+          strokeColors: ['rgba(130, 240, 255, 0.2)'],
+          fill: {
+            colors: ['rgba(153, 123, 237, 0.2)', 'rgba(130, 240, 255, 0.2)'],
+          },
+        },
       },
-    ],
+    },
+    colors: ['#0BC5EA', '#A5A6F6'],
+    markers: {
+      size: 4,
+      colors: ['#0BC5EA', '#A5A6F6'],
+      strokeColor: '#0BC5EA',
+      strokeWidth: 2,
+    },
+    tooltip: {
+      shared: false,
+      theme: 'dark',
+      y: {
+        formatter: function (val: any) {
+          return val;
+        },
+      },
+    },
+    xaxis: {
+      categories: [
+        '수학 math',
+        '구현 implementation',
+        '그리디 greedy',
+        '문자열 string',
+        '자료구조 data_structures',
+        '그래프 graphs',
+        '동적프로그래밍 dp',
+        '브루트포스 bruteforcing',
+      ],
+    },
+    yaxis: {
+      tickAmount: 7,
+      labels: {
+        formatter: function (val: any, i: number) {
+          if (i % 2 === 0) {
+            return val;
+          } else {
+            return '';
+          }
+        },
+      },
+    },
   };
-
   const bgCondition = useColorModeValue('nuetral.0', 'black');
 
   return (
@@ -156,7 +180,7 @@ const RivalCompareChart = (props: { Rectype: string }) => {
           <ColorText>태그 분포 비교 분석</ColorText>
         </Center>
         <Box w="40vw">
-          <Radar data={data} />
+          <ApexCharts type="radar" series={series} options={options} width="800" height="400" />
         </Box>
         <Box h="8vh" />
         <HStack spacing={12}>

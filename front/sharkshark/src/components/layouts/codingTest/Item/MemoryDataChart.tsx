@@ -100,7 +100,7 @@ const MemoryDataChart = (props: { problem: userSolvedData[]; userInfo: userSolve
       >
         <ColorText>메모리 비교 분석</ColorText>
       </Center>
-      <ApexCharts type="bar" series={series} options={options} width="600" height="300" />
+      <ApexCharts type="bar" series={series} options={options} width="500" height="300" />
     </VStack>
   );
 };

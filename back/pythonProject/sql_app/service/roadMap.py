@@ -35,7 +35,12 @@ def get_aver_rank(list: list, db: Session):
     for prob_list_one in list:
         total = 0
         for prob in prob_list_one:
-            prob_rank = db.query(models.problem).filter(models.problem.no == prob['probNo']).first().__dict__['level']
+            prob_rank = db.query(models.problem).filter(models.problem.no == prob['probNo']).first()
+            try:
+                prob_rank = prob_rank.__dict__['level']
+                pass
+            except Exception as e:
+                continue                
             total += prob_rank
         result_list.append(round(total / len(prob_list_one), 1))
 
@@ -47,7 +52,11 @@ def tag_prob_cnt(list: list, db: Session):
     tags_cnt = {"math": 0, "implementation": 0, "greedy": 0, "string": 0, "dataStructure": 0, "graph": 0, "dp": 0,"bruteforce": 0}
     for prob_list_one in list:
         for prob in prob_list_one:
-            prob_tags = db.query(models.problem).filter(models.problem.no == prob['probNo']).first().__dict__['tags']
+            try:
+                prob_tags = db.query(models.problem).filter(models.problem.no == prob['probNo']).first().__dict__['tags']
+                pass
+            except Exception as e:
+                continue
             if prob_tags != None:
                 if "math" in prob_tags:
                     tags_cnt["math"] += 1

@@ -18,6 +18,7 @@ import FooterWave from '../components/common/FooterWave';
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import { getUserID } from '../api/common';
 
 export const LandingPage = () => {
   const animationKeyframes = keyframes`
@@ -80,7 +81,11 @@ export const LandingPage = () => {
                   fontSize="18px"
                   fontWeight={useColorModeValue(800, 700)}
                 >
-                  <Link to="/login">시작하기</Link>
+                  {getUserID() !== '' ? (
+                    <Link to="/recommend/quiz">시작하기</Link>
+                  ) : (
+                    <Link to="/login">시작하기</Link>
+                  )}
                 </Button>
               </VStack>
             </Center>
@@ -236,7 +241,11 @@ export const LandingPage = () => {
 
               <Button variant="secondary" h="60px" fontSize="18px">
                 <ColorText>
-                  <Link to="/login">지금 바로 시작하기</Link>
+                  {getUserID() !== '' ? (
+                    <Link to="/recommend/quiz">지금 바로 시작하기</Link>
+                  ) : (
+                    <Link to="/login">지금 바로 시작하기</Link>
+                  )}
                 </ColorText>
               </Button>
             </VStack>

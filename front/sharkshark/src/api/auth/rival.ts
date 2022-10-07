@@ -40,7 +40,7 @@ export const createRivalAPI = (id: string) => {
     })
     .catch(err => {
       console.log(err);
-      alert('라이벌 등록 실패');
+      // alert('라이벌 등록 실패');
     });
 };
 
@@ -54,7 +54,7 @@ export const deleteRivalAPI = (id: string) => {
     })
     .catch(err => {
       console.log(err);
-      alert('라이벌 삭제 실패');
+      // alert('라이벌 삭제 실패');
     });
 };
 // 라이벌들의 최근 5문제

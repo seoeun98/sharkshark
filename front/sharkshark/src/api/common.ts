@@ -38,7 +38,7 @@ export const refreshAPI = async () => {
     )
     .then(res => {
       localStorage.setItem('access_token', res.data.access_token);
-      alert('인증 갱신 완료.');
+      // alert('인증 갱신 완료.');
       window.location.href = '/';
       localStorage.setItem('isLogin', 'true');
     })
@@ -105,7 +105,8 @@ export const githubRepoImage = async (repo: string, token: string) => {
       url = data.owner.avatar_url;
     })
     .catch(err => {
-      alert('githubRepoImage failed');
+      console.log(err);
+      // alert('githubRepoImage failed');
     });
   return url;
 };
@@ -127,7 +128,8 @@ export const githubRepoList = async (token: string) => {
       list = repos;
     })
     .catch(err => {
-      alert('githubRepoList failed');
+      console.log(err);
+      // alert('githubRepoList failed');
     });
   return list;
 };
@@ -160,6 +162,6 @@ export const githubUpload = (
     })
     .catch(err => {
       console.log(err);
-      alert('githubUpload failed');
+      // alert('githubUpload failed');
     });
 };

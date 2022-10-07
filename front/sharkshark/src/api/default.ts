@@ -26,7 +26,7 @@ export const getProfileMsgAPI = async (id: string) => {
     .catch(err => {
       profileMsg.msg = '-1';
       console.log(err);
-      alert('getProfileMsg failed');
+      // alert('getProfileMsg failed');
     });
 
   return profileMsg;

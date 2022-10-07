@@ -330,8 +330,16 @@
 
   ![DesignSystem](./images/README/DesignSystem.png)
 
+  ![DesignComponent](./images/README/DESIGN_COMPONENT.png.png)
+
 
   ## 6-3. Design
+
+    ![DesignConcept](./images/README/concept.png)
+
+    - 브랜딩 컨셉
+      - 전체적인 컨셉은 방대한 문제를 형상화한 바다, 그리고 그 속 주인공 상어
+      - 서비스 명인 'SharkShark🦈🦈'에 맞추어 상어의 모습를 연상 시킬 수 있는 지느러미 형상화 + 백준 과의 연동 및 연상을 상기 시키기 위한 코드 블럭 형상화
 
     
   

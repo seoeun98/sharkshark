@@ -6,7 +6,7 @@ from scipy import sparse
 from implicit.evaluation import *
 from implicit.als import AlternatingLeastSquares as ALS
 import pickle
-from preprocessing import load_data, preprocess_rival_prob
+from preprocessing_tag import load_data, preprocess_rival_prob
 from filtering import filter
 # import torch
 from sklearn.metrics.pairwise import cosine_similarity
@@ -136,7 +136,7 @@ def main_mf_als():
     result.index.name='id'
 
     print('라이벌 기반 문제 추천 완료!')
-    result.to_csv(file_path + 'rival_pb_mf_als_output_221002.csv')
+    result.to_csv(file_path + 'rival_tag_pb_mf_als_output_221002.csv')
 
     return result
 

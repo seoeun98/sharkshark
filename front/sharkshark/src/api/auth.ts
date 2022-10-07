@@ -17,7 +17,7 @@ export const getUserInfoAPI = async (id: string) => {
     })
     .catch(err => {
       console.log(err);
-      alert('유저 정보 조회에 실패했습니다.');
+      // alert('유저 정보 조회에 실패했습니다.');
     });
   return userinfo;
 };
@@ -37,7 +37,7 @@ export const updateUserInfoAPI = (
     })
     .catch(err => {
       console.log(err);
-      alert('updateUserInfoAPI failed');
+      // alert('updateUserInfoAPI failed');
     });
 };
 
@@ -52,7 +52,7 @@ export const githubTokenAPI = async (id: string, code: string) => {
     })
     .catch(err => {
       console.log(err);
-      alert('githubTokenAPI failed');
+      // alert('githubTokenAPI failed');
     });
   return token;
 };
@@ -70,7 +70,7 @@ export const probsByRivalAPI = async () => {
     })
     .catch(err => {
       console.log(err);
-      alert('probsByRivalAPI failed');
+      // alert('probsByRivalAPI failed');
     });
   return list;
 };
@@ -86,7 +86,7 @@ export const probsByCategoryAPI = async () => {
     })
     .catch(err => {
       console.log(err);
-      alert('probsByCategoryAPI failed');
+      // alert('probsByCategoryAPI failed');
     });
   return list;
 };
@@ -102,7 +102,7 @@ export const probsByTagAPI = async (tagName: string) => {
     })
     .catch(err => {
       console.log(err);
-      alert('probsByTagAPI failed');
+      // alert('probsByTagAPI failed');
     });
   return list;
 };
@@ -118,7 +118,7 @@ export const probsForTestAPI = async () => {
     })
     .catch(err => {
       console.log(err);
-      alert('probsForTestAPI failed');
+      // alert('probsForTestAPI failed');
     });
   return list;
 };
@@ -134,7 +134,7 @@ export const probsRecentAPI = async () => {
     })
     .catch(err => {
       console.log(err);
-      alert('probsRecentAPI failed');
+      // alert('probsRecentAPI failed');
     });
   return list;
 };
@@ -157,7 +157,7 @@ export const probsDetailAPI = async (probNo: number) => {
     })
     .catch(err => {
       console.log(err);
-      alert('probsDetailAPI failed');
+      // alert('probsDetailAPI failed');
     });
   return detail;
 };

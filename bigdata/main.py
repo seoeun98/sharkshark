@@ -38,8 +38,8 @@ def data_into_bj_user():
 	solved_problems_columns = ['userId', 'problems']
 
 	# csv 파일 읽어오기 (데이터 프레임으로)
-	df_bj_users = pd.read_csv(file_path + 'users.csv', index_col=0)
-	df_solved_problems = pd.read_csv(file_path + 'user_solved_problems.csv')
+	df_bj_users = pd.read_csv(file_path + 'users_221002_drop.csv')
+	df_solved_problems = pd.read_csv(file_path + 'user_solved_problems_221002_drop.csv')
 
 	# column 명 db에 맞게 변환
 	df_bj_users.columns = bj_users_columns	
@@ -60,6 +60,93 @@ def data_into_bj_user():
 	# db에 데이터 입력
 	df_bj_users.to_sql(name='bj_user', con=engine, if_exists='append', index=False)
 
+# recrival 테이블 입력
+def data_into_rec_rival():	
+	# recrival 에 사용될 columns	
+	rec_rival_columns = ['userId', 'rivalIds']
+
+	# csv 파일 읽어오기 (데이터 프레임으로)
+	df_rec_rival = pd.read_csv(file_path + 'rivals_knn_221002.csv', index_col=0)
+
+	# column 명 db에 맞게 변환
+	df_rec_rival.columns = rec_rival_columns
+
+	# userId 중복 제거
+	df_rec_rival = df_rec_rival.drop_duplicates(['userId'])
+
+	# # no column 추가
+	# df_bj_users['no'] = range(1, len(df_rec_rival) + 1)
+
+	print(df_rec_rival)
+
+	# db에 데이터 입력
+	df_rec_rival.to_sql(name='recrival', con=engine, if_exists='append', index=False)
+
+# recrivaltag 테이블 입력
+def data_into_rec_rival_tag():	
+	# recrivaltag 에 사용될 columns	
+	rec_rival_tag_columns = ['userId', 'rivalIds']
+
+	# csv 파일 읽어오기 (데이터 프레임으로)
+	df_rec_rival_tag = pd.read_csv(file_path + 'rivals_tag_knn_221002.csv', index_col=0)
+
+	# column 명 db에 맞게 변환
+	df_rec_rival_tag.columns = rec_rival_tag_columns
+
+	# userId 중복 제거
+	df_rec_rival_tag = df_rec_rival_tag.drop_duplicates(['userId'])
+
+	# # no column 추가
+	# df_bj_users['no'] = range(1, len(df_rec_rival) + 1)
+
+	print(df_rec_rival_tag)
+
+	# db에 데이터 입력
+	df_rec_rival_tag.to_sql(name='recrivaltag', con=engine, if_exists='append', index=False)
+
+# recproblems 테이블 입력
+def data_into_rec_problems():	
+	# recrivaltag 에 사용될 columns	
+	rec_problems_columns = ['userId', 'problems']
+
+	# csv 파일 읽어오기 (데이터 프레임으로)
+	df_rec_problems = pd.read_csv(file_path + 'rival_pb_mf_als_output_221002.csv', index_col=0)
+
+	# column 명 db에 맞게 변환
+	df_rec_problems.columns = rec_problems_columns
+
+	# userId 중복 제거
+	df_rec_problems = df_rec_problems.drop_duplicates(['userId'])
+
+	# # no column 추가
+	# df_bj_users['no'] = range(1, len(df_rec_rival) + 1)
+
+	print(df_rec_problems)
+
+	# db에 데이터 입력
+	df_rec_problems.to_sql(name='recproblems', con=engine, if_exists='append', index=False)
+
+# recproblemstag 테이블 입력
+def data_into_rec_problems_tag():	
+	# recrivaltag 에 사용될 columns	
+	rec_problems_tag_columns = ['userId', 'problems']
+
+	# csv 파일 읽어오기 (데이터 프레임으로)
+	df_rec_problems_tag = pd.read_csv(file_path + 'rival_tag_pb_mf_als_output_221002.csv', index_col=0)
+
+	# column 명 db에 맞게 변환
+	df_rec_problems_tag.columns = rec_problems_tag_columns
+
+	# userId 중복 제거
+	df_rec_problems_tag = df_rec_problems_tag.drop_duplicates(['userId'])
+
+	# # no column 추가
+	# df_bj_users['no'] = range(1, len(df_rec_rival) + 1)
+
+	print(df_rec_problems_tag)
+
+	# db에 데이터 입력
+	df_rec_problems_tag.to_sql(name='recproblemstag', con=engine, if_exists='append', index=False)
 
 # solvedproblem 테이블 입력
 def data_into_solvedproblem():	
@@ -80,29 +167,28 @@ def data_into_solvedproblem():
 # worngtype 테이블 입력
 def data_into_wrongtype():	
 
-	df_lately_worngproblem = pd.read_csv(file_path + 'wrong_pb.csv')
+	df_lately_worngproblem = pd.read_csv(file_path + 'wrong_pb.csv', index_col=0)
 	df_lately_worngproblem.loc[df_lately_worngproblem['result'].str.contains('런타임 에러'), 'result'] = '런타임 에러'
-	# worngtype = ['handle', '출력 형식이 잘못되었습니다', '틀렸습니다', '시간 초과', '메모리 초과', '출력 초과', '런타임 에러', '컴파일 에러']
-	worngtype_columns = ['no', 'userId', 'problems', 'typeName', 'timestamp']
-	df_lately_worngproblem.columns = worngtype_columns
-	print(df_lately_worngproblem)
-	series = df_lately_worngproblem.groupby('userId')['typeName'].value_counts()
-	df_wrongtype = series.reset_index(name='wrongCnt')
-	print(df_wrongtype)
-	df_wrongtype.to_sql(name='wrongtype', con=engine, if_exists='append', index=False)
-	# # wrongtype 에 사용될 columns	
-	# wrongtype_columns = ['typeName', 'userId', 'wrongCnt']
 
-	# # csv 파일 읽어오기 (데이터 프레임으로)
-	# df_lately_solvedproblem = pd.read_csv(file_path + 'user_lately_solved_problems.csv')
-	# # print(df_lately_solvedproblem)
-	# # column 명 db에 맞게 변환
-	# df_lately_solvedproblem.columns = lately_solvedproblem_columns	
+	df = df_lately_worngproblem
+	df_copy = df
+	df_copy = df_copy.drop_duplicates(['handle'])
+	df_copy['handle']
 
-	# print(df_lately_solvedproblem)
+	wrongtype = ['출력 형식이 잘못되었습니다', '틀렸습니다', '시간 초과', '메모리 초과', '출력 초과', '런타임 에러', '컴파일 에러']
+	list = []
+	for id in df_copy['handle']:
+	    print(id)
+	    df_user = df[df['handle'] == id]        
+	    arr = [id, len(df_user[df_user['result'] == wrongtype[0]]), len(df_user[df_user['result'] == wrongtype[1]]), len(df_user[df_user['result'] == wrongtype[2]]), len(df_user[df_user['result'] == wrongtype[3]]), len(df_user[df_user['result'] == wrongtype[4]]), len(df_user[df_user['result'] == wrongtype[5]]) ,len(df_user[df_user['result'] == wrongtype[6]])]
+	    list.append(arr)
 
-	# # db에 데이터 입력
-	# df_lately_solvedproblem.to_sql(name='solvedproblem', con=engine, if_exists='append', index=False)
+	res_df = pd.DataFrame(list, columns = ['userId', 'wrong_print', 'wrong_answer', 'over_time', 'over_memory', 'over_print', 'runtime_error', 'compile_error'])
+
+	res_df.to_sql(name='wrongtype', con=engine, if_exists='append', index=False)
+
+	res_df.to_csv(file_path + 'wrongtype.csv')
+
 
 
 # db 연결
@@ -112,11 +198,16 @@ conn = engine.connect()
 # data_into_major_category()
 
 # bj_user 테이블 입력
-# data_into_bj_user()
+data_into_bj_user()
+
+data_into_rec_rival()
+data_into_rec_rival_tag()
+data_into_rec_problems()
+data_into_rec_problems_tag()
 
 # solvedproblem 테이블 입력
 # data_into_solvedproblem()
 
-data_into_wrongtype()
+# data_into_wrongtype()
 
 conn.close()

@@ -33,13 +33,16 @@ def main_mf_als():
     df_problems_solved, df_rec_rivals, df_problems= load_data()
 
     # 빈칸 및 NaN 제거
-    df_problems_solved['problems'].replace('', np.nan, inplace=True)
-    df_problems_solved = df_problems_solved.dropna()
+    # df_problems_solved['problems'].replace('', np.nan, inplace=True)
+    # df_problems_solved = df_problems_solved.dropna()
+    # print(df_problems_solved.head(10))
+    # NaN -> '' 으로 대체
+    # df_problems_solved = df_problems_solved.fillna('', inplace=True)
 
     print('데이터 로드 완료!')
     lst_rivals= df_rec_rivals['rec_rivals']
     target_users= df_rec_rivals['handle']
-    
+
     data, profile2id, show2id, df_user_problems= preprocess_rival_prob(df_problems_solved)
 
     with open(file_path + 'show2id.pkl','wb') as f:
@@ -75,7 +78,7 @@ def main_mf_als():
 
     df_user_level= df_user_level.sort_values(['handle','level','accepted_user_count'], ascending=False)
     df_user_level.reset_index(inplace=True, drop=True)
-
+    print(df_user_level) #
     df_user_level['handle']= df_user_level['handle'].apply(numerize_for_profile)
     df_user_level['problems']= df_user_level['problems'].apply(numerize_for_problem)
 
@@ -133,7 +136,7 @@ def main_mf_als():
     result.index.name='id'
 
     print('라이벌 기반 문제 추천 완료!')
-    result.to_csv(file_path + 'rival_pb_mf_als_output.csv')
+    result.to_csv(file_path + 'rival_pb_mf_als_output_221002.csv')
 
     return result
 

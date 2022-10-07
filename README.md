@@ -330,12 +330,12 @@
 
   ![DesignSystem](./images/README/DesignSystem.png)
 
-  ![DesignComponent](./images/README/DESIGN_COMPONENT.png.png)
+  ![DESIGN_COMPONENT](./images/README/DESIGN_COMPONENT.png)
 
 
   ## 6-3. Design
 
-    ![DesignConcept](./images/README/concept.png)
+  ![DesignConcept](./images/README/concept.png)
 
     - 브랜딩 컨셉
       - 전체적인 컨셉은 방대한 문제를 형상화한 바다, 그리고 그 속 주인공 상어

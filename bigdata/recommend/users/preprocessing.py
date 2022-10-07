@@ -12,14 +12,14 @@ def rm_comma(x):
 
 
 def load_data():
-    df_users = pd.read_csv(file_path + 'users.csv')  # 유저 데이터
+    df_users = pd.read_csv(file_path + 'users_221002_drop.csv')  # 유저 데이터
     df_problems = pd.read_csv(file_path + 'probleams.csv')  # 문제 데이터
-    df_problems_solved = pd.read_csv(file_path + 'user_solved_problems.csv')  # 유저별 푼 문제 데이터
+    df_problems_solved = pd.read_csv(file_path + 'user_solved_problems_221002_drop.csv')  # 유저별 푼 문제 데이터
     # df_problems = pd.read_sql('select * from problems', db)
     # df_problems_solved = pd.read_sql('select * from problems_solved', db)
     # df_users= pd.read_sql('select * from users',db)
     # df_problems_class= pd.read_sql('select * from problems_class',db)
-
+    print(df_users)
     # 전처리
     df_problems = df_problems[df_problems.is_solvable == True]
     df_problems['tags'].loc[df_problems.tags.isnull()] =''
@@ -36,7 +36,7 @@ def load_data():
     df_problems.reset_index(inplace=True,drop=True)
     df_problems_solved.reset_index(inplace=True,drop=True)
     df_users.reset_index(inplace=True,drop=True)
-
+    print(df_users)
     # return df_problems, df_problems_solved, df_users, df_problems_class
     return df_problems, df_problems_solved, df_users
 

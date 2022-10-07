@@ -12,7 +12,7 @@ export const getCTproblemAPI = async () => {
     })
     .catch(err => {
       console.log(err);
-      alert('코테 문제 받기 실패');
+      // alert('코테 문제 받기 실패');
     });
   return CTproblemList;
 };
@@ -30,7 +30,7 @@ export const getCTresultAPI = async (probNo: number, start: string) => {
     })
     .catch(err => {
       console.log(err);
-      alert('모의 코테 결과 받기 실패');
+      // alert('모의 코테 결과 받기 실패');
     });
   return problemSolvingData;
 };

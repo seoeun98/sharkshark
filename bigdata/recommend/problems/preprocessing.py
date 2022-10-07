@@ -12,12 +12,15 @@ def rm_comma(x):
     return ''.join(str(x).split(','))
 
 def load_data():
-    df_users = pd.read_csv(file_path + 'users.csv')  # 유저 데이터
+    df_users = pd.read_csv(file_path + 'users_221002_drop.csv')  # 유저 데이터
+    # df_users = pd.read_csv(file_path + 'users.csv')  # 유저 데이터
     # 중복 유저 제거
     df_users = df_users.drop_duplicates(['handle'])
     df_problems = pd.read_csv(file_path + 'probleams.csv')  # 문제 데이터
-    df_problems_solved = pd.read_csv(file_path + 'user_solved_problems.csv')  # 유저별 푼 문제 데이터
-    df_rec_rivals = pd.read_csv(file_path + 'rivals_knn.csv')  # 유저별 라이벌 데이터
+    df_problems_solved = pd.read_csv(file_path + 'user_solved_problems_221002_drop.csv')  # 유저별 푼 문제 데이터
+    df_rec_rivals = pd.read_csv(file_path + 'rivals_knn_221002.csv')  # 유저별 라이벌 데이터
+    # df_problems_solved = pd.read_csv(file_path + 'user_solved_problems.csv')  # 유저별 푼 문제 데이터
+    # df_rec_rivals = pd.read_csv(file_path + 'rivals_knn.csv')  # 유저별 라이벌 데이터
     # df_problems = pd.read_sql('select * from problems', db)
     # df_problems_solved = pd.read_sql('select * from problems_solved', db)
     # df_users= pd.read_sql('select * from users',db)
@@ -28,6 +31,9 @@ def load_data():
     df_problems = df_problems[df_problems.is_solvable == True]
     df_problems['tags'].loc[df_problems.tags.isnull()] =''
     df_problems= df_problems[df_problems['level']!=0]
+
+    df_problems_solved['problems'].loc[df_problems_solved.problems.isnull()] = ''
+    print(df_problems_solved)
 
     df_problems_solved.drop(df_problems_solved[df_problems_solved.problems==''].index, axis=0, inplace=True)
 
@@ -51,11 +57,17 @@ def preprocess_rival_prob(df_problems_solved):
     ## 문제 id
     df_user_problems = df_problems_solved[['handle', 'problems']]
     df_user_problems.problems = df_user_problems.problems.str.split(',')
+    # print(df_user_problems.problems)
+    # print(type(df_user_problems.problems[0]))
     df_user_problems = df_user_problems.explode('problems').reset_index(drop=True)
 
     # 빈칸 및 NaN 제거
-    df_user_problems['problems'].replace('', np.nan, inplace=True)
-    df_user_problems = df_user_problems.dropna()
+    # df_user_problems['problems'].replace('', np.nan, inplace=True)
+    # df_user_problems = df_user_problems.dropna()
+    # df_user_problems.fillna(0, inplace=True)
+    print('after dropna')
+    print(df_user_problems)
+    # df_user_problems = df_user_problems.dropna()
 
     df_user_problems['problems']= df_user_problems['problems'].astype('int')
     df_user_problems = df_user_problems.dropna(axis=0)

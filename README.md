@@ -218,6 +218,8 @@
 
   1. 회원 가입 시, 백준 연동 인증
 
+  ![회원가입_연동](./images/README/회원가입_연동.gif)
+  ![로그인](./images/README/로그인.gif)
     
 
   2. 문제 추천
@@ -255,6 +257,10 @@
 
     - 테스트 종료 후, 제출한 문제들에 대한 실력 분석 제공
 
+  ![모의테스트_시작](./images/README/모의테스트_시작.gif)
+  ![모의테스트_제출확인](./images/README/모의테스트_제출확인.gif)
+  ![모의테스트_결과](./images/README/모의테스트_결과.gif)
+  
 
   5. 블로깅 자동화
 
@@ -287,12 +293,12 @@
   - 라이벌 추천
     - KNN 알고리즘으로 라이벌 추천
 
-  ![라이벌_추천_알고리즘](./images/README/라이벌_추천_알고리즘.gif)
+  ![라이벌_추천_알고리즘](./images/README/라이벌_추천_알고리즘.jpg)
 
   - 문제 추천
     - Matrix Factorization - ALS(Alternating Least Square) 알고리즘으로 라이벌 기반 문제 추천
 
-  ![문제추천_알고리즘](./images/README/문제추천_알고리즘.gif)
+  ![문제추천_알고리즘](./images/README/문제추천_알고리즘.jpg)
 --------------------------
 
 

@@ -94,7 +94,7 @@ export const BlogSetting = () => {
         title="Repository 선택"
         description={
           <>
-            계정에 올릴 문제를 선택해주세요.,
+            계정에 올릴 문제를 선택해주세요.
             <br /> 최근 풀이한 문제 5개 중 하나를 선택할 수 있습니다.
           </>
         }

@@ -18,7 +18,7 @@ def load_data():
     df_users = df_users.drop_duplicates(['handle'])
     df_problems = pd.read_csv(file_path + 'probleams.csv')  # 문제 데이터
     df_problems_solved = pd.read_csv(file_path + 'user_solved_problems_221002_drop.csv')  # 유저별 푼 문제 데이터
-    df_rec_rivals = pd.read_csv(file_path + 'rivals_knn_221002.csv')  # 유저별 라이벌 데이터
+    df_rec_rivals = pd.read_csv(file_path + 'rivals_tag_knn_221002.csv')  # 유저별 라이벌 데이터
     # df_problems_solved = pd.read_csv(file_path + 'user_solved_problems.csv')  # 유저별 푼 문제 데이터
     # df_rec_rivals = pd.read_csv(file_path + 'rivals_knn.csv')  # 유저별 라이벌 데이터
     # df_problems = pd.read_sql('select * from problems', db)

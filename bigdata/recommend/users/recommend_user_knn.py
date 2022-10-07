@@ -40,7 +40,7 @@ def rival_knn_main():
     output['rec_rivals'] = lst_rivals
     output.index += 1  #mysql에서 auto increment를 위해 1 추가
     output.index.name='id'
-    output.to_csv(file_path + 'rivals_knn.csv')
+    output.to_csv(file_path + 'rivals_knn_221002.csv')
 
     print('라이벌 추천 완료!')
     return output

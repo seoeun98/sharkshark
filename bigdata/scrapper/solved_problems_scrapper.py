@@ -44,14 +44,14 @@ def total_solved_problem_seq_crawling(username : str) -> list:
 
 
 def scrap_problem_solved(args_time_interval):
-    handles = pd.read_csv(file_path + 'users.csv')['handle']
+    handles = pd.read_csv(file_path + 'users_221002.csv')['handle']
 
-    output_file = open(file_path + 'user_solved_problems.csv', mode='w', encoding='utf-8-sig', newline='')
+    output_file = open(file_path + 'user_solved_problems_221002.csv', mode='w', encoding='utf-8-sig', newline='')
     writer = csv.writer(output_file)
     writer.writerow(['handle', 'problems'])
 
-    for handle in reversed(handles):
-        output_file = open(file_path + 'user_solved_problems.csv', mode='a', encoding='utf-8-sig', newline='')
+    for handle in handles:
+        output_file = open(file_path + 'user_solved_problems_221002.csv', mode='a', encoding='utf-8-sig', newline='')
         writer = csv.writer(output_file)
         print(f"Get handle {handle} now!")
         problems_list = total_solved_problem_seq_crawling(handle)

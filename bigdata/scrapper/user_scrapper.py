@@ -7,7 +7,7 @@ headers = { "Content-Type": "application/json" }
 base_url = "https://solved.ac/api/v3/"
 search_user_url = "ranking/tier"
 file_path = '../data/'
-start = 1
+start = 448
 
 class Users:
     def __init__(self):
@@ -25,14 +25,14 @@ def scrap_user_per_page(page: int):
     querystring = {"page": f"{page}"}
 
     if page == start:
-      output_file = open(file_path + 'users.csv', mode='w', encoding='utf-8-sig', newline='')
+      output_file = open(file_path + 'users_221002.csv', mode='w', encoding='utf-8-sig', newline='')
       writer = csv.writer(output_file)
       writer.writerow(['handle', 'solved_count', 'user_class', 'tier', 'rating',
                       'rating_by_problems_sum', 'rating_by_class', 'rating_by_solved_count',
                       'exp', 'rival_count', 'reverse_rival_count', 'max_streak',
                       'rank', 'organization'])
     else:
-        output_file = open(file_path + 'users.csv', mode='a', encoding='utf-8-sig', newline='')
+        output_file = open(file_path + 'users_221002.csv', mode='a', encoding='utf-8-sig', newline='')
         writer = csv.writer(output_file)
 
     response = requests.request("GET", url, headers=headers, params=querystring)
@@ -92,4 +92,4 @@ def scrap_user(args_time_interval):
         scrap_user_per_page(page)       
         time.sleep(time_interval)
 
-scrap_user(20)
+scrap_user(10)

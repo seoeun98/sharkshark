@@ -184,6 +184,8 @@
       # 컨테이너 실행
       docker run --name mysql -e MYSQL_ROOT_PASSWORD={password} -d -p 3306:3306 mysql
      ~~~
+  
+   - 3306포트로 mySQL 접속하여 b205 스키마 생성
 
    - docker-compose 실행
 
@@ -201,6 +203,8 @@
      ~~~bash
      docker ps
      ~~~
+    
+  - mySQL 접속하여 DB [덤프 파일](/exec/sharkshark_dp_dump.zip) 실행
 
 --------------------------
 

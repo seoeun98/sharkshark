@@ -287,9 +287,12 @@
   - 라이벌 추천
     - KNN 알고리즘으로 라이벌 추천
 
+  ![라이벌_추천_알고리즘](./images/README/라이벌_추천_알고리즘.gif)
+
   - 문제 추천
     - Matrix Factorization - ALS(Alternating Least Square) 알고리즘으로 라이벌 기반 문제 추천
-  
+
+  ![문제추천_알고리즘](./images/README/문제추천_알고리즘.gif)
 --------------------------
 
 

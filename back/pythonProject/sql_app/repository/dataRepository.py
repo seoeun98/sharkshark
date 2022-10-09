@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import numpy as np
-import math
+import math, json
 
 from requests import Session
 from sql_app.repository import rivalRepository
@@ -15,6 +15,17 @@ def get_probs_order_by_recent_solved(id: str, db: Session):
 
 # 티어 상승 로드맵을 가져온다
 def get_roadMap(userId: str, db: Session):
+    exist = False
+    now  = datetime.now()
+    latest_roadmap = db.query(models.roadmap).filter(models.roadmap.userId == userId).first()
+    if latest_roadmap:
+        exist = True
+        date_diff = now - latest_roadmap.time
+        # 업데이트 된지 1시간 이내라면
+        if date_diff.seconds / 3600 <= 1:
+            return json.loads(latest_roadmap.roadmap)
+
+
     user_list_a = get_probs_order_by_recent_solved(userId, db)
     user_list = []
     result_list = []
@@ -55,6 +66,16 @@ def get_roadMap(userId: str, db: Session):
     result.append(user_list)
     result.append(rival_list)
 
+    json_result = json.dumps(result)
+    # 테이블에 있었는지 유무 확인
+    if exist:        
+        # 업데이트
+        latest_roadmap.update({'roadmap' : json_result, 'time' : now})
+    else:
+        # 추가
+        db.add(models.roadmap(userId=userId, roadmap=json_result, time=now))
+    db.commit()
+
     return result;
 
 # 주요 유형 조회. 유형별 능력치 표현
@@ -85,6 +106,16 @@ def get_major_wrong(userId: str, db: Session):
 
 # 추천 유저들의 최근 푼 문제 레벨 평균
 def get_level_avg(userId: str, db: Session):
+    exist = False
+    now  = datetime.now()
+    latest_levelavg = db.query(models.levelavg).filter(models.levelavg.userId == userId).first()
+    if latest_levelavg:
+        exist = True
+        date_diff = now - latest_levelavg.time
+        # 업데이트 된지 1시간 이내라면
+        if date_diff.seconds / 3600 <= 1:
+            return json.loads(latest_levelavg.pb_list), latest_levelavg.lv_avg           
+
     # 라이벌 조회
     rec_rivals = db.query(models.rec_rival).filter(models.rec_rival.userId == userId).first().__dict__
     rec_rival_list = rec_rivals['rivalIds'].split(',')
@@ -108,10 +139,32 @@ def get_level_avg(userId: str, db: Session):
 
     lv_avg = round(np.mean(pb_lv_list), 1)
 
+    
+    list_of_dicts = [{'no': row.no, 'title' : row.title, 'level' : row.level} for row in pb_list]
+    json_pb_list = json.dumps(list_of_dicts)    
+    # 테이블에 있었는지 유무 확인
+    if exist:        
+        # 업데이트
+        latest_levelavg.update({'lv_avg' : lv_avg, 'pb_list' : json_pb_list, 'time' : now})
+    else:
+        # 추가
+        db.add(models.levelavg(userId=userId, lv_avg=lv_avg, pb_list=json_pb_list, time=now))
+    db.commit()
+
     return pb_list, lv_avg
 
 # 추천 유저들의 최근 주간 평균 푼 문제 수
 def get_pb_per_week(userId: str, db: Session):
+    exist = False
+    now  = datetime.now()
+    latest_pbperweek = db.query(models.pbperweek).filter(models.pbperweek.userId == userId).first()
+    if latest_pbperweek:
+        exist = True
+        date_diff = now - latest_pbperweek.time
+        # 업데이트 된지 1시간 이내라면
+        if date_diff.seconds / 3600 <= 1:
+            return json.loads(latest_pbperweek.pbperweek)   
+
     # 라이벌 조회
     rec_rivals = db.query(models.rec_rival).filter(models.rec_rival.userId == userId).first().__dict__
     rec_rival_list = rec_rivals['rivalIds'].split(',')
@@ -123,5 +176,15 @@ def get_pb_per_week(userId: str, db: Session):
         recent_date = datetime.strptime(str(rival_probs[-1].solvedDate), "%Y-%m-%d %H:%M:%S").date()
         last_date = datetime.strptime(str(rival_probs[0].solvedDate), "%Y-%m-%d %H:%M:%S").date() 
         res_list.append({"userId" : one, "pb_per_week" : round(7 * len(rival_probs) / (abs((recent_date - last_date).days) + 1), 2)})
+
+    json_result = json.dumps(res_list)
+    # 테이블에 있었는지 유무 확인
+    if exist:        
+        # 업데이트
+        latest_pbperweek.update({'pbperweek' : json_result, 'time' : now})
+    else:
+        # 추가
+        db.add(models.pbperweek(userId=userId, pbperweek=json_result, time=now))
+    db.commit()    
 
     return res_list

@@ -33,7 +33,7 @@ const SolvedLevel = () => {
         fontWeight="500"
         fontSize="18px"
       >
-        <ColorText>해결 문제 분석</ColorText>
+        <ColorText>유사 사용자 해결 문제 분석</ColorText>
       </Center>
       <VStack spacing={8}>
         <HStack mt={8}>

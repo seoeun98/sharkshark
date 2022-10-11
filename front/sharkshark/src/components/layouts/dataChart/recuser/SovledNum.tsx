@@ -47,9 +47,9 @@ const SovledNum = () => {
         >
           {averageLevel.length > 0 ? (
             averageLevel.map((item: userPerProblem, index: number) => (
-              <Box mb="8px" mr="8px" key={index}>
+              <Center mr="8px" key={index}>
                 <UserNumCard RivalInfo={item} />
-              </Box>
+              </Center>
             ))
           ) : (
             <Center bg={bgcolor} borderRadius="12px" p="32px">

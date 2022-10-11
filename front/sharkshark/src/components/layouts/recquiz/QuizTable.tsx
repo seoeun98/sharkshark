@@ -8,7 +8,7 @@ export const QuizTable = (probs: { list: Problem[] }) => {
 
   return (
     <Box>
-      <Box p="8px" bg={useColorModeValue('neutral.100', 'neutral.800')} borderRadius="10px">
+      <Box p="8px" bg={useColorModeValue('neutral.50', 'neutral.800')} borderRadius="10px">
         <Flex>
           {/* star */}
           <Box w="24px" ml="24px" />

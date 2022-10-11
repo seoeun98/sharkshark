@@ -33,6 +33,7 @@ export const LandingPage = () => {
   });
 
   const animation = `${animationKeyframes} 1s ease-in-out infinite`;
+  const color = useColorModeValue(800, 700);
 
   return (
     <Box>
@@ -75,19 +76,32 @@ export const LandingPage = () => {
                     당신의 코딩 실력 향상을 위한 길잡이
                   </Box>
                 </VStack>
-                <Button
-                  w="300px"
-                  h="60px"
-                  borderRadius="52px"
-                  fontSize="18px"
-                  fontWeight={useColorModeValue(800, 700)}
-                >
-                  {getUserID() !== '' ? (
-                    <Link to="/recommend/quiz">시작하기</Link>
-                  ) : (
-                    <Link to="/login">시작하기</Link>
-                  )}
-                </Button>
+
+                {getUserID() !== '' ? (
+                  <Link to="/recommend/quiz">
+                    <Button
+                      w="300px"
+                      h="60px"
+                      borderRadius="52px"
+                      fontSize="18px"
+                      fontWeight={color}
+                    >
+                      시작하기
+                    </Button>
+                  </Link>
+                ) : (
+                  <Link to="/login">
+                    <Button
+                      w="300px"
+                      h="60px"
+                      borderRadius="52px"
+                      fontSize="18px"
+                      fontWeight={color}
+                    >
+                      시작하기
+                    </Button>
+                  </Link>
+                )}
               </VStack>
             </Center>
             <Center
@@ -239,15 +253,19 @@ export const LandingPage = () => {
                 </Center>
               </Box>
 
-              <Button variant="secondary" h="60px" fontSize="18px">
-                <ColorText>
-                  {getUserID() !== '' ? (
-                    <Link to="/recommend/quiz">지금 바로 시작하기</Link>
-                  ) : (
-                    <Link to="/login">지금 바로 시작하기</Link>
-                  )}
-                </ColorText>
-              </Button>
+              {getUserID() !== '' ? (
+                <Link to="/recommend/quiz">
+                  <Button variant="secondary" h="60px" fontSize="18px">
+                    <ColorText>지금 바로 시작하기</ColorText>
+                  </Button>
+                </Link>
+              ) : (
+                <Link to="/login">
+                  <Button variant="secondary" h="60px" fontSize="18px">
+                    <ColorText>지금 바로 시작하기</ColorText>
+                  </Button>
+                </Link>
+              )}
             </VStack>
           </Center>
         </VStack>{' '}

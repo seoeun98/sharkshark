@@ -161,6 +161,10 @@ export const BlogSetting = () => {
                 })
               }
             />
+            <Box ml="16px" mb="20px" fontSize="12px" fontWeight="500" color="warning.0">
+              업로드 경로 형식 : &#91; directory 명 &#93; &#47; &nbsp; &#40; 예시 : sharkshark/
+              &#41;
+            </Box>
             <Button size="cmd" onClick={setOnClose}>
               확인
             </Button>

@@ -44,7 +44,7 @@ const CodingTestAnalysis = () => {
                 <ProblemItemForAnalysis userInfo={item.userInfo} problem={solvedList[index]} />
               </Box>
               <Center>
-                <Flex w="50vw">
+                <Flex>
                   <MemoryDataChart problem={item.memory_sort_list} userInfo={item.userInfo} />
                   <TimeDataChart problem={item.time_sort_list} userInfo={item.userInfo} />
                 </Flex>

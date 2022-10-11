@@ -1,6 +1,6 @@
 import json
 
-from sqlalchemy import Column, ForeignKey, Integer, VARCHAR, FLOAT, TIMESTAMP, BIGINT, TEXT, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, VARCHAR, FLOAT, TIMESTAMP, BIGINT, TEXT, Boolean, JSON
 from sqlalchemy.dialects.mysql import MEDIUMTEXT
 from sqlalchemy.orm import relationship
 
@@ -139,3 +139,28 @@ class rec_problems_tag(Base):
     no = Column(Integer, primary_key=True, index=True, autoincrement=True)
     userId = Column(VARCHAR(45))
     problems = Column(VARCHAR(1000))
+
+class levelavg(Base):
+    __tablename__ = "levelavg"
+
+    no = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    userId = Column(VARCHAR(45))
+    lv_avg = Column(FLOAT)    
+    pb_list = Column(JSON)
+    time = Column(TIMESTAMP(6))
+
+class pbperweek(Base):
+    __tablename__ = "pbperweek"
+
+    no = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    userId = Column(VARCHAR(45))    
+    pbperweek = Column(JSON)
+    time = Column(TIMESTAMP(6))
+
+class roadmap(Base):
+    __tablename__ = "roadmap"
+
+    no = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    userId = Column(VARCHAR(45))    
+    roadmap = Column(JSON)
+    time = Column(TIMESTAMP(6))

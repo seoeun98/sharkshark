@@ -121,4 +121,5 @@ export type simpleProblem = {
 export type userPerProblem = {
   userId: string;
   pb_per_week: number;
+  level: number;
 };

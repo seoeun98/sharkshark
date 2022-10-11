@@ -58,15 +58,18 @@ export const DataRivalPage = () => {
             <SovledNum />
           </VStack>
         </Center>
-        <VStack
-          boxShadow="base"
-          bg={useColorModeValue('neutral.0', 'neutral.500')}
-          borderRadius="12px"
-          w="60vw"
-          h="500px"
-        >
-          <AvgTag />
-        </VStack>
+
+        <Center>
+          <VStack
+            boxShadow="base"
+            bg={useColorModeValue('neutral.0', 'neutral.500')}
+            borderRadius="12px"
+            w="60vw"
+            h="500px"
+          >
+            <AvgTag />
+          </VStack>
+        </Center>
       </VStack>
     </>
   );

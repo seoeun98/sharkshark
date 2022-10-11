@@ -21,7 +21,7 @@ const SovledNum = () => {
         fontWeight="500"
         fontSize="18px"
       >
-        <ColorText> 유사 사용자 Top 5 문제 풀이 분석</ColorText>
+        <ColorText> 유사 사용자 Top 6 문제 풀이 분석</ColorText>
       </Center>
       <Center w="26vw" h="540px">
         {' '}
@@ -30,7 +30,7 @@ const SovledNum = () => {
           h="520px"
           py={0}
           px={2}
-          overflow="auto"
+          overflowY="auto"
           css={{
             '&::-webkit-scrollbar': {
               width: '12px',
@@ -47,9 +47,9 @@ const SovledNum = () => {
         >
           {averageLevel.length > 0 ? (
             averageLevel.map((item: userPerProblem, index: number) => (
-              <Box mb="8px" mr="8px" key={index}>
+              <Center key={index}>
                 <UserNumCard RivalInfo={item} />
-              </Box>
+              </Center>
             ))
           ) : (
             <Center bg={bgcolor} borderRadius="12px" p="32px">

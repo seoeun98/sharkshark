@@ -69,8 +69,9 @@ def get_roadMap(userId: str, db: Session):
     json_result = json.dumps(result)
     # 테이블에 있었는지 유무 확인
     if exist:        
-        # 업데이트
-        latest_roadmap.update({'roadmap' : json_result, 'time' : now})
+        # 업데이트        
+        latest_roadmap.roadmap = json_result
+        latest_roadmap.time = now
     else:
         # 추가
         db.add(models.roadmap(userId=userId, roadmap=json_result, time=now))
@@ -144,8 +145,10 @@ def get_level_avg(userId: str, db: Session):
     json_pb_list = json.dumps(list_of_dicts)    
     # 테이블에 있었는지 유무 확인
     if exist:        
-        # 업데이트
-        latest_levelavg.update({'lv_avg' : lv_avg, 'pb_list' : json_pb_list, 'time' : now})
+        # 업데이트        
+        latest_levelavg.lv_avg = lv_avg
+        latest_levelavg.pb_list = json_pb_list
+        latest_levelavg.time = now
     else:
         # 추가
         db.add(models.levelavg(userId=userId, lv_avg=lv_avg, pb_list=json_pb_list, time=now))
@@ -180,8 +183,9 @@ def get_pb_per_week(userId: str, db: Session):
     json_result = json.dumps(res_list)
     # 테이블에 있었는지 유무 확인
     if exist:        
-        # 업데이트
-        latest_pbperweek.update({'pbperweek' : json_result, 'time' : now})
+        # 업데이트        
+        latest_pbperweek.pbperweek = json_result
+        latest_pbperweek.time = now
     else:
         # 추가
         db.add(models.pbperweek(userId=userId, pbperweek=json_result, time=now))

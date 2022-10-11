@@ -19,7 +19,7 @@ const SolvedCard = (props: { RivalInfo: userPerProblem }) => {
   const bg = useColorModeValue('white', 'black');
   const { RivalInfo } = props;
   return (
-    <Box bg={bg} borderRadius="10px" w="22vw">
+    <Box bg={bg} borderRadius="10px">
       <Flex justifyContent="space-between" alignItems="center" py="18px" px="36px">
         <HStack py={2}>
           {' '}

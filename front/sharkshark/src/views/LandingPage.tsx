@@ -10,6 +10,8 @@ import {
   keyframes,
   Flex,
   Spacer,
+  GridItem,
+  Grid,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -88,7 +90,7 @@ export const LandingPage = () => {
 
   return (
     <Box>
-      <Box h="6300px">
+      <Box h="700vh">
         <VStack>
           <Box w="100%">
             <Center h="100vh" w="100%" bgSize="cover">
@@ -219,7 +221,6 @@ export const LandingPage = () => {
               </VStack>
             </Center>
           </Box>
-
           <VStack spacing={0}>
             <Center h="88vh" w="64vw">
               <Flex justifyContent="space-between" w="100%">

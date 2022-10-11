@@ -21,7 +21,7 @@ const SovledNum = () => {
         fontWeight="500"
         fontSize="18px"
       >
-        <ColorText> 유사 사용자 Top 5 문제 풀이 분석</ColorText>
+        <ColorText> 유사 사용자 Top 6 문제 풀이 분석</ColorText>
       </Center>
       <Center w="26vw" h="540px">
         {' '}

@@ -4,7 +4,7 @@ import numpy as np
 import math, json
 
 from requests import Session
-from sql_app.repository import rivalRepository
+from sql_app.repository import rivalRepository, userRepository
 from sql_app import models
 from sql_app.service import roadMap, crowling
 
@@ -22,7 +22,7 @@ def get_roadMap(userId: str, db: Session):
         exist = True
         date_diff = now - latest_roadmap.time
         # 업데이트 된지 1시간 이내라면
-        if date_diff.seconds / 3600 <= 1:
+        if date_diff.seconds / 3600 <= 24:
             return json.loads(latest_roadmap.roadmap)
 
 
@@ -69,8 +69,9 @@ def get_roadMap(userId: str, db: Session):
     json_result = json.dumps(result)
     # 테이블에 있었는지 유무 확인
     if exist:        
-        # 업데이트
-        latest_roadmap.update({'roadmap' : json_result, 'time' : now})
+        # 업데이트        
+        latest_roadmap.roadmap = json_result
+        latest_roadmap.time = now
     else:
         # 추가
         db.add(models.roadmap(userId=userId, roadmap=json_result, time=now))
@@ -113,7 +114,7 @@ def get_level_avg(userId: str, db: Session):
         exist = True
         date_diff = now - latest_levelavg.time
         # 업데이트 된지 1시간 이내라면
-        if date_diff.seconds / 3600 <= 1:
+        if date_diff.seconds / 3600 <= 24:
             return json.loads(latest_levelavg.pb_list), latest_levelavg.lv_avg           
 
     # 라이벌 조회
@@ -144,8 +145,10 @@ def get_level_avg(userId: str, db: Session):
     json_pb_list = json.dumps(list_of_dicts)    
     # 테이블에 있었는지 유무 확인
     if exist:        
-        # 업데이트
-        latest_levelavg.update({'lv_avg' : lv_avg, 'pb_list' : json_pb_list, 'time' : now})
+        # 업데이트        
+        latest_levelavg.lv_avg = lv_avg
+        latest_levelavg.pb_list = json_pb_list
+        latest_levelavg.time = now
     else:
         # 추가
         db.add(models.levelavg(userId=userId, lv_avg=lv_avg, pb_list=json_pb_list, time=now))
@@ -162,7 +165,7 @@ def get_pb_per_week(userId: str, db: Session):
         exist = True
         date_diff = now - latest_pbperweek.time
         # 업데이트 된지 1시간 이내라면
-        if date_diff.seconds / 3600 <= 1:
+        if date_diff.seconds / 3600 <= 24:
             return json.loads(latest_pbperweek.pbperweek)   
 
     # 라이벌 조회
@@ -172,16 +175,18 @@ def get_pb_per_week(userId: str, db: Session):
     res_list = []
     for one in rec_rival_list:
         # rival_probs = db.query(models.solvedProblem).filter(models.solvedProblem.userId == one).order_by(models.solvedProblem.solvedDate).all()
+        level = userRepository.get_bjuser_by_id(one, db).tier
         rival_probs = crowling.lately_solved_problem_seq_crawling(one)
         recent_date = datetime.strptime(str(rival_probs[-1].solvedDate), "%Y-%m-%d %H:%M:%S").date()
         last_date = datetime.strptime(str(rival_probs[0].solvedDate), "%Y-%m-%d %H:%M:%S").date() 
-        res_list.append({"userId" : one, "pb_per_week" : round(7 * len(rival_probs) / (abs((recent_date - last_date).days) + 1), 2)})
+        res_list.append({"userId" : one, "pb_per_week" : round(7 * len(rival_probs) / (abs((recent_date - last_date).days) + 1), 2), "level" : level})
 
     json_result = json.dumps(res_list)
     # 테이블에 있었는지 유무 확인
     if exist:        
-        # 업데이트
-        latest_pbperweek.update({'pbperweek' : json_result, 'time' : now})
+        # 업데이트        
+        latest_pbperweek.pbperweek = json_result
+        latest_pbperweek.time = now
     else:
         # 추가
         db.add(models.pbperweek(userId=userId, pbperweek=json_result, time=now))

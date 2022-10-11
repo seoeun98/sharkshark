@@ -122,7 +122,7 @@ export const QuizTagCard = (props: { title: string; active: boolean }) => {
   const [main, sub] = title.split(' ');
   const bgcolor = useColorModeValue('neutral.25', 'neutral.500');
   return (
-    <Box h="112px" w="200px" pt="56px" pl="20px">
+    <Box h="112px" w="200px" pt="56px" pl="20px" color="white">
       <Box fontSize="12px" lineHeight="14px">
         {sub}
       </Box>

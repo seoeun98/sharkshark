@@ -90,7 +90,7 @@ export const LandingPage = () => {
 
   return (
     <Box>
-      <Box h="700vh">
+      <Box h="100%" pb={480}>
         <VStack>
           <Box w="100%">
             <Center h="100vh" w="100%" bgSize="cover">
@@ -221,6 +221,7 @@ export const LandingPage = () => {
               </VStack>
             </Center>
           </Box>
+
           <VStack spacing={0}>
             <Center h="88vh" w="64vw">
               <Flex justifyContent="space-between" w="100%">
@@ -528,7 +529,7 @@ export const LandingPage = () => {
             <Center
               data-aos="zoom-in-right"
               flexDirection="column"
-              w={380}
+              w="20vw"
               h={200}
               bg={useColorModeValue('neutral.0', 'black')}
               borderRadius={10}
@@ -547,7 +548,7 @@ export const LandingPage = () => {
             <Center
               data-aos="zoom-in-up"
               flexDirection="column"
-              w={380}
+              w="20vw"
               h={200}
               bg={useColorModeValue('neutral.0', 'black')}
               borderRadius={10}
@@ -566,7 +567,7 @@ export const LandingPage = () => {
             <Center
               data-aos="zoom-in-left"
               flexDirection="column"
-              w={380}
+              w="20vw"
               h={200}
               bg={useColorModeValue('neutral.0', 'black')}
               borderRadius={10}

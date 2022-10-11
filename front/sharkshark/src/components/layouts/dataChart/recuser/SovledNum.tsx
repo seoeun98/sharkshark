@@ -30,7 +30,7 @@ const SovledNum = () => {
           h="520px"
           py={0}
           px={2}
-          overflow="auto"
+          overflowY="auto"
           css={{
             '&::-webkit-scrollbar': {
               width: '12px',
@@ -47,7 +47,7 @@ const SovledNum = () => {
         >
           {averageLevel.length > 0 ? (
             averageLevel.map((item: userPerProblem, index: number) => (
-              <Center mr="8px" key={index}>
+              <Center key={index}>
                 <UserNumCard RivalInfo={item} />
               </Center>
             ))

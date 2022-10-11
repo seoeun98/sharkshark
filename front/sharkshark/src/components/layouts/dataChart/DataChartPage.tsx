@@ -275,27 +275,29 @@ const DataChartPage = () => {
             <HeatmapChart />
           </VStack>
         </Center>
-        <HStack spacing={8}>
-          <VStack
-            boxShadow="base"
-            bg={useColorModeValue('neutral.0', 'neutral.500')}
-            borderRadius="12px"
-            w="30vw"
-            h="380px"
-          >
-            <PieChart />
-          </VStack>
-          {/* 알고리즘 유형별 분석 */}
-          <VStack
-            boxShadow="base"
-            bg={useColorModeValue('neutral.0', 'neutral.500')}
-            borderRadius="12px"
-            w="30vw"
-            h="380px"
-          >
-            <TagChart />
-          </VStack>
-        </HStack>
+        <Center>
+          <HStack spacing={8}>
+            <VStack
+              boxShadow="base"
+              bg={useColorModeValue('neutral.0', 'neutral.500')}
+              borderRadius="12px"
+              w="30vw"
+              h="380px"
+            >
+              <PieChart />
+            </VStack>
+            {/* 알고리즘 유형별 분석 */}
+            <VStack
+              boxShadow="base"
+              bg={useColorModeValue('neutral.0', 'neutral.500')}
+              borderRadius="12px"
+              w="30vw"
+              h="380px"
+            >
+              <TagChart />
+            </VStack>
+          </HStack>
+        </Center>
       </VStack>
     </>
   );

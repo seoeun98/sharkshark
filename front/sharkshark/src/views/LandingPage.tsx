@@ -230,7 +230,7 @@ export const LandingPage = () => {
                     <ColorText>문제 추천</ColorText>
                   </Box>
 
-                  <Box fontSize="44px" fontWeight={useColorModeValue(800, 700)} mb={24}>
+                  <Box fontSize="40px" fontWeight={useColorModeValue(800, 700)} mb={24}>
                     오직 너만을 위한, <br />
                     추천 문제
                   </Box>
@@ -249,15 +249,14 @@ export const LandingPage = () => {
                     </Box>
                   </Box>
                 </Box>
-                <Flex data-aos="fade-left" w="30vw">
+                <Flex data-aos="fade-left" w="30vw" minW="30vw">
                   <Image
                     pos="absolute"
                     src="/assets/landing/gif/problem_2.gif"
                     shadow="base"
-                    w={500}
-                    h={260}
+                    w="28vw"
                     mt={240}
-                    right={60}
+                    right="10vw"
                     borderRadius={10}
                     ml={-20}
                   />
@@ -265,21 +264,20 @@ export const LandingPage = () => {
                     src="/assets/landing/gif/problem_1.gif"
                     pos="absolute"
                     shadow="base"
-                    right={30}
+                    right={0}
                     mt={10}
-                    w={500}
-                    h={260}
+                    w="28vw"
                     borderRadius={10}
                   />
                   <Image
                     pos="absolute"
-                    h={280}
+                    h="30vh"
                     right={-20}
                     mt={240}
                     opacity="60%"
                     src="/assets/landing/problem_background.svg"
                   />
-                  <Box w={360} mt={280} ml={72} as={motion.div} animation={animation6}>
+                  <Box w="20vw" mt={280} ml={72} as={motion.div} animation={animation6}>
                     <Image pos="absolute" w={360} src="/assets/landing/calculator.svg" />
                   </Box>
                 </Flex>
@@ -288,19 +286,20 @@ export const LandingPage = () => {
             <Center h="88vh" w="64vw">
               <Flex justifyContent="space-between" w="100%">
                 <Flex data-aos="fade-right" w="40vw">
-                  <Image
-                    pos="absolute"
-                    h={540}
-                    opacity="60%"
-                    src="/assets/landing/rival_background.svg"
-                  />
+                  <Box>
+                    <Image
+                      pos="absolute"
+                      h={540}
+                      opacity="60%"
+                      src="/assets/landing/rival_background.svg"
+                    />
+                  </Box>
                   <Image
                     src="/assets/landing/gif/rival_1.gif"
                     pos="absolute"
                     shadow="base"
+                    w="24vw"
                     mt={10}
-                    w={460}
-                    h={260}
                     left={20}
                     borderRadius={10}
                   />
@@ -308,8 +307,7 @@ export const LandingPage = () => {
                     pos="absolute"
                     src="/assets/landing/gif/rival_2.gif"
                     shadow="base"
-                    w={460}
-                    h={260}
+                    w="24vw"
                     mt={240}
                     left={80}
                     borderRadius={10}
@@ -334,9 +332,18 @@ export const LandingPage = () => {
                   <Box fontSize="24px" fontWeight="800" pt="4vh" pb="2vh">
                     <ColorText>라이벌 추천</ColorText>
                   </Box>
-                  <Box fontSize="44px" fontWeight={useColorModeValue(800, 700)} mb={24}>
-                    지피지기(知彼知己)면 <br />
-                    백전불태(百戰不殆)
+                  <Box fontSize="40px" fontWeight={useColorModeValue(800, 700)} mb={24}>
+                    <Flex>
+                      <Center>
+                        {' '}
+                        지피지기<Text fontSize="32px">(知彼知己)</Text>면 <br />
+                      </Center>
+                    </Flex>
+                    <Flex>
+                      <Center>
+                        백전불태<Text fontSize="32px">(百戰不殆)</Text>
+                      </Center>
+                    </Flex>
                   </Box>
                   <Box fontSize="20px" fontWeight={useColorModeValue(500, 300)} ml={2}>
                     <Box mb={1}>비슷한 실력을 가진 라이벌을 추천해 드립니다.</Box>
@@ -351,7 +358,7 @@ export const LandingPage = () => {
                   <Box fontSize="24px" fontWeight="800" pt="4vh" pb="2vh">
                     <ColorText>코딩테스트</ColorText>
                   </Box>
-                  <Box fontSize="44px" fontWeight={useColorModeValue(800, 700)} mb={24}>
+                  <Box fontSize="40px" fontWeight={useColorModeValue(800, 700)} mb={24}>
                     나만의 실전 연습,
                     <br />
                     모의 코딩 테스트
@@ -367,8 +374,7 @@ export const LandingPage = () => {
                     pos="absolute"
                     src="/assets/landing/gif/test_2.gif"
                     shadow="base"
-                    w={500}
-                    h={260}
+                    w="28vw"
                     mt={10}
                     right={0}
                     borderRadius={10}
@@ -378,31 +384,30 @@ export const LandingPage = () => {
                     src="/assets/landing/gif/test_1.gif"
                     pos="absolute"
                     shadow="base"
-                    right={60}
+                    right="10vw"
                     mt={240}
-                    w={500}
-                    h={260}
+                    w="28vw"
                     borderRadius={10}
                   />
                   <Box
-                    w={240}
-                    ml={-15}
+                    w="16vw"
+                    ml={-20}
                     mt={-10}
                     pos="absolute"
                     as={motion.div}
                     animation={animation7}
                   >
-                    <Image w={240} src="/assets/landing/trophy.svg" />
+                    <Image w="16vw" src="/assets/landing/trophy.svg" />
                   </Box>
                   <Box
-                    w={340}
-                    mt={280}
+                    w="20vw"
+                    mt={220}
                     pos="absolute"
-                    ml={72}
+                    ml={60}
                     as={motion.div}
                     animation={animation6}
                   >
-                    <Image w={340} src="/assets/landing/ide.svg" />
+                    <Image w="20vw" src="/assets/landing/ide.svg" />
                   </Box>
                 </Flex>
               </Flex>
@@ -429,8 +434,7 @@ export const LandingPage = () => {
                     pos="absolute"
                     shadow="base"
                     mt={10}
-                    w={500}
-                    h={260}
+                    w="28vw"
                     left={20}
                     borderRadius={10}
                   />
@@ -439,7 +443,7 @@ export const LandingPage = () => {
                     pos="absolute"
                     shadow="base"
                     mt={200}
-                    w={300}
+                    w="20vw"
                     h={240}
                     borderRadius={10}
                   />
@@ -459,7 +463,7 @@ export const LandingPage = () => {
                   <Box fontSize="24px" fontWeight="800" pt="4vh" pb="2vh">
                     <ColorText>깃허브 자동 포스팅</ColorText>
                   </Box>
-                  <Box fontSize="44px" fontWeight={useColorModeValue(800, 700)} mb={24}>
+                  <Box fontSize="40px" fontWeight={useColorModeValue(800, 700)} mb={24}>
                     나의 풀이 기록을
                     <br /> 자동으로 간편하게!
                   </Box>
@@ -476,7 +480,7 @@ export const LandingPage = () => {
                   <Box fontSize="24px" fontWeight="800" pt="4vh" pb="2vh">
                     <ColorText>실력 분석</ColorText>
                   </Box>
-                  <Box fontSize="44px" fontWeight={useColorModeValue(800, 700)} mb={24}>
+                  <Box fontSize="40px" fontWeight={useColorModeValue(800, 700)} mb={24}>
                     당신의 성장을 위한, <br />
                     실력 분석
                   </Box>
@@ -492,16 +496,14 @@ export const LandingPage = () => {
                     shadow="base"
                     right={30}
                     mt={10}
-                    w={400}
-                    h={200}
+                    w="20vw"
                     borderRadius={10}
                   />
                   <Image
                     pos="absolute"
                     src="/assets/landing/gif/tier_analysis.gif"
                     shadow="base"
-                    w={400}
-                    h={200}
+                    w="20vw"
                     mt={120}
                     right={300}
                     borderRadius={10}
@@ -511,8 +513,7 @@ export const LandingPage = () => {
                     pos="absolute"
                     src="/assets/landing/gif/user_analysis.gif"
                     shadow="base"
-                    w={400}
-                    h={200}
+                    w="20vw"
                     mt={240}
                     right={100}
                     borderRadius={10}

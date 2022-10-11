@@ -39,7 +39,7 @@ const RivalAllList = () => {
             </Box>
           ))
         ) : (
-          <Center bg={bgcolor} borderRadius="12px" p="32px">
+          <Center bg={bgcolor} borderRadius="12px">
             ~ 목록이 없습니다 ~
           </Center>
         )}

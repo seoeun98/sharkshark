@@ -17,7 +17,7 @@ const SolvedCard = (props: { problem: simpleProblem }) => {
   const { problem } = props;
   return (
     <Box px="24px" py="12px" bg={useColorModeValue('white', 'black')} borderRadius="10px" mb="12px">
-      <Flex>
+      <Flex py={2}>
         {/* id */}
         <Box ml="24px" fontWeight="700" fontSize="16px">
           <ColorText>{problem.no}</ColorText>
@@ -25,7 +25,7 @@ const SolvedCard = (props: { problem: simpleProblem }) => {
 
         {/* title */}
         <Box ml="16px">
-          <Box mb="16px">{problem.title}</Box>
+          <Box>{problem.title}</Box>
         </Box>
 
         <Spacer />

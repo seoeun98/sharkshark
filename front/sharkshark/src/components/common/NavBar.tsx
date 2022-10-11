@@ -16,15 +16,17 @@ import {
   MenuDivider,
   MenuList,
   Text,
+  Avatar,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { Link } from 'react-router-dom';
 import { ColorModeSwitcher } from '../../ColorModeSwitcher';
 import { ColorText } from '../common/ColorText';
-import { getUserID, logout } from '../../api/common';
+import { getUserID, githubRepoImage, logout } from '../../api/common';
 import { SetStateAction, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCompStatus } from '../../reducers/CTReducer';
+import { getUserInfoAPI } from '../../api/auth';
 
 const menu = [
   { url: '/', text: 'HOME' },
@@ -46,12 +48,14 @@ export const NavBar = (isLoggedIn: any) => {
   // eslint-disable-next-line react/destructuring-assignment
   const [isLogin, setLoginin] = useState(isLoggedIn.status);
   const [tabIndex, setTabIndex] = useState(0);
+  const [avatar, setAvatar] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
     const userId = getUserID();
     if (userId !== '') {
       setLoginin(true);
+      getProfileImage();
     } else {
       setLoginin(false);
     }
@@ -65,6 +69,15 @@ export const NavBar = (isLoggedIn: any) => {
     setTabIndex(index);
     if (index === 3) {
       dispatch(setCompStatus(0));
+    }
+  };
+
+  const getProfileImage = async () => {
+    const userInfo = await getUserInfoAPI(getUserID());
+
+    if (userInfo.git) {
+      const url = await githubRepoImage(userInfo.git, userInfo.token);
+      setAvatar(url);
     }
   };
 
@@ -172,7 +185,11 @@ export const NavBar = (isLoggedIn: any) => {
                   transition="all 0.2s"
                 >
                   <HStack>
-                    <Image src="/assets/account/Avatar.svg" boxSize="32px" mr={1} />
+                    {avatar ? (
+                      <Avatar src={avatar} boxSize="32px" mr={1} />
+                    ) : (
+                      <Image src="/assets/account/Avatar.svg" boxSize="32px" mr={1} />
+                    )}
                     <HStack fontSize="18px" fontWeight="700">
                       <ColorText children={getUserID()} />
                       <Text fontSize="16px" fontWeight="600">

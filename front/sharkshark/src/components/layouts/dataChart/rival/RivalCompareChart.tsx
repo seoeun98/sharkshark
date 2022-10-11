@@ -51,7 +51,7 @@ const RivalCompareChart = (props: { Rectype: string }) => {
 
   const animationKeyframes = keyframes`
   0% { transform: rotate(0);  }
-  25% { transform: otate(0); }
+  25% { transform: rotate(0); }
   50% { transform: rotate(30deg);}
   75% { transform: rotate(30deg); }
   100% { transform: rotate(0); }

@@ -2,6 +2,10 @@ import requests, copy
 from datetime import datetime
 from bs4 import BeautifulSoup
 
+
+# solved.ac에서 제공하는 BAEKJOON 사이트 정보 API 사용
+
+
 format = '%Y-%m-%d %H:%M:%S'
 
 class result:

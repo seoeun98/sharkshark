@@ -1,6 +1,5 @@
 ![Footer__1_](./images/README/Footer__1_.png)
   
-[TOC]
 
 
 
